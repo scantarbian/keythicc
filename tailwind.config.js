@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Space Grotesk", ...defaultTheme.fontFamily.sans],
+        sans: ["Century Gothic", ...defaultTheme.fontFamily.sans],
       },
     },
   },
