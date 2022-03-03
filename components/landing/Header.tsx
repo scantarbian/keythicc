@@ -6,7 +6,7 @@ const Header = ({ className }: { className?: string }) => {
 
   return (
     <header
-      className={`flex text-white justify-between px-20 pt-20 ${className}`}
+      className={`flex text-white justify-between px-20 pt-20 items-center ${className}`}
     >
       <Link href="/">
         <a>

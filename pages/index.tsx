@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 // components
-import Header from "components/landing/Header";
+
 import CarouselWrapper from "components/landing/Carousel";
 
 const menuItems = [
@@ -22,13 +22,12 @@ const menuItems = [
 
 const Home: NextPage = () => {
   return (
-    <div className="h-screen">
+    <>
       <Head>
         <title>Landing | KeyThicc</title>
         <meta name="description" content="Welcome to KeyThicc" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header className=" w-full" />
       <main>
         <CarouselWrapper>
           <div className="flex gap-20 font-bold text-white mx-48">
@@ -40,7 +39,7 @@ const Home: NextPage = () => {
           </div>
         </CarouselWrapper>
       </main>
-    </div>
+    </>
   );
 };
 

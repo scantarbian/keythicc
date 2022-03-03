@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+// components
+import Header from "components/landing/Header";
 
 const images = [
   {
@@ -43,34 +45,37 @@ const CarouselWrapper = ({
           }}
         >
           <div
-            className="top-0 left-0 w-full h-full flex flex-col justify-center pl-48 gap-4"
+            className="w-full h-full flex flex-col justify-between"
             style={{
               background: "rgba(0,0,0,0.5)",
             }}
           >
-            <h1 className="text-7xl font-bold ">{image.title}</h1>
-            <h2 className="text-2xl font-light">{image.subtitle}</h2>
+            <Header />
+            <div className="flex flex-col pl-48 gap-4">
+              <h1 className="text-7xl font-bold ">{image.title}</h1>
+              <h2 className="text-2xl font-light">{image.subtitle}</h2>
+            </div>
+            <div className="w-full flex flex-col gap-32 pb-20">
+              {children}
+              <div className="flex justify-between mx-20">
+                <br />
+                <button>FIND MORE</button>
+                <div className="flex gap-4">
+                  {images.map((image, index) => (
+                    <button key={index} onClick={() => setActiveIndex(index)}>
+                      <div
+                        className={`h-1 w-14 bg-white ${
+                          index === activeIndex ? "opacity-100" : " opacity-30"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ))}
-      <div className="bottom-0 left-0 w-full h-full flex flex-col justify-end gap-32 pb-20">
-        {children}
-        <div className="flex justify-between mx-20">
-          <br />
-          <button className="">FIND MORE</button>
-          <div className="flex gap-4">
-            {images.map((image, index) => (
-              <button key={index} onClick={() => setActiveIndex(index)}>
-                <div
-                  className={`h-1 w-14 bg-white ${
-                    index === activeIndex ? "opacity-100" : " opacity-30"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
