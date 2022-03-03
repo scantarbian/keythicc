@@ -31,27 +31,25 @@ const CarouselWrapper = ({
   }, [activeIndex]);
 
   return (
-    <div className={`text-white ${className} `}>
-      <div>
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`${
-              index === activeIndex ? "opacity-100" : "opacity-0"
-            } absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat transition-opacity duration-500 ease-in-out`}
-            style={{
-              backgroundImage: `url(${image.src})`,
-            }}
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50" />
-            <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center pl-48 gap-4">
-              <h1 className="text-7xl font-bold">{image.title}</h1>
-              <h2 className="text-2xl font-light">{image.subtitle}</h2>
-            </div>
+    <div className={`text-white ${className}`}>
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className={`${
+            index === activeIndex ? "" : "hidden"
+          } flex relative top-0 left-0 w-full h-screen bg-cover bg-center bg-no-repeat `}
+          style={{
+            backgroundImage: `url(${image.src})`,
+          }}
+        >
+          <div className="top-0 left-0 w-full h-screen absolute bg-black opacity-50" />
+          <div className="top-0 left-0 w-full h-screen absolute flex flex-col justify-center pl-48 gap-4">
+            <h1 className="text-7xl font-bold">{image.title}</h1>
+            <h2 className="text-2xl font-light">{image.subtitle}</h2>
           </div>
-        ))}
-      </div>
-      <div className="absolute bottom-0 left-0 w-full h-full flex flex-col justify-end gap-32 pb-20">
+        </div>
+      ))}
+      <div className="bottom-0 left-0 w-full h-full flex flex-col justify-end gap-32 pb-20">
         {children}
         <div className="flex justify-between mx-20">
           <br />
