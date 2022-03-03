@@ -22,21 +22,23 @@ const CarouselWrapper = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setActiveIndex((activeIndex + 1) % images.length);
-  //   }, 8000);
-  // }, [activeIndex]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((activeIndex) => (activeIndex + 1) % images.length);
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, [activeIndex]);
 
   return (
-    <div className={`text-white ${className}`}>
+    <div className={`text-white ${className} `}>
       <div>
         {images.map((image, index) => (
           <div
             key={index}
             className={`${
               index === activeIndex ? "opacity-100" : "opacity-0"
-            } absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat`}
+            } absolute top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat transition-opacity duration-500 ease-in-out`}
             style={{
               backgroundImage: `url(${image.src})`,
             }}

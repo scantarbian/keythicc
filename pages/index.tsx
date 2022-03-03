@@ -28,10 +28,10 @@ const Home: NextPage = () => {
         <meta name="description" content="Welcome to KeyThicc" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header className="z-10 relative" />
+      <Header className="relative z-10" />
       <main>
-        <CarouselWrapper className="">
-          <div className="flex gap-20 font-bold text-white mx-48 relative">
+        <CarouselWrapper className="z-0">
+          <div className="flex gap-20 font-bold text-white mx-48">
             {menuItems.map((item, index) => (
               <Link href={item.href} key={index}>
                 <a className=" hover:text-orange-400">{item.title}</a>

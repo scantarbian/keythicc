@@ -21,7 +21,16 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <SettingsContext.Provider value={{ ...settings, toggleMenu }}>
-      {children}
+      <div
+        className={`top-0 left-0 w-full h-screen opacity-50 bg-white items-center justify-center fixed z-50 cursor-pointer ${
+          settings.menuOpen ? "flex" : "hidden"
+        }`}
+      >
+        <div className="bg-black w-1/2 h-1/2 text-white">
+          <span>Menu</span>
+        </div>
+      </div>
+      <>{children}</>
     </SettingsContext.Provider>
   );
 };
