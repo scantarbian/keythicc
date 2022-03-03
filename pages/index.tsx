@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 // components
 import Header from "components/landing/Header";
-import Carousel from "components/landing/Carousel";
+import CarouselWrapper from "components/landing/Carousel";
 
 const menuItems = [
   {
@@ -30,14 +30,15 @@ const Home: NextPage = () => {
       </Head>
       <Header className="z-10 relative" />
       <main>
-        <Carousel className="z-0" />
-        <div className="flex gap-20 font-bold text-white mx-48 relative">
-          {menuItems.map((item, index) => (
-            <Link href={item.href} key={index}>
-              <a className=" hover:text-orange-400">{item.title}</a>
-            </Link>
-          ))}
-        </div>
+        <CarouselWrapper className="">
+          <div className="flex gap-20 font-bold text-white mx-48 relative">
+            {menuItems.map((item, index) => (
+              <Link href={item.href} key={index}>
+                <a className=" hover:text-orange-400">{item.title}</a>
+              </Link>
+            ))}
+          </div>
+        </CarouselWrapper>
       </main>
     </div>
   );
