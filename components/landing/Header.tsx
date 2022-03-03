@@ -1,4 +1,8 @@
+import useSettings from "hooks/useSettings";
+
 const Header = ({ className }: { className?: string }) => {
+  const { toggleMenu } = useSettings();
+
   return (
     <header
       className={`flex text-white justify-between px-20 pt-20 ${className}`}
@@ -16,7 +20,7 @@ const Header = ({ className }: { className?: string }) => {
         />
       </svg>
 
-      <button>
+      <button onClick={toggleMenu}>
         <div className="flex flex-col gap-3 items-center">
           <svg
             width="43"

@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 
 const initState = {
   menuOpen: false,
-  onToggleMenu: () => {},
+  toggleMenu: () => {},
 };
 
 export const SettingsContext = createContext(initState);
@@ -12,7 +12,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
     menuOpen: initState.menuOpen,
   });
 
-  const onToggleMenu = () => {
+  const toggleMenu = () => {
     setSettings({
       ...settings,
       menuOpen: !settings.menuOpen,
@@ -20,7 +20,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <SettingsContext.Provider value={{ ...settings, onToggleMenu }}>
+    <SettingsContext.Provider value={{ ...settings, toggleMenu }}>
       {children}
     </SettingsContext.Provider>
   );
