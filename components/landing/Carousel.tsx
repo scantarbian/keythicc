@@ -37,14 +37,18 @@ const CarouselWrapper = ({
           key={index}
           className={`${
             index === activeIndex ? "" : "hidden"
-          } flex relative top-0 left-0 w-full h-screen bg-cover bg-center bg-no-repeat `}
+          } flex w-full h-screen bg-cover bg-center bg-no-repeat `}
           style={{
             backgroundImage: `url(${image.src})`,
           }}
         >
-          <div className="top-0 left-0 w-full h-screen absolute bg-black opacity-50" />
-          <div className="top-0 left-0 w-full h-screen absolute flex flex-col justify-center pl-48 gap-4">
-            <h1 className="text-7xl font-bold">{image.title}</h1>
+          <div
+            className="top-0 left-0 w-full h-full flex flex-col justify-center pl-48 gap-4"
+            style={{
+              background: "rgba(0,0,0,0.5)",
+            }}
+          >
+            <h1 className="text-7xl font-bold ">{image.title}</h1>
             <h2 className="text-2xl font-light">{image.subtitle}</h2>
           </div>
         </div>

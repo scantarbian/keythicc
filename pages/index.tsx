@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Welcome to KeyThicc" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header className=" w-full" />
       <main>
         <CarouselWrapper>
           <div className="flex gap-20 font-bold text-white mx-48">
