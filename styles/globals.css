@@ -2,11 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
-  font-family: "DOS/V re. JPN30";
-  src: url(/fonts/Web437_DOS-V_re_JPN30.woff) format("woff");
-} */
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 300;
+  src: url(/fonts/SpaceGrotesk-Light.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 400;
+  src: url(/fonts/SpaceGrotesk-Regular.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 500;
+  src: url(/fonts/SpaceGrotesk-Medium.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 600;
+  src: url(/fonts/SpaceGrotesk-SemiBold.ttf) format("ttf");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-weight: 700;
+  src: url(/fonts/SpaceGrotesk-Bold.ttf) format("ttf");
+}
 
 body {
-  @apply bg-black m-0 bg-no-repeat bg-cover bg-fixed font-mono;
+  @apply bg-black m-0 bg-no-repeat bg-cover bg-fixed;
 }
