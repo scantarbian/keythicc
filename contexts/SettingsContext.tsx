@@ -11,7 +11,47 @@ const menuTopOptions = [
   {
     title: "Keyboards",
     href: "/products/keyboards",
-    icon: "",
+    icon: (
+      <svg
+        width="51"
+        height="39"
+        viewBox="0 0 51 39"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="1"
+          y="12.9099"
+          width="49"
+          height="25"
+          rx="3"
+          stroke="white"
+          stroke-width="2"
+        />
+        <rect x="9" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="14" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="19" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="24" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="29" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="34" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="39" y="16.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="9" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="9" y="28.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="39" y="28.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="14" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="19" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="24" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="16" y="28.9099" width="20" height="4" rx="1" fill="white" />
+        <rect x="29" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="34" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <rect x="39" y="22.9099" width="4" height="4" rx="1" fill="white" />
+        <path
+          d="M9.51559 12.9098C8.18226 8.07651 8.61559 -0.590157 21.0156 3.40984C36.5156 8.40984 45.5156 2.40991 46.5156 0.909912"
+          stroke="white"
+          stroke-width="2"
+        />
+      </svg>
+    ),
   },
   {
     title: "Auctions",
@@ -69,7 +109,35 @@ const menuTopOptions = [
   {
     title: "Peripherals",
     href: "/products/peripherals",
-    icon: "",
+    icon: (
+      <svg
+        width="31"
+        height="51"
+        viewBox="0 0 31 51"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M8.65763 50.4099C8.65763 28.4099 3.98771 20.9265 3.36558 18.4109C2.74344 15.8952 2.91853 13.2484 3.86662 10.8367C4.81471 8.42493 6.48893 6.36746 8.65763 4.94894C10.8263 3.53043 13.3823 2.821 15.9719 2.91882C18.5614 3.01664 21.0566 3.91687 23.1121 5.49496C25.1676 7.07304 26.6818 9.25095 27.4452 11.7274C28.2087 14.2038 28.1836 16.8562 27.3735 19.3178C23.1121 26.4099 23.1121 28.9099 22.1254 50.4099H18.5C19.6634 49.5512 15.7232 29.003 22.1254 18.4109C22.5775 17.0373 22.5915 14.7369 22.1655 13.355C21.7395 11.9732 20.8945 10.7579 19.7476 9.87734C18.6006 8.99676 17.2083 8.49443 15.7633 8.43985C14.3183 8.38526 12.8921 8.78113 11.6819 9.57266C10.4718 10.3642 9.53758 11.5123 9.00854 12.858C8.4795 14.2038 8.31047 17.0071 8.65763 18.4109C15 28.9099 11.4047 49.4659 12.5 50.4099H8.65763Z"
+          fill="white"
+        />
+        <path
+          d="M1 19.9099L3.5 16.9099L5.5 24.9099L2 23.9099L1 19.9099Z"
+          fill="white"
+          stroke="white"
+        />
+        <path
+          d="M16.8832 1.03362L19 3.90991L11.5 3.9099L13 1.03362L16.8832 1.03362Z"
+          fill="white"
+          stroke="white"
+        />
+        <path
+          d="M30 19.91L27.5 16.9099L23 24.91L27.6667 24.41L30 19.91Z"
+          fill="white"
+          stroke="white"
+        />
+      </svg>
+    ),
   },
 ];
 
@@ -178,10 +246,10 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
                 </a>
               </Link>
             </div>
-            <div className="flex justify-evenly">
+            <div className="flex justify-center gap-12">
               {menuTopOptions.map((option, index) => (
                 <Link href={option.href} key={index}>
-                  <a className="flex flex-col items-center gap-2 hover:text-orange-400">
+                  <a className="flex flex-col items-center justify-end gap-2 hover:text-orange-400">
                     {option.icon}
                     <span>{option.title}</span>
                   </a>
@@ -189,7 +257,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
               ))}
             </div>
             <div className="h-0.5 w-full bg-gray-600" />
-            <div className="flex justify-evenly">
+            <div className="flex justify-center gap-12">
               {MenuBottomOptions.map((option, index) => (
                 <Link href={option.href} key={index}>
                   <a className="uppercase font-bold hover:text-orange-400">
