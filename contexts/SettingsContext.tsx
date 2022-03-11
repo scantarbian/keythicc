@@ -227,7 +227,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
           <div className="flex flex-col p-12 justify-between h-full">
             <div className="flex font-bold items-center justify-between px-20">
               <span className="text-3xl">MENU</span>
-              <Link href="/login">
+              <Link href="/auth">
                 <a className="flex gap-2 items-center text-lg">
                   <svg
                     width="17"
