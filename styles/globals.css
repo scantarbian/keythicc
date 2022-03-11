@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Century Gothic";
-  src: url(/fonts/CenturyGothic.woff) format("woff");
+  font-family: "Century Gothic", 'Space Grotesk';
+  src: url(/fonts/CenturyGothic.woff) format("woff"), url('https://fonts.googleapis.com/css2?family=Merriweather&family=Space+Grotesk:wght@300;500;700&display=swap');
 }
 
 body {
