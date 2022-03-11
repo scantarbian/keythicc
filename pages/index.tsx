@@ -16,7 +16,7 @@ const menuItems = [
   },
   {
     title: "About Us",
-    href: "/about",
+    href: "/about",   
   },
 ];
 
