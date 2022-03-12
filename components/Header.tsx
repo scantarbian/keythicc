@@ -24,7 +24,7 @@ const Header = ({
 }: {
   className?: string;
   children?: ReactNode;
-  additionals: boolean;
+  additionals?: boolean;
 }) => {
   const { toggleMenu } = useSettings();
 
@@ -127,9 +127,15 @@ const Header = ({
   );
 };
 
-export const HeaderWithMenu = ({ current }: { current: string }) => {
+export const HeaderWithMenu = ({
+  current,
+  className,
+}: {
+  current: string;
+  className?: string;
+}) => {
   return (
-    <Header additionals className="pb-20">
+    <Header additionals className={className}>
       <div className="flex gap-20 font-bold text-white mx-48">
         {menuItems.map((item, index) => (
           <Link href={item.href} key={index}>
