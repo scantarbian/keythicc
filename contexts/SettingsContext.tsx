@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 
 const initState = {
@@ -187,6 +188,8 @@ const SettingsProvider = ({
     });
   };
 
+  const { data: session, status } = useSession();
+
   return (
     <SettingsContext.Provider value={{ ...settings, toggleMenu }}>
       <nav
@@ -232,10 +235,14 @@ const SettingsProvider = ({
           <div className="flex flex-col p-12 justify-between h-full">
             <div className="flex font-bold items-center justify-between px-20">
               <span className="text-3xl">MENU</span>
-              <Link href="/auth">
+              {session && session.user ? (
                 <a
-                  className="flex gap-2 items-center text-lg"
-                  onClick={toggleMenu}
+                  onClick={() =>
+                    signOut({
+                      redirect: false,
+                    })
+                  }
+                  className="flex gap-2 items-center text-lg hover:cursor-pointer"
                 >
                   <svg
                     width="17"
@@ -245,14 +252,36 @@ const SettingsProvider = ({
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M8.5 0V17M17 8.5H0"
+                      d="M8.5 0M17 8.5H0"
                       stroke="#FAC53E"
                       strokeWidth="3"
                     />
                   </svg>
-                  <span>LOG IN</span>
+                  <span>LOG OUT</span>
                 </a>
-              </Link>
+              ) : (
+                <Link href="/auth">
+                  <a
+                    className="flex gap-2 items-center text-lg"
+                    onClick={toggleMenu}
+                  >
+                    <svg
+                      width="17"
+                      height="17"
+                      viewBox="0 0 17 17"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.5 0V17M17 8.5H0"
+                        stroke="#FAC53E"
+                        strokeWidth="3"
+                      />
+                    </svg>
+                    <span>LOG IN</span>
+                  </a>
+                </Link>
+              )}
             </div>
             <div className="flex justify-center gap-12">
               {menuTopOptions.map((option, index) => (
