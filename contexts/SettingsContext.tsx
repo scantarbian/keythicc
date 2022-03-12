@@ -25,7 +25,7 @@ const menuTopOptions = [
           height="25"
           rx="3"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <rect x="9" y="16.9099" width="4" height="4" rx="1" fill="white" />
         <rect x="14" y="16.9099" width="4" height="4" rx="1" fill="white" />
@@ -47,7 +47,7 @@ const menuTopOptions = [
         <path
           d="M9.51559 12.9098C8.18226 8.07651 8.61559 -0.590157 21.0156 3.40984C36.5156 8.40984 45.5156 2.40991 46.5156 0.909912"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
       </svg>
     ),
@@ -70,12 +70,12 @@ const menuTopOptions = [
           height="6"
           rx="3"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <path
           d="M0.999969 50.2223C0.999969 48.5654 2.34312 47.2223 3.99997 47.2223H24C25.6568 47.2223 27 48.5654 27 50.2223C27 51.8791 25.6568 53.2223 24 53.2223H3.99997C2.34312 53.2223 0.999969 51.8791 0.999969 50.2223Z"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <rect
           x="7.22223"
@@ -83,7 +83,7 @@ const menuTopOptions = [
           width="13.5556"
           height="18"
           stroke="white"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <rect
           x="20"
@@ -241,7 +241,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
                     <path
                       d="M8.5 0V17M17 8.5H0"
                       stroke="#FAC53E"
-                      stroke-width="3"
+                      strokeWidth="3"
                     />
                   </svg>
                   <span>LOG IN</span>

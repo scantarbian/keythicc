@@ -1,8 +1,9 @@
 import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Billing } from "./Billing";
 import { Shipping } from "./Shipping";
 
-export class Account {
+export class Account extends TimeStamps {
   @prop({ type: String })
   public email!: string;
 
@@ -18,17 +19,11 @@ export class Account {
   @prop({ type: Boolean, default: false })
   public administrator!: boolean;
 
-  @prop({ ref: () => Billing })
-  public billing?: Ref<Billing>;
+  @prop({ ref: () => Billing, type: () => [Billing] })
+  public billing?: Ref<Billing>[];
 
-  @prop({ ref: () => Shipping })
-  public shipping?: Ref<Shipping>;
-
-  @prop({ default: new Date().toISOString(), type: Date })
-  public createdAt!: Date;
-
-  @prop({ default: new Date().toISOString(), type: Date })
-  public updatedAt!: Date;
+  @prop({ ref: () => Shipping, type: () => [Shipping] })
+  public shipping?: Ref<Shipping>[];
 }
 
 export default getModelForClass(Account);

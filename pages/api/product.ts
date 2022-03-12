@@ -51,7 +51,9 @@ export default async function handler(
         });
       }
       case "DELETE": {
-        const product = await ProductModel.findByIdAndDelete(req.body.id);
+        const { id } = req.query;
+
+        const product = await ProductModel.findByIdAndDelete(id);
 
         return res.status(200).json({
           product,

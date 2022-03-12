@@ -2,8 +2,8 @@ import { Category } from "models/Category";
 
 type CategoryProps = {
   categories: [Category & { _id: string }];
-  active: number;
-  onClick: (id: number) => void;
+  active: string;
+  onClick: (id: string) => void;
   className?: string;
 };
 
@@ -23,9 +23,9 @@ const CategoryList = ({
       {categories.map((category, index) => (
         <button
           key={index}
-          onClick={() => onClick(index)}
+          onClick={() => onClick(category._id)}
           className={`hover:text-orange-400 ${
-            active === index ? "font-bold text-orange-400" : "font-light"
+            active === category._id ? "font-bold text-orange-400" : "font-light"
           }`}
         >
           <span>{category.name}</span>
