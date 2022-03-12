@@ -85,8 +85,10 @@ const Login: NextPage = () => {
             </form>
           </div>
           <div className="w-2/5 bg-black text-white rounded-r-2xl px-12 flex flex-col justify-between">
-            <Image src={TopImage} />
-            <div className="flex flex-col place-content-center h-full items-center gap-8">
+            <div className="w-32 self-end">
+              <Image src={TopImage} />
+            </div>
+            <div className="flex flex-col place-content-center h-full items-center gap-8 mt-40">
               <h2 className="text-3xl font-bold">Hi Fellas!</h2>
               <p className=" text-lg">
                 Don't have any account yet? Well let's create one then
@@ -97,7 +99,9 @@ const Login: NextPage = () => {
                 </button>
               </Link>
             </div>
-            <Image src={BottomImage} />
+            <div className="w-52 self-start">
+              <Image src={BottomImage} />
+            </div>
           </div>
         </div>
       </main>
