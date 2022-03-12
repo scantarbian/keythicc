@@ -228,7 +228,10 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
             <div className="flex font-bold items-center justify-between px-20">
               <span className="text-3xl">MENU</span>
               <Link href="/auth">
-                <a className="flex gap-2 items-center text-lg">
+                <a
+                  className="flex gap-2 items-center text-lg"
+                  onClick={toggleMenu}
+                >
                   <svg
                     width="17"
                     height="17"
@@ -249,7 +252,10 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
             <div className="flex justify-center gap-12">
               {menuTopOptions.map((option, index) => (
                 <Link href={option.href} key={index}>
-                  <a className="flex flex-col items-center justify-end gap-2 hover:text-orange-400">
+                  <a
+                    className="flex flex-col items-center justify-end gap-2 hover:text-orange-400"
+                    onClick={toggleMenu}
+                  >
                     {option.icon}
                     <span>{option.title}</span>
                   </a>
@@ -276,7 +282,10 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
                 Follow KeyThicc
               </a>
               <Link href="/privacy">
-                <a className="font-light hover:text-orange-400">
+                <a
+                  className="font-light hover:text-orange-400"
+                  onClick={toggleMenu}
+                >
                   Privacy Policy
                 </a>
               </Link>
