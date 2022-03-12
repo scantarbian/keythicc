@@ -5,7 +5,7 @@ import Head from "next/head";
 // components
 import Sidenav from "components/admin/Sidenav";
 
-const AdminHome: NextPage = () => {
+const ProductsHome: NextPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
@@ -21,15 +21,15 @@ const AdminHome: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Administration Dashboard | KeyThicc</title>
-        <meta name="description" content="Administration Dashboard" />
+        <title>Product Management | KeyThicc</title>
+        <meta name="description" content="Product Management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="text-white flex h-screen">
-        <Sidenav active="/admin" className="w-1/6 h-full" />
+        <Sidenav active="/admin/products" className="w-1/6 h-full" />
       </main>
     </>
   );
 };
 
-export default AdminHome;
+export default ProductsHome;

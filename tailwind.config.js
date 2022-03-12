@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         sans: ["Century Gothic", ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        "special-grey": "#1f1f1f",
+      },
     },
   },
   plugins: [],
