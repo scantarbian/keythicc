@@ -1,7 +1,31 @@
 import Link from "next/link";
 import useSettings from "hooks/useSettings";
+import { ReactNode } from "react";
 
-const Header = ({ className }: { className?: string }) => {
+const menuItems = [
+  {
+    title: "Products",
+    href: "/products",
+  },
+  {
+    title: "Auctions",
+    href: "/auctions",
+  },
+  {
+    title: "About Us",
+    href: "/about",
+  },
+];
+
+const Header = ({
+  className,
+  children,
+  additionals = false,
+}: {
+  className?: string;
+  children?: ReactNode;
+  additionals: boolean;
+}) => {
   const { toggleMenu } = useSettings();
 
   return (
@@ -24,33 +48,102 @@ const Header = ({ className }: { className?: string }) => {
           </svg>
         </a>
       </Link>
-
-      <button onClick={toggleMenu}>
-        <div className="flex flex-col gap-3 items-center">
-          <svg
-            width="43"
-            height="14"
-            viewBox="0 0 43 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.818848 0.932602H42.1291V1.91618H0.818848V0.932602Z"
-              fill="white"
-            />
-            <path
-              d="M0.818848 6.83408H42.1291V7.81765H0.818848V6.83408Z"
-              fill="white"
-            />
-            <path
-              d="M0.818848 12.7355H42.1291V13.7191H0.818848V12.7355Z"
-              fill="white"
-            />
-          </svg>
-          <span>MENU</span>
-        </div>
-      </button>
+      {children}
+      <div className="flex items-center gap-20">
+        {additionals && (
+          <>
+            <button>
+              <svg
+                width="31"
+                height="31"
+                viewBox="0 0 31 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M28.8035 28.8031L17.5327 17.5322"
+                  stroke="white"
+                  stroke-width="3.75694"
+                />
+                <circle
+                  cx="10.6447"
+                  cy="10.6447"
+                  r="8.7662"
+                  stroke="white"
+                  stroke-width="3.75694"
+                />
+              </svg>
+            </button>
+            <button>
+              <svg
+                width="29"
+                height="29"
+                viewBox="0 0 29 29"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M25.8051 6.07564H6.43667L9.52118 15.3292H21.9169C22.1966 15.3292 22.4523 15.1711 22.5774 14.9209L26.4657 7.14448C26.7112 6.65342 26.3541 6.07564 25.8051 6.07564Z"
+                  fill="white"
+                />
+                <path
+                  d="M0.781738 2.47705H3.95174C4.21677 2.47705 4.46148 2.61906 4.59297 2.84917L6.43667 6.07564M6.43667 6.07564H25.8051C26.3541 6.07564 26.7112 6.65342 26.4657 7.14448L22.5774 14.9209C22.4523 15.1711 22.1966 15.3292 21.9169 15.3292H9.52118M6.43667 6.07564L9.52118 15.3292M9.52118 15.3292L6.97109 20.4294C6.72556 20.9204 7.08264 21.4982 7.63166 21.4982H24.9437"
+                  stroke="white"
+                  stroke-width="3.08451"
+                />
+                <circle cx="8.29002" cy="26.2331" r="2.33836" fill="white" />
+                <circle cx="22.5679" cy="26.2331" r="2.33836" fill="white" />
+              </svg>
+            </button>
+          </>
+        )}
+        <button onClick={toggleMenu}>
+          <div className="flex flex-col gap-3 items-center">
+            <svg
+              width="43"
+              height="14"
+              viewBox="0 0 43 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.818848 0.932602H42.1291V1.91618H0.818848V0.932602Z"
+                fill="white"
+              />
+              <path
+                d="M0.818848 6.83408H42.1291V7.81765H0.818848V6.83408Z"
+                fill="white"
+              />
+              <path
+                d="M0.818848 12.7355H42.1291V13.7191H0.818848V12.7355Z"
+                fill="white"
+              />
+            </svg>
+            <span>MENU</span>
+          </div>
+        </button>
+      </div>
     </header>
+  );
+};
+
+export const HeaderWithMenu = ({ current }: { current: string }) => {
+  return (
+    <Header additionals className="pb-20">
+      <div className="flex gap-20 font-bold text-white mx-48">
+        {menuItems.map((item, index) => (
+          <Link href={item.href} key={index}>
+            <a
+              className={`hover:text-orange-400 ${
+                current === item.href ? "border-b-4 border-orange-400" : ""
+              }`}
+            >
+              {item.title}
+            </a>
+          </Link>
+        ))}
+      </div>
+    </Header>
   );
 };
 

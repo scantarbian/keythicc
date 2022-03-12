@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // components
-import Header from "components/landing/Header";
+import Header from "components/Header";
 
 const images = [
   {

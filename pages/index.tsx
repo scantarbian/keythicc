@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 // components
-
 import CarouselWrapper from "components/landing/Carousel";
 
 const menuItems = [
@@ -16,7 +15,7 @@ const menuItems = [
   },
   {
     title: "About Us",
-    href: "/about",   
+    href: "/about",
   },
 ];
 
