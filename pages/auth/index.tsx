@@ -92,7 +92,7 @@ const Login: NextPage = () => {
             <div className="flex flex-col place-content-center h-full items-center gap-8 mt-40">
               <h2 className="text-3xl font-bold">Hi Fellas!</h2>
               <p className=" text-lg">
-                Don't have any account yet? Well let's create one then
+                Don&apos;t have any account yet? Well let&apos;s create one then
               </p>
               <Link href="/auth/register">
                 <button className="border-2 border-black-500 text-black-500 text-xl rounded-full px-12 py-2 inline-block font-semibold hover:bg-green-500">
