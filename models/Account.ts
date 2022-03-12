@@ -8,7 +8,7 @@ export class Account {
   public password!: string;
 
   @prop({ type: String })
-  public username!: string;
+  public fullname!: string;
 
   @prop({ type: Boolean, default: false })
   public verified!: boolean;
