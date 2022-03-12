@@ -6,10 +6,12 @@ import NextNProgress from "nextjs-progressbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SettingsContext>
-      <NextNProgress />
-      <Component {...pageProps} />
-    </SettingsContext>
+    <SessionProvider session={pageProps.session}>
+      <SettingsContext>
+        <NextNProgress />
+        <Component {...pageProps} />
+      </SettingsContext>
+    </SessionProvider>
   );
 }
 

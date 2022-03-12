@@ -3,14 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // authentication suite
 import bcrypt from "bcryptjs";
 import AccountModel from "models/Account";
-import MemberModel from "models/Member";
 import dbConnect from "lib/mongo";
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
@@ -18,7 +17,7 @@ export default NextAuth({
           await dbConnect();
 
           const user = await AccountModel.findOne({
-            username: credentials?.username,
+            email: credentials?.email,
           });
 
           if (
@@ -27,8 +26,7 @@ export default NextAuth({
           ) {
             return {
               id: user._id.toString(),
-              username: user.username,
-              member: user.member?.toString(),
+              email: user.email,
             };
           } else {
             return null;
@@ -44,8 +42,7 @@ export default NextAuth({
       if (user) {
         token = {
           id: user.id,
-          username: user.username,
-          member: user.member,
+          email: user.email,
         };
       }
 
@@ -53,13 +50,11 @@ export default NextAuth({
     },
     async session({ session, token }) {
       const account = await AccountModel.findById(token.id);
-      const member = await MemberModel.findById(token.member);
 
-      if (account && member) {
+      if (account) {
         account.password = "";
 
         session.user = account;
-        session.member = member;
       }
 
       return session; // The return type will match the one returned in `useSession()`
