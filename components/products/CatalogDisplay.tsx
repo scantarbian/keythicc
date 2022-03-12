@@ -1,9 +1,10 @@
 import { Product } from "models/Product";
+import { Image } from "models/Image";
 // components
 import ProductCard from "components/products/ProductCard";
 
 type CatalogDisplayProps = {
-  products: [Product & { _id: string }];
+  products: [Product & { _id: string; image: [Image & { _id: string }] }];
   activeCategory: string;
   className?: string;
 };

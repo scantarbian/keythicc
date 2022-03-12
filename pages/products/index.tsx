@@ -13,6 +13,7 @@ import CatalogDisplay from "components/products/CatalogDisplay";
 import dbConnect from "lib/mongo";
 import CategoryModel, { Category } from "models/Category";
 import ProductModel, { Product } from "models/Product";
+import { Image } from "models/Image";
 
 const Products: NextPage = ({
   data,
@@ -24,7 +25,7 @@ const Products: NextPage = ({
     products,
   }: {
     categories: [Category & { _id: string }];
-    products: [Product & { _id: string }];
+    products: [Product & { _id: string; image: [Image & { _id: string }] }];
   } = JSON.parse(data);
 
   useEffect(() => {

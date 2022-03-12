@@ -7,7 +7,7 @@ import NextNProgress from "nextjs-progressbar";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      <SettingsContext>
+      <SettingsContext className="absolute z-50">
         <NextNProgress />
         <Component {...pageProps} />
       </SettingsContext>

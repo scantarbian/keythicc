@@ -1,14 +1,18 @@
-import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
+import { Ref, getModelForClass, prop, plugin } from "@typegoose/typegoose";
+import mongoose from "mongoose";
+import autopopulate from "mongoose-autopopulate";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Category } from "./Category";
 import { Account } from "./Account";
+import { Image } from "./Image";
 
+@plugin(autopopulate as any)
 export class Product extends TimeStamps {
   @prop({ type: String })
   public name!: string;
 
-  @prop({ type: () => [String], default: [] })
-  public image!: string[];
+  @prop({ ref: () => Image, autopopulate: true, type: Array })
+  public image!: Ref<Image>[];
 
   @prop({ type: String })
   public description!: string;

@@ -169,7 +169,13 @@ const MenuBottomOptions = [
 
 export const SettingsContext = createContext(initState);
 
-const SettingsProvider = ({ children }: { children: ReactNode }) => {
+const SettingsProvider = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className: string;
+}) => {
   const [settings, setSettings] = useState({
     menuOpen: initState.menuOpen,
   });
@@ -186,7 +192,7 @@ const SettingsProvider = ({ children }: { children: ReactNode }) => {
       <nav
         className={`w-full h-full fixed flex items-center justify-center ${
           settings.menuOpen ? "" : "hidden"
-        }`}
+        } ${className}`}
         style={{
           background: "rgba(0,0,0,0.8)",
         }}

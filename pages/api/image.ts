@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "lib/mongo";
-import ProductModel from "models/Product";
+import ImageModel from "models/Image";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,31 +15,28 @@ export default async function handler(
       case "GET": {
         // handle presence of id queries
         if (req.query.id) {
-          const product = await ProductModel.findById(req.query.id);
+          const image = await ImageModel.findById(req.query.id);
 
           return res.status(200).json({
-            product,
+            image,
           });
         }
 
-        // populate images
-        const products = await ProductModel.find().populate("image").exec();
+        const images = await ImageModel.find();
 
         return res.status(200).json({
-          products,
+          images,
         });
       }
       case "POST": {
-        const product = await ProductModel.create(req.body);
+        const image = await ImageModel.create(req.body);
 
         return res.status(200).json({
-          product,
+          image,
         });
       }
       case "PATCH": {
-        req.body.updatedAt = new Date();
-
-        const product = await ProductModel.findByIdAndUpdate(
+        const image = await ImageModel.findByIdAndUpdate(
           req.body.id,
           req.body,
           {
@@ -48,23 +45,22 @@ export default async function handler(
         );
 
         return res.status(200).json({
-          product,
+          image,
         });
       }
       case "DELETE": {
         const { id } = req.query;
 
-        const product = await ProductModel.findByIdAndDelete(id);
+        const image = await ImageModel.findByIdAndDelete(id);
 
         return res.status(200).json({
-          product,
+          image,
         });
       }
-      default: {
-        res.status(405).end();
-      }
+      default:
+        return res.status(405).end();
     }
-  } catch (error: any) {
-    res.status(500).json(error);
+  } catch (error) {
+    return res.status(500).json(error);
   }
 }
