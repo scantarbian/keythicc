@@ -83,7 +83,7 @@ const About: NextPage = () => {
             </form>
           </div>
         </div>
-        <div className="max-w-screen-2xl mx-auto gap-4">
+        <div className="max-w-screen-3xl gap-4 px-24">
           <div className="p-4 bg-black-500">
             <div className="flex justify-between">
                 <div className="mb-6">
@@ -93,7 +93,7 @@ const About: NextPage = () => {
                 </div>
                 <div className="grid gap-20 grid-cols-4">
                     <div>
-                        <h2 className="mb-6 text-m font-semibold text-gray-50 uppercase">Products</h2>
+                        <h2 className="mb-6 text-m font-semibold text-orange-400 uppercase">Products</h2>
                         <ul className="text-gray-50">
                             <li className="mb-4">
                                 <a href="#" className="hover:text-orange-500">Peripherals</a>
@@ -102,12 +102,12 @@ const About: NextPage = () => {
                                 <a href="#" className="hover:text-orange-500">Keyboards</a>
                             </li>
                             <li className="mb-4">
-                                <a href="/auctions" className="hover:text-orange-500">Auctions</a>
+                                <a href="#" className="hover:text-orange-500">Auctions</a>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h2 className="mb-6 text-m font-semibold text-gray-50 uppercase">Documentation</h2>
+                        <h2 className="mb-6 text-m font-semibold text-orange-400 uppercase">Documentation</h2>
                         <ul className="text-gray-50">
                             <li className="mb-4">
                                 <a href="#" className="hover:text-orange-500">Screenshots</a>
@@ -121,7 +121,7 @@ const About: NextPage = () => {
                         </ul>
                     </div>
                     <div>
-                        <h2 className="mb-6 text-m font-semibold text-gray-50 uppercase">Legal</h2>
+                        <h2 className="mb-6 text-m font-semibold text-orange-400 uppercase">Legal</h2>
                         <ul className="text-gray-50">
                             <li className="mb-4">
                                 <a href="#" className="hover:text-orange-500">Warranty Service</a>
@@ -135,7 +135,7 @@ const About: NextPage = () => {
                         </ul>
                     </div>
                     <div>
-                        <h2 className="mb-6 text-m font-semibold text-gray-50 uppercase">Company</h2>
+                        <h2 className="mb-6 text-m font-semibold text-orange-400 uppercase">Company</h2>
                         <ul className="text-gray-50">
                             <li className="mb-4">
                                 <a href="#" className="hover:text-orange-500 ">Contact Us</a>
