@@ -1,6 +1,7 @@
 import { Ref, getModelForClass, prop, plugin } from "@typegoose/typegoose";
 import autopopulate from "mongoose-autopopulate";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
+import { Type } from "./Type";
 import { Category } from "./Category";
 import { Account } from "./Account";
 import { Image } from "./Image";
@@ -21,6 +22,9 @@ export class Product extends TimeStamps {
 
   @prop({ type: Number })
   public stock!: number;
+
+  @prop({ ref: () => Type })
+  public type!: Ref<Type>;
 
   @prop({ ref: () => Category })
   public category!: Ref<Category>;

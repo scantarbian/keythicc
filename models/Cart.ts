@@ -4,7 +4,7 @@ import { Product } from "./Product";
 
 @plugin(autopopulate as any)
 export class Cart {
-  @prop({ ref: () => Product, autopopulate: true, type: Array })
+  @prop({ ref: () => Product, autopopulate: true, type: Array, default: [] })
   public items!: Ref<Product>[];
 }
 
