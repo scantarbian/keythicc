@@ -48,7 +48,7 @@ const ProductsDetailAdminView: NextPage = ({
       </Head>
       <main className="text-white flex h-screen">
         <Sidenav active="/admin/products" className="w-1/6 h-full" />
-        <div className="w-5/6 flex flex-col h-full p-4">
+        <div className="w-5/6 flex flex-col h-full p-4 gap-4">
           <div className="flex w-full justify-between gap-4">
             <a
               onClick={router.back}
@@ -69,6 +69,7 @@ const ProductsDetailAdminView: NextPage = ({
             types={types}
             editMode={editMode}
             setEditMode={setEditMode}
+            router={router}
           />
         </div>
       </main>
