@@ -72,15 +72,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const types = await TypeMode.find();
   const categories = await CategoryModel.find();
 
-  const data = JSON.stringify({
-    products,
-    types,
-    categories,
-  });
-
   return {
     props: {
-      data,
+      data: JSON.stringify({
+        products,
+        types,
+        categories,
+      }),
     },
   };
 };

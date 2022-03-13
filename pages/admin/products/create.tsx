@@ -78,6 +78,7 @@ const ProductsCreation: NextPage = ({
         footnotes: data.footnotes,
         type: data.type.value,
         category: data.category.value,
+        createdBy: session?.user._id,
       }),
     }).then((res) => {
       if (res.status === 200) {
