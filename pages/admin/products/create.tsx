@@ -6,8 +6,9 @@ import type {
 // hooks
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 // components
+import Select from "react-select";
 import Head from "next/head";
 import Sidenav from "components/admin/Sidenav";
 // data
@@ -21,6 +22,14 @@ type Inputs = {
   basePrice: number;
   stock: number;
   footnotes: string;
+  type: {
+    value: string;
+    label: string;
+  };
+  category: {
+    value: string;
+    label: string;
+  };
 };
 
 const ProductsCreation: NextPage = ({
@@ -49,6 +58,7 @@ const ProductsCreation: NextPage = ({
 
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -76,7 +86,90 @@ const ProductsCreation: NextPage = ({
               <span>Return</span>
             </a>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}></form>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4 text-black"
+          >
+            <Controller
+              name="type"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={types.map((type) => ({
+                    value: type._id,
+                    label: type.name,
+                  }))}
+                  placeholder="Select Type"
+                  className="w-full"
+                />
+              )}
+            />
+            <div className="flex gap-4">
+              <div className="w-1/4 text-white">
+                <span>Image management</span>
+              </div>
+              <div className="flex flex-col gap-2 w-3/4">
+                <input
+                  type="text"
+                  className="w-full"
+                  {...register("name", {
+                    required: true,
+                  })}
+                  placeholder="Product name"
+                />
+                <textarea
+                  className="w-full resize-none h-28"
+                  {...register("description")}
+                  placeholder="Product description"
+                />
+                <input
+                  type="number"
+                  className="w-full"
+                  {...register("basePrice", {
+                    required: true,
+                  })}
+                  placeholder="Product price"
+                />
+                <input
+                  type="number"
+                  className="w-full"
+                  {...register("stock", {
+                    required: true,
+                  })}
+                  placeholder="Product stock"
+                />
+                <Controller
+                  name="category"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      options={categories.map((category) => ({
+                        value: category._id,
+                        label: category.name,
+                      }))}
+                      placeholder="Select Category"
+                      className="w-full"
+                    />
+                  )}
+                />
+                <input
+                  type="text"
+                  className="w-full"
+                  {...register("footnotes")}
+                  placeholder="Footnotes"
+                />
+                <span>Rest of the form</span>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="px-4 py-2 mb-4 border-b-2 border-white hover:border-orange-400 hover:text-orange-400 text-white"
+            >
+              Create
+            </button>
+          </form>
         </div>
       </main>
     </>
