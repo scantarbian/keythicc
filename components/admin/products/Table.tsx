@@ -34,8 +34,8 @@ const columns = [
 
 type ProductTableProps = {
   products: [Product & { _id: string }];
-  types: Type & { _id: string };
-  categories: Category & { _id: string };
+  types: [Type & { _id: string }];
+  categories: [Category & { _id: string }];
   className?: string;
 };
 
