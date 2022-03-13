@@ -2,7 +2,7 @@ import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Billing } from "./Billing";
 import { Shipping } from "./Shipping";
-
+import { Cart } from "./Cart";
 export class Account extends TimeStamps {
   @prop({ type: String })
   public email!: string;
@@ -19,11 +19,14 @@ export class Account extends TimeStamps {
   @prop({ type: Boolean, default: false })
   public administrator!: boolean;
 
-  @prop({ ref: () => Billing, type: () => [Billing] })
+  @prop({ ref: () => Billing, type: () => Array })
   public billing?: Ref<Billing>[];
 
-  @prop({ ref: () => Shipping, type: () => [Shipping] })
+  @prop({ ref: () => Shipping, type: () => Array })
   public shipping?: Ref<Shipping>[];
+
+  // @prop({ ref: () => Cart })
+  // public cart?: Ref<Cart>;
 }
 
 export default getModelForClass(Account);

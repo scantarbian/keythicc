@@ -5,7 +5,7 @@ export class Shipping {
   public name!: string;
 
   @prop({ type: String })
-  public basePrice!: string;
+  public address!: string;
 }
 
 export default getModelForClass(Shipping);

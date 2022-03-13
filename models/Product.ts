@@ -1,5 +1,4 @@
 import { Ref, getModelForClass, prop, plugin } from "@typegoose/typegoose";
-import mongoose from "mongoose";
 import autopopulate from "mongoose-autopopulate";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Category } from "./Category";

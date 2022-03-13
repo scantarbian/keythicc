@@ -6,7 +6,7 @@ import Head from "next/head";
 // components
 import Sidenav from "components/admin/Sidenav";
 
-const ProductsHome: NextPage = () => {
+const ProductsCreation: NextPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession({
     required: true,
@@ -22,24 +22,16 @@ const ProductsHome: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Product Management | KeyThicc</title>
-        <meta name="description" content="Product Management" />
+        <title>Product Creation | KeyThicc</title>
+        <meta name="description" content="Product Creation" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="text-white flex h-screen">
         <Sidenav active="/admin/products" className="w-1/6 h-full" />
-        <div className="w-5/6 flex flex-col h-full">
-          <div className="flex p-4 w-full justify-end">
-            <Link href="/admin/products/create">
-              <a className="flex items-center px-4 py-2 mb-4 border-b-2 border-white hover:border-orange-400 hover:text-orange-400">
-                <span>Add Product</span>
-              </a>
-            </Link>
-          </div>
-        </div>
+        <div className="w-5/6 flex flex-col h-full"></div>
       </main>
     </>
   );
 };
 
-export default ProductsHome;
+export default ProductsCreation;
