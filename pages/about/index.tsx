@@ -12,7 +12,7 @@ import Keyside from "public/images/aboutus/keyside.svg";
 import Team from "public/images/team.svg";
 import Logo from "public/images/KeyThicc.svg";
 
-const Auctions: NextPage = () => {
+const About: NextPage = () => {
   return (
     <>
       <Head>
@@ -178,4 +178,4 @@ const Auctions: NextPage = () => {
   );
 };
 
-export default Auctions;
+export default About;
