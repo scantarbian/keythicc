@@ -14,7 +14,7 @@ export class Product extends TimeStamps {
   @prop({ ref: () => Image, autopopulate: true, type: Array, default: [] })
   public image!: Ref<Image>[];
 
-  @prop({ type: String })
+  @prop({ type: String, default: "" })
   public description!: string;
 
   @prop({ type: Number })

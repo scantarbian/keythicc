@@ -65,7 +65,25 @@ const ProductsCreation: NextPage = ({
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    fetch("/api/product", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        description: data.description,
+        basePrice: data.basePrice,
+        stock: data.stock,
+        footnotes: data.footnotes,
+        type: data.type.value,
+        category: data.category.value,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        router.push("/admin/products");
+      }
+    });
   };
 
   return (
