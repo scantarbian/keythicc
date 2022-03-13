@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 // components
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
 import TopImage from "public/images/bgatas.png";
 import BottomImage from "public/images/bgbawah.png";
 

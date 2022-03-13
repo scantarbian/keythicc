@@ -52,7 +52,7 @@ const ProductTable = ({
         })
       );
     }
-  }, [products, types, categories]);
+  }, []);
 
   const columns: TableColumn<Row>[] = [
     {
