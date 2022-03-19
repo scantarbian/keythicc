@@ -11,7 +11,31 @@ import SeePass from "public/images/SeePass.svg";
 import Assemble from "public/images/assembleimg.svg";
 import sidekeyboard from "public/images/sidekeyboard.svg";
 
+type Inputs = {
+  fullname: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
+
 export default function Register() {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
+
+  if (session && session.user) {
+    router.push("/");
+  }
+
   return (
     <>
       <Head>
@@ -27,7 +51,10 @@ export default function Register() {
                 KeyThicc
               </h1>
             </Link>
-            <form className="grid grid-col items-center mt-12 gap-0 h-full">
+            <form
+              className="grid grid-col items-center mt-12 gap-0 h-full"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <h2 className="text-3xl font-bold text-black-500 text-left mb-12 pr-20">
                 Keep your head in the <br></br> clouds and your hands <br></br>{" "}
                 on the keyboard
@@ -40,6 +67,9 @@ export default function Register() {
                 type="Name"
                 placeholder=""
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
+                {...register("fullname", {
+                  required: true,
+                })}
               />
 
               <p className="text-sm font-bold text-black-500 text-left mb-2 mt-6">
@@ -49,7 +79,11 @@ export default function Register() {
                 type="email"
                 placeholder=""
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
+                {...register("email", {
+                  required: true,
+                })}
               />
+
               <p className="text-sm font-bold text-black-500 text-left mb-2 mt-6">
                 Password
               </p>
@@ -57,6 +91,9 @@ export default function Register() {
                 type="password"
                 placeholder=""
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
+                {...register("password", {
+                  required: true,
+                })}
               />
 
               <p className="text-sm font-bold text-black-500 text-left mb-2 mt-6">
@@ -66,6 +103,9 @@ export default function Register() {
                 type="password"
                 placeholder=""
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
+                {...register("repeatPassword", {
+                  required: true,
+                })}
               />
 
               <label className="flex items-center text-sm my-8 text-gray-500">
