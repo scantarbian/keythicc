@@ -235,6 +235,11 @@ const SettingsProvider = ({
           <div className="flex flex-col p-12 justify-between h-full">
             <div className="flex font-bold items-center justify-between px-20">
               <span className="text-3xl">MENU</span>
+              {session && (
+                <span className="text-xl">
+                  Hello, {session.user.fullname.split(" ")[0]}
+                </span>
+              )}
               {session && session.user ? (
                 <a
                   onClick={() =>
