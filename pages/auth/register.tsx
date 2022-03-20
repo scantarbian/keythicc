@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import bcrypt from "bcryptjs";
 
 // components
 import Head from "next/head";
@@ -16,9 +17,10 @@ type Inputs = {
   email: string;
   password: string;
   repeatPassword: string;
+  tosAgreement: boolean;
 };
 
-export default function Register() {
+const Register: NextPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const {
@@ -29,7 +31,30 @@ export default function Register() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    fetch("/api/account", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+        password: bcrypt.hashSync(data.password),
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            callbackUrl: "/",
+          });
+        }
+
+        if (res.error) {
+          console.error(res.error);
+        }
+      });
   };
 
   if (session && session.user) {
@@ -39,7 +64,7 @@ export default function Register() {
   return (
     <>
       <Head>
-        <title>Authentication | KeyThicc</title>
+        <title>Registration | KeyThicc</title>
         <meta name="description" content="KeyThicc Login" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -81,8 +106,18 @@ export default function Register() {
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
                 {...register("email", {
                   required: true,
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Invalid email address",
+                  },
                 })}
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm font-light">
+                  {errors.email.message}
+                </span>
+              )}
 
               <p className="text-sm font-bold text-black-500 text-left mb-2 mt-6">
                 Password
@@ -93,8 +128,17 @@ export default function Register() {
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
                 {...register("password", {
                   required: true,
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
                 })}
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm font-light">
+                  {errors.password.message}
+                </span>
+              )}
 
               <p className="text-sm font-bold text-black-500 text-left mb-2 mt-6">
                 Confirm Password
@@ -105,15 +149,24 @@ export default function Register() {
                 className="bg-white border-2 border-gray-300 rounded text-xl p-2 w-full"
                 {...register("repeatPassword", {
                   required: true,
+                  validate: (value) =>
+                    value === watch("password") || "Passwords do not match",
                 })}
               />
+              {errors.repeatPassword && (
+                <span className="text-red-500 text-sm font-light">
+                  {errors.repeatPassword.message}
+                </span>
+              )}
 
               <label className="flex items-center text-sm my-8 text-gray-500">
                 <input
                   type="checkbox"
-                  name="Remember"
                   className="border-2 rounded border-gray-300 mr-2"
-                ></input>
+                  {...register("tosAgreement", {
+                    required: true,
+                  })}
+                />
                 I agree to all the
                 <Link href="/">
                   <a className="text-sm font-normal text-blue-500 cursor:pointer mx-1">
@@ -164,4 +217,6 @@ export default function Register() {
       </main>
     </>
   );
-}
+};
+
+export default Register;

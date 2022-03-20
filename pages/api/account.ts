@@ -19,6 +19,7 @@ export default async function handler(
           const account = await AccountModel.findById(req.query.id);
 
           return res.status(200).json({
+            success: true,
             account,
           });
         }
@@ -30,6 +31,17 @@ export default async function handler(
         });
       }
       case "POST": {
+        // prevent duplicate account
+        const verify = await AccountModel.findOne({
+          email: req.body.email,
+        });
+
+        if (verify) {
+          return res.status(400).json({
+            error: "Account already exists",
+          });
+        }
+
         if (req.query.debug) {
           const account = await AccountModel.create({
             ...req.body,
@@ -37,6 +49,7 @@ export default async function handler(
           });
 
           return res.status(200).json({
+            success: true,
             account,
           });
         }
@@ -44,6 +57,7 @@ export default async function handler(
         const account = await AccountModel.create(req.body);
 
         return res.status(200).json({
+          success: true,
           account,
         });
       }
