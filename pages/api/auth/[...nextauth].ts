@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 // authentication suite
 import bcrypt from "bcryptjs";
 import AccountModel from "models/Account";
@@ -36,9 +37,26 @@ export default NextAuth({
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      profile(profile) {
+        console.log(profile);
+        return {
+          id: profile.id,
+          googleId: profile.id,
+          email: profile.email,
+          fullname: `${profile.given_name} ${profile.family_name}`,
+          image: profile.picture,
+        };
+      },
+    }),
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("JWT-token", token);
+      console.log("JWT-user", user);
+
       if (user) {
         token = {
           id: user.id,
@@ -48,7 +66,9 @@ export default NextAuth({
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
+      console.log("SESSION-token", token);
+      console.log("SESSION-user", user);
       const account = await AccountModel.findById(token.id);
 
       if (account) {
