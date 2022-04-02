@@ -3,8 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 // authentication suite
 import bcrypt from "bcryptjs";
-import AccountModel from "models/Account";
+import AccountModel, { Account } from "models/Account";
 import dbConnect from "lib/mongo";
+import { isValidObjectId } from "mongoose";
 
 export default NextAuth({
   providers: [
@@ -41,12 +42,12 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       profile(profile) {
-        console.log(profile);
         return {
-          id: profile.id,
-          googleId: profile.id,
+          id: profile.sub,
+          googleId: profile.sub,
           email: profile.email,
-          fullname: `${profile.given_name} ${profile.family_name}`,
+          fullname: profile.name,
+          name: profile.name,
           image: profile.picture,
         };
       },
@@ -54,27 +55,68 @@ export default NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("JWT-token", token);
-      console.log("JWT-user", user);
-
       if (user) {
         token = {
           id: user.id,
           email: user.email,
         };
+
+        if (user.googleId) {
+          token.fullname = user.fullname;
+          token.googleId = user.googleId;
+          token.image = user.image;
+        }
       }
 
       return token;
     },
     async session({ session, token, user }) {
-      console.log("SESSION-token", token);
-      console.log("SESSION-user", user);
-      const account = await AccountModel.findById(token.id);
+      let account:
+        | (Account & {
+            _id: string;
+          })
+        | null = null;
 
-      if (account) {
+      if (isValidObjectId(token.id)) {
+        // id from google will never be valid
+        account = await AccountModel.findById(token.id);
+
+        if (!account) {
+          // check if email is registered (handle already registered google accounts)
+          account = await AccountModel.findOne({
+            email: token.email,
+          });
+        }
+
+        if (account) {
+          account.password = "";
+
+          session.user = account;
+        }
+      } else if (token.googleId) {
+        // create new account (handle google logins)
+        account = await AccountModel.create({
+          email: token.email,
+          fullname: token.fullname,
+          googleId: token.googleId,
+          image: token.image,
+          password: bcrypt.hashSync(token.googleId),
+          verified: true,
+        });
+
         account.password = "";
 
         session.user = account;
+      } else {
+        throw new Error(
+          "[next-auth][error][custom][SESSION_CREATION_ERROR] Account not found"
+        );
+      }
+
+      if (!session.user.fullname) {
+        throw new Error(
+          "[next-auth][error][custom][SESSION_CREATION_ERROR] Incomplete session data"
+        );
       }
 
       return session; // The return type will match the one returned in `useSession()`
