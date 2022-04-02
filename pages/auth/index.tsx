@@ -119,6 +119,12 @@ const Login: NextPage = () => {
                 </Link>
               </div>
             </form>
+            <button
+              className="border-2 border-black-500 rounded text-white bg-black text-xl px-20 py-2 font-semibold hover:bg-green-500"
+              onClick={() => signIn("google")}
+            >
+              Sign In with Google
+            </button>
           </div>
           <div className="w-1/2 bg-black text-white p-32">
             <div className="flex w-3/5 h-3/5 mx-auto">

@@ -16,6 +16,12 @@ export class Account extends TimeStamps {
   @prop({ type: Boolean, default: false })
   public verified!: boolean;
 
+  @prop({ type: String })
+  public googleId?: string;
+
+  @prop({ type: String })
+  public image?: string;
+
   @prop({ type: Boolean, default: false })
   public administrator!: boolean;
 
