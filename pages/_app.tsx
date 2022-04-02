@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           vertical: "top",
           horizontal: "right",
         }}
+        autoHideDuration={3000}
       >
         <SettingsContext className="absolute z-50">
           <NextNProgress />

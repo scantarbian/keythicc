@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 // components
 import Head from "next/head";
 import Link from "next/link";
@@ -14,6 +15,7 @@ type Inputs = {
 };
 
 const Login: NextPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { data: session, status } = useSession();
   const {
@@ -26,9 +28,14 @@ const Login: NextPage = () => {
     signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/",
-    }).then((res) => {
-      console.log(res);
+      redirect: false,
+    }).then((res: any) => {
+      if (!res.ok) {
+        enqueueSnackbar("Sign in failed!", { variant: "error" });
+      } else {
+        enqueueSnackbar("Successfully signed in!", { variant: "success" });
+        router.push("/");
+      }
     });
   };
 
