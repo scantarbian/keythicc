@@ -33,7 +33,6 @@ const Login: NextPage = () => {
       if (!res.ok) {
         enqueueSnackbar("Sign in failed!", { variant: "error" });
       } else {
-        enqueueSnackbar("Successfully signed in!", { variant: "success" });
         router.push("/");
       }
     });
@@ -127,7 +126,11 @@ const Login: NextPage = () => {
             </form>
             <button
               className="border-2 border-black-500 rounded text-white bg-black text-xl px-20 py-2 font-semibold hover:bg-green-500"
-              onClick={() => signIn("google")}
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "/",
+                })
+              }
             >
               Sign In with Google
             </button>

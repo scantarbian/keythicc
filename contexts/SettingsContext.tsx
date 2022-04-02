@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
@@ -191,6 +191,14 @@ const SettingsProvider = ({
   };
 
   const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated" && session && session.user.fullname) {
+      enqueueSnackbar(`Welcome, ${session.user.fullname.split(" ")[0]}!`, {
+        variant: "success",
+      });
+    }
+  }, [status]);
 
   return (
     <SettingsContext.Provider value={{ ...settings, toggleMenu }}>
