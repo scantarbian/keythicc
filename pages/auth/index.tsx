@@ -6,9 +6,6 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import TopImage from "public/images/bgatas.png";
-import BottomImage from "public/images/bgbawah.png";
-import SeePass from "public/images/SeePass.svg";
 import Assemble from "public/images/assembleimg.svg";
 
 type Inputs = {
@@ -30,6 +27,8 @@ const Login: NextPage = () => {
       email: data.email,
       password: data.password,
       callbackUrl: "/",
+    }).then((res) => {
+      console.log(res);
     });
   };
 

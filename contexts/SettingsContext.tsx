@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useSnackbar } from "notistack";
 
 const initState = {
   menuOpen: false,
@@ -177,6 +178,7 @@ const SettingsProvider = ({
   children: ReactNode;
   className: string;
 }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [settings, setSettings] = useState({
     menuOpen: initState.menuOpen,
   });
@@ -242,11 +244,17 @@ const SettingsProvider = ({
               )}
               {session && session.user ? (
                 <a
-                  onClick={() =>
-                    signOut({
+                  onClick={async () => {
+                    const data = await signOut({
                       redirect: false,
-                    })
-                  }
+                    });
+
+                    if (data) {
+                      enqueueSnackbar("You have been signed out", {
+                        variant: "success",
+                      });
+                    }
+                  }}
                   className="flex gap-2 items-center text-lg hover:cursor-pointer"
                 >
                   <svg
