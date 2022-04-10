@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Product } from "models/Product";
 import { Image as Img } from "models/Image";
 import Placeholder from "public/images/placeholder.jpg";
+import Link from "next/link";
 
 type ProductCardProps = {
   product: Product & { _id: string; image: [Img & { _id: string }] };

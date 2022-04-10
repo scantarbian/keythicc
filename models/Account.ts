@@ -31,6 +31,9 @@ export class Account extends TimeStamps {
   @prop({ ref: () => Shipping, type: () => Array })
   public shipping?: Ref<Shipping>[];
 
+  @prop({ type: Number, default: 0 })
+  public keythiccPoints!: number;
+
   // @prop({ ref: () => Cart })
   // public cart?: Ref<Cart>;
 }
