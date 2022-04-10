@@ -3,7 +3,6 @@ import autopopulate from "mongoose-autopopulate";
 import { Account } from "./Account";
 import { Product } from "./Product";
 
-// handles custom keyboard built through the builder
 @plugin(autopopulate as any)
 export class Review {
   @prop({ type: Number, default: 0 })

@@ -6,6 +6,18 @@ import { Category } from "./Category";
 import { Account } from "./Account";
 import { Image } from "./Image";
 
+enum KeycapMaterial {
+  ABS = "ABS",
+  PBT = "PBT",
+  POM = "POM",
+}
+
+enum SwitchType {
+  Linear = "Linear",
+  Tactile = "Tactile",
+  Clicky = "Clicky",
+}
+
 @plugin(autopopulate as any)
 export class Product extends TimeStamps {
   @prop({ type: String })
@@ -23,10 +35,7 @@ export class Product extends TimeStamps {
   @prop({ type: Number, default: 0 })
   public stock!: number;
 
-  @prop({ type: Boolean, default: false })
-  public customizabe!: boolean;
-
-  @prop({ ref: () => Type })
+  @prop({ ref: () => Type, autopopulate: true })
   public type!: Ref<Type>;
 
   @prop({ ref: () => Category })
@@ -41,12 +50,30 @@ export class Product extends TimeStamps {
   @prop({ type: String })
   public footnote?: string;
 
-  // these are only applicable if the type is keyboard
+  // these are only applicable if the type is "Keyboard"
+  @prop({ type: Boolean, default: false })
+  public customizable?: boolean;
+
   @prop({ ref: () => Product, autopopulate: true })
   public baseKeycaps?: Ref<Product>;
 
   @prop({ ref: () => Product, autopopulate: true })
   public baseSwitches?: Ref<Product>;
+
+  @prop({ type: Boolean, default: false })
+  public wireless?: boolean;
+
+  // these are only applicable if the type is "Keycaps"
+  @prop({ type: String, enum: KeycapMaterial })
+  public material?: KeycapMaterial;
+
+  // these are only applicable if the type is "Switches"
+  @prop({ type: String, enum: SwitchType })
+  public switchType?: SwitchType;
+
+  // false = mechanical
+  @prop({ type: Boolean, default: false })
+  public optical?: boolean;
 }
 
 export default getModelForClass(Product);
