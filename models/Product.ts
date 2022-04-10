@@ -47,11 +47,14 @@ export class Product extends TimeStamps {
   @prop({ type: Number, default: 0 })
   public keythiccPoints!: number;
 
+  @prop({ type: String, default: "Keythicc" })
+  public manufacturer!: string;
+
   @prop({ type: String })
   public footnote?: string;
 
   // these are only applicable if the type is "Keyboard"
-  @prop({ type: Boolean, default: false })
+  @prop({ type: Boolean })
   public customizable?: boolean;
 
   @prop({ ref: () => Product, autopopulate: true })
@@ -60,7 +63,7 @@ export class Product extends TimeStamps {
   @prop({ ref: () => Product, autopopulate: true })
   public baseSwitches?: Ref<Product>;
 
-  @prop({ type: Boolean, default: false })
+  @prop({ type: Boolean })
   public wireless?: boolean;
 
   // these are only applicable if the type is "Keycaps"
@@ -72,8 +75,14 @@ export class Product extends TimeStamps {
   public switchType?: SwitchType;
 
   // false = mechanical
-  @prop({ type: Boolean, default: false })
+  @prop({ type: Boolean })
   public optical?: boolean;
+
+  @prop({ type: Number })
+  public actuationDistance?: number;
+
+  @prop({ type: Number })
+  public actuationForce?: number;
 }
 
 export default getModelForClass(Product);
