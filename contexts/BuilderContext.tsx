@@ -1,4 +1,4 @@
-import { useEffect, useRef, createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 type BuilderProps = {
   children: ReactNode;
@@ -6,6 +6,9 @@ type BuilderProps = {
 
 const initState = {
   currentStage: 0,
+  estimatedTotal: 0,
+  estimatedShipDate: new Date(),
+  keyThiccPoints: 0,
   setStage: (stage: number) => {},
 };
 
@@ -13,11 +16,9 @@ export const BuilderContext = createContext(initState);
 
 const BuilderProvider = ({ children }: BuilderProps) => {
   const [currentStage, setCurrentStage] = useState(0);
-  const stageRef = useRef(currentStage);
-
-  useEffect(() => {
-    stageRef.current = currentStage;
-  }, [currentStage]);
+  const [estimatedTotal, setEstimatedTotal] = useState(0);
+  const [estimatedShipDate, setEstimatedShipDate] = useState(new Date());
+  const [keyThiccPoints, setKeyThiccPoints] = useState(0);
 
   const setStage = (stage: number) => {
     setCurrentStage(stage);
@@ -27,7 +28,9 @@ const BuilderProvider = ({ children }: BuilderProps) => {
     <BuilderContext.Provider
       value={{
         currentStage,
-
+        estimatedTotal,
+        estimatedShipDate,
+        keyThiccPoints,
         setStage,
       }}
     >

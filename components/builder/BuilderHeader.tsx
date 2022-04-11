@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { BuilderContext } from "contexts/BuilderContext";
 
-// type Props = {
-//   currentStage: number;
-// };
+type Props = {
+  className?: string;
+};
 
 const Stages = ["Keyboard", "Keycaps", "Switches", "Review"];
 
-export const BuilderHeader = () => {
+const BuilderHeader = ({ className }: Props) => {
   const { setStage, currentStage } = useContext(BuilderContext);
 
   return (
-    <div className="grid grid-cols-5 w-full gap-x-20 items-end">
+    <div className={`grid grid-cols-5 w-full gap-x-20 items-end ${className}`}>
       <div className="text-white flex flex-col">
         <span className="font-bold text-4xl">Builder</span>
         <span>

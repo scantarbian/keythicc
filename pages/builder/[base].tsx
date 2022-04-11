@@ -6,6 +6,7 @@ import type {
 // components
 import Head from "next/head";
 import BuilderHeader from "components/builder/BuilderHeader";
+import BuilderFooter from "components/builder/BuilderFooter";
 import BuilderProvider from "contexts/BuilderContext";
 
 const BuilderPage: NextPage = () => {
@@ -16,9 +17,10 @@ const BuilderPage: NextPage = () => {
         <meta name="description" content="Product Management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="bg-special-grey pt-10 px-10">
+      <main className="bg-special-grey ">
         <BuilderProvider>
-          <BuilderHeader />
+          <BuilderHeader className="pt-10 px-10" />
+          <BuilderFooter />
         </BuilderProvider>
       </main>
     </>
