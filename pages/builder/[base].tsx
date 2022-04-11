@@ -5,7 +5,7 @@ import type {
 } from "next";
 // components
 import Head from "next/head";
-import { PhaseIndicator } from "components/builder/PhaseIndicator";
+import BuilderHeader from "components/builder/BuilderHeader";
 import BuilderProvider from "contexts/BuilderContext";
 
 const BuilderPage: NextPage = () => {
@@ -16,17 +16,9 @@ const BuilderPage: NextPage = () => {
         <meta name="description" content="Product Management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="bg-special-grey px-8 pt-8">
+      <main className="bg-special-grey pt-10 px-10">
         <BuilderProvider>
-          <div className="flex w-full justify-between gap-20">
-            <div className="text-white flex flex-col">
-              <span className="font-bold text-4xl">Builder</span>
-              <span>
-                by <b>KeyThicc</b>
-              </span>
-            </div>
-            <PhaseIndicator />
-          </div>
+          <BuilderHeader />
         </BuilderProvider>
       </main>
     </>
