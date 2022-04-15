@@ -23,7 +23,7 @@ const cart: NextPage = () => {
         <HeaderWithMenu current="/cart" />
       </main>
 
-      <div className="max-w-screen-2xl mx-12 px-10 flex grid grid-cols-12 gap-4 mt-24 items-center">
+      <div className="max-w-screen-2xl mx-12 px-10 grid grid-cols-12 gap-4 mt-24 items-center">
         <div className="col-start-1 col-span-6">
           <h1 className="text-2xl font-semibold text-gray-50">My Cart</h1>
         </div>
