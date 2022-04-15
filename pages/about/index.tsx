@@ -16,7 +16,7 @@ const About: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Auctions | KeyThicc</title>
+        <title>About Us | KeyThicc</title>
         <meta name="description" content="Welcome to KeyThicc" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
