@@ -25,7 +25,7 @@ const cart: NextPage = () => {
 
       <div className="max-w-screen-2xl mx-12 px-10 flex grid grid-cols-12 gap-4 mt-24 items-center">
         <div className="col-start-1 col-span-6">
-          <h1 className="text-2xl font-semibold text-gray-50">My Chart</h1>
+          <h1 className="text-2xl font-semibold text-gray-50">My Cart</h1>
         </div>
         
         <div id="Per-item" className="col-start-1 w-full h-full col-span-6 bg-shark-500 items-center">
