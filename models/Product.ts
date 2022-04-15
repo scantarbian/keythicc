@@ -56,6 +56,9 @@ export class Product extends TimeStamps {
   @prop({ type: String })
   public footnote?: string;
 
+  @prop({ type: Boolean, default: true })
+  public display!: boolean;
+
   // these are only applicable if the type is "Keyboard"
   @prop({ type: Boolean })
   public customizable?: boolean;
