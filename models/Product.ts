@@ -1,10 +1,13 @@
 import { Ref, getModelForClass, prop, plugin } from "@typegoose/typegoose";
+import mongoose from "mongoose";
 import autopopulate from "mongoose-autopopulate";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Type } from "./Type";
 import { Category } from "./Category";
 import { Account } from "./Account";
 import { Image } from "./Image";
+import { Case } from "./Case";
+import { Color } from "./Color";
 
 enum KeycapMaterial {
   ABS = "ABS",
@@ -65,6 +68,15 @@ export class Product extends TimeStamps {
 
   @prop({ type: Boolean })
   public wireless?: boolean;
+
+  @prop({ type: Array })
+  public sizes?: mongoose.Types.Array<string>;
+
+  @prop({ ref: () => Color, autopopulate: true })
+  public colors?: Ref<Color>[];
+
+  @prop({ ref: () => Case, autopopulate: true })
+  public cases?: Ref<Case>[];
 
   // these are only applicable if the type is "Keycaps"
   @prop({ type: String, enum: KeycapMaterial })
