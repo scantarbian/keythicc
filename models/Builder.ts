@@ -3,7 +3,6 @@ import autopopulate from "mongoose-autopopulate";
 import { Account } from "./Account";
 import { Product } from "./Product";
 import { Color } from "./Color";
-import { Case } from "./Case";
 
 // handles custom keyboard built through the builder
 @plugin(autopopulate as any)
@@ -17,8 +16,8 @@ export class Builder {
   @prop({ type: String })
   public keyboardSize!: string;
 
-  @prop({ ref: () => Case, autopopulate: true })
-  public keyboardCase!: Ref<Case>;
+  @prop({ ref: () => Product, autopopulate: true })
+  public keyboardCase!: Ref<Product>;
 
   @prop({ ref: () => Product, autopopulate: true })
   public keycaps!: Ref<Product>;

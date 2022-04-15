@@ -6,7 +6,6 @@ import { Type } from "./Type";
 import { Category } from "./Category";
 import { Account } from "./Account";
 import { Image } from "./Image";
-import { Case } from "./Case";
 import { Color } from "./Color";
 
 enum KeycapMaterial {
@@ -78,8 +77,8 @@ export class Product extends TimeStamps {
   @prop({ ref: () => Color, autopopulate: true })
   public colors?: Ref<Color>[];
 
-  @prop({ ref: () => Case, autopopulate: true })
-  public cases?: Ref<Case>[];
+  @prop({ ref: () => Product, autopopulate: true })
+  public cases?: Ref<Product>[];
 
   // these are only applicable if the type is "Keycaps"
   @prop({ type: String, enum: KeycapMaterial })
