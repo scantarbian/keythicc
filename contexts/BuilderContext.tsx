@@ -6,6 +6,7 @@ import { Color } from "models/Color";
 
 type BuilderProps = {
   children: ReactNode;
+  baseKeyboard: Product & { _id: string };
 };
 
 type StateProps = {
@@ -24,6 +25,7 @@ type StateProps = {
   setEstimatedShipDate: (date: Date) => void;
   setKeyThiccPoints: (points: number) => void;
   setKeyboard: (keyboard: Product & { _id: string }) => void;
+  setKeyboardSize: (size: string) => void;
   setKeycaps: (keycaps: Product & { _id: string }) => void;
   setSwitches: (switches: Product & { _id: string }) => void;
   setColor: (color: Color & { _id: string }) => void;
@@ -46,6 +48,7 @@ const initState: StateProps = {
   setEstimatedShipDate: (date: Date) => {},
   setKeyThiccPoints: (points: number) => {},
   setKeyboard: (keyboard: Product & { _id: string }) => {},
+  setKeyboardSize: (size: string) => {},
   setKeycaps: (keycaps: Product & { _id: string }) => {},
   setSwitches: (switches: Product & { _id: string }) => {},
   setColor: (color: Color & { _id: string }) => {},
@@ -54,16 +57,16 @@ const initState: StateProps = {
 
 export const BuilderContext = createContext(initState);
 
-const BuilderProvider = ({ children }: BuilderProps) => {
+const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
   const [currentStage, setCurrentStage] = useState(0);
   const [estimatedTotal, setEstimatedTotal] = useState(0);
   const [estimatedShipDate, setEstimatedShipDate] = useState(new Date());
   const [keyThiccPoints, setKeyThiccPoints] = useState(0);
-  const [keyboard, setKeyboardStore] = useState<Product | null>(null);
+  const [keyboard, setKeyboardStore] = useState<Product | null>(baseKeyboard);
   const [keycaps, setKeycapsStore] = useState<Product | null>(null);
   const [switches, setSwitchesStore] = useState<Product | null>(null);
   const [builderResult, setBuilderResult] = useState<Builder>({
-    baseKeyboard: undefined,
+    baseKeyboard: baseKeyboard,
     keycaps: undefined,
     switches: undefined,
     builder: undefined,
@@ -85,6 +88,13 @@ const BuilderProvider = ({ children }: BuilderProps) => {
       baseKeyboard: keyboard,
     });
   };
+
+  const setKeyboardSize = (size: string) => {
+    setBuilderResult({
+      ...builderResult,
+      keyboardSize: size,
+    });
+  }
 
   const setKeycaps = (keycaps: Product & { _id: string }) => {
     setKeycapsStore(keycaps);
@@ -128,6 +138,7 @@ const BuilderProvider = ({ children }: BuilderProps) => {
         setEstimatedShipDate,
         setKeyThiccPoints,
         setKeyboard,
+        setKeyboardSize,
         setKeycaps,
         setSwitches,
         setColor,
