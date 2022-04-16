@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { BuilderContext } from "contexts/BuilderContext";
+import Link from "next/link";
 
 type Props = {
   className?: string;
@@ -15,7 +16,10 @@ const BuilderHeader = ({ className }: Props) => {
       <div className="text-white flex flex-col">
         <span className="font-bold text-4xl">Builder</span>
         <span>
-          by <b>KeyThicc</b>
+          by{" "}
+          <Link href="/">
+            <a className="font-bold">KeyThicc</a>
+          </Link>
         </span>
       </div>
       <div className="flex gap-x-4 flex-1 col-span-3">
