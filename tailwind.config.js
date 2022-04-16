@@ -18,6 +18,8 @@ module.exports = {
         "shark-500": "#1F1F1F",
         "stormdust-500": "#676767",
         "manatee-500": "#92929D",
+        "colonialwhite-500": "#FFEBB9",
+        "tuatara-500": "#393939",
       },
     },
   },
