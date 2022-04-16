@@ -149,7 +149,7 @@ const cart: NextPage = () => {
                             <p className="m-5 mt-1 text-lg font-light text-gray-50">Total Price</p>
                             <p className="m-5 mt-1 text-lg font-light text-gray-50">$267.50</p>
                         </div> 
-                        <div id="checkout" className="m-4 p-4 bg-yellow-500 justify-center items-center">
+                        <div id="checkout" className="m-4 p-4 bg-yellow-500 flex justify-center items-center">
                             <button className="text-center text-lg font-semibold text-black">CHECKOUT</button>
                         </div>
                     </div>  
