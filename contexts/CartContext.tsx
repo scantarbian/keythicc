@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { Product } from "models/Product";
+import { Builder } from "models/Builder";
 
 type CartProps = {
   children: ReactNode;
@@ -7,10 +8,16 @@ type CartProps = {
 
 type StateProps = {
   contents:
-    | Array<{
-        product: Product & { _id: string };
-        quantity: number;
-      }>
+    | Array<
+        | {
+            product: Product & { _id: string };
+            quantity: number;
+          }
+        | {
+            product: Builder & { _id: string };
+            quantity: number;
+          }
+      >
     | [];
   addContent: (product: Product & { _id: string }) => void;
   addQuantity: (product: Product & { _id: string }) => void;

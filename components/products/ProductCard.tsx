@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import Image from "next/image";
 import { Product } from "models/Product";
 import { Type } from "models/Type";
 import { Image as Img } from "models/Image";
 import Placeholder from "public/images/placeholder.jpg";
 import Link from "next/link";
+import { CartContext } from "contexts/CartContext";
 
 export interface ProductProps extends Product {
   _id: string;
@@ -17,6 +19,8 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product, className }: ProductCardProps) => {
+  const { addContent } = useContext(CartContext);
+
   return (
     <div className={`flex flex-col p-6 bg-special-grey ${className}`}>
       <div className="h-48 w-full flex flex-col justify-center relative z-0 ">
@@ -67,7 +71,10 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
             </a>
           </Link>
         ) : (
-          <button className="text-lg text-white text-center bg-orange-400 p-2 mt-4 hover:bg-gray-700 hover:text-orange-400">
+          <button
+            className="text-lg text-white text-center bg-orange-400 p-2 mt-4 hover:bg-gray-700 hover:text-orange-400"
+            onClick={() => addContent(product)}
+          >
             <span className="font-bold">Add to Cart!</span>
           </button>
         )}

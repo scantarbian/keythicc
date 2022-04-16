@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import SettingsContext from "contexts/SettingsContext";
+import SettingsProvider from "contexts/SettingsContext";
+import CartProvider from "contexts/CartContext";
 import { SessionProvider } from "next-auth/react";
 import NextNProgress from "nextjs-progressbar";
 import { SnackbarProvider } from "notistack";
@@ -15,10 +16,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
         autoHideDuration={3000}
       >
-        <SettingsContext className="absolute z-50">
-          <NextNProgress />
-          <Component {...pageProps} />
-        </SettingsContext>
+        <CartProvider>
+          <SettingsProvider className="absolute z-50">
+            <NextNProgress />
+            <Component {...pageProps} />
+          </SettingsProvider>
+        </CartProvider>
       </SnackbarProvider>
     </SessionProvider>
   );
