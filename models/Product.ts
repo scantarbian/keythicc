@@ -97,6 +97,10 @@ export class Product extends TimeStamps {
 
   @prop({ type: Number })
   public actuationForce?: number;
+
+  // viewer history (analytics)
+  @prop({ type: Array, default: [] })
+  public viewerHistory!: mongoose.Types.Array<string>;
 }
 
 export default getModelForClass(Product);

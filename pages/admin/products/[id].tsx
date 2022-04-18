@@ -16,6 +16,7 @@ import { Image as Img } from "models/Image";
 import Head from "next/head";
 import Sidenav from "components/admin/Sidenav";
 import Display from "components/admin/products/Display";
+import TrackingTable from "components/admin/products/TrackingTable";
 
 const ProductsDetailAdminView: NextPage = ({
   data,
@@ -71,6 +72,9 @@ const ProductsDetailAdminView: NextPage = ({
             setEditMode={setEditMode}
             router={router}
           />
+          {product.viewerHistory && (
+            <TrackingTable viewerHistory={product.viewerHistory} />
+          )}
         </div>
       </main>
     </>

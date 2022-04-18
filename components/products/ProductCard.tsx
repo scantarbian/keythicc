@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Image from "next/image";
 import { Product } from "models/Product";
 import { Type } from "models/Type";
@@ -6,6 +6,7 @@ import { Image as Img } from "models/Image";
 import Placeholder from "public/images/placeholder.jpg";
 import Link from "next/link";
 import { CartContext } from "contexts/CartContext";
+import { useSession } from "next-auth/react";
 
 export interface ProductProps extends Product {
   _id: string;
@@ -20,6 +21,22 @@ type ProductCardProps = {
 
 const ProductCard = ({ product, className }: ProductCardProps) => {
   const { addContent } = useContext(CartContext);
+
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    // POST REQUEST TO PRODUCT API, ANALYTICS (TEMPORARY)
+    // fetch("/api/product", {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     id: product._id,
+    //     viewerHistory: [product.viewerHistory, `${session} | ${new Date()}`],
+    //   }),
+    // });
+  }, []);
 
   return (
     <div className={`flex flex-col p-6 bg-special-grey ${className}`}>
