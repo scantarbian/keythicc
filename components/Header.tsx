@@ -1,6 +1,6 @@
 import Link from "next/link";
 import useSettings from "hooks/useSettings";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 const menuItems = [
   {
@@ -29,6 +29,9 @@ const Header = ({
   additionals?: boolean;
 }) => {
   const { toggleMenu } = useSettings();
+  const [cartHover, setCartHover] = useState(false);
+  const [searchHover, setSearchHover] = useState(false);
+  const [menuHover, setMenuHover] = useState(false);
 
   return (
     <header
@@ -54,7 +57,14 @@ const Header = ({
       <div className="flex items-center gap-20">
         {additionals && (
           <>
-            <button>
+            <button
+              onMouseEnter={() => {
+                setSearchHover(true);
+              }}
+              onMouseLeave={() => {
+                setSearchHover(false);
+              }}
+            >
               <svg
                 width="31"
                 height="31"
@@ -64,20 +74,27 @@ const Header = ({
               >
                 <path
                   d="M28.8035 28.8031L17.5327 17.5322"
-                  stroke="white"
+                  stroke={searchHover ? "#FB923C" : "white"}
                   strokeWidth="3.75694"
                 />
                 <circle
                   cx="10.6447"
                   cy="10.6447"
                   r="8.7662"
-                  stroke="white"
+                  stroke={searchHover ? "#FB923C" : "white"}
                   strokeWidth="3.75694"
                 />
               </svg>
             </button>
             <Link href="/cart">
-              <button>
+              <button
+                onMouseEnter={() => {
+                  setCartHover(true);
+                }}
+                onMouseLeave={() => {
+                  setCartHover(false);
+                }}
+              >
                 <svg
                   width="29"
                   height="29"
@@ -91,27 +108,41 @@ const Header = ({
                   />
                   <path
                     d="M0.781738 2.47705H3.95174C4.21677 2.47705 4.46148 2.61906 4.59297 2.84917L6.43667 6.07564M6.43667 6.07564H25.8051C26.3541 6.07564 26.7112 6.65342 26.4657 7.14448L22.5774 14.9209C22.4523 15.1711 22.1966 15.3292 21.9169 15.3292H9.52118M6.43667 6.07564L9.52118 15.3292M9.52118 15.3292L6.97109 20.4294C6.72556 20.9204 7.08264 21.4982 7.63166 21.4982H24.9437"
-                    stroke={current === "/cart" ? "#F97316" : "white"}
+                    stroke={
+                      current === "/cart" || cartHover ? "#FB923C" : "white"
+                    }
                     strokeWidth="3.08451"
                   />
                   <circle
                     cx="8.29002"
                     cy="26.2331"
                     r="2.33836"
-                    fill={current === "/cart" ? "#F97316" : "white"}
+                    fill={
+                      current === "/cart" || cartHover ? "#FB923C" : "white"
+                    }
                   />
                   <circle
                     cx="22.5679"
                     cy="26.2331"
                     r="2.33836"
-                    fill={current === "/cart" ? "#F97316" : "white"}
+                    fill={
+                      current === "/cart" || cartHover ? "#FB923C" : "white"
+                    }
                   />
                 </svg>
               </button>
             </Link>
           </>
         )}
-        <button onClick={toggleMenu}>
+        <button
+          onClick={toggleMenu}
+          onMouseEnter={() => {
+            setMenuHover(true);
+          }}
+          onMouseLeave={() => {
+            setMenuHover(false);
+          }}
+        >
           <div className="flex flex-col gap-3 items-center">
             <svg
               width="43"
@@ -122,18 +153,20 @@ const Header = ({
             >
               <path
                 d="M0.818848 0.932602H42.1291V1.91618H0.818848V0.932602Z"
-                fill="white"
+                fill={menuHover ? "#FB923C" : "white"}
               />
               <path
                 d="M0.818848 6.83408H42.1291V7.81765H0.818848V6.83408Z"
-                fill="white"
+                fill={menuHover ? "#FB923C" : "white"}
               />
               <path
                 d="M0.818848 12.7355H42.1291V13.7191H0.818848V12.7355Z"
-                fill="white"
+                fill={menuHover ? "#FB923C" : "white"}
               />
             </svg>
-            <span>MENU</span>
+            <span className={`${menuHover ? "text-orange-400" : "text-white"}`}>
+              MENU
+            </span>
           </div>
         </button>
       </div>
