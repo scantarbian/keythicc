@@ -8,29 +8,27 @@ type CartProps = {
 
 type StateProps = {
   contents:
-    | Array<
-        | {
-            product: Product & { _id: string };
-            quantity: number;
-          }
-        | {
-            product: Builder & { _id: string };
-            quantity: number;
-          }
-      >
+    | Array<{
+        product: (Product | Builder) & { _id: string };
+        quantity: number;
+      }>
     | [];
-  addContent: (product: Product & { _id: string }) => void;
-  addQuantity: (product: Product & { _id: string }) => void;
-  removeQuantity: (product: Product & { _id: string }) => void;
-  removeContent: (product: Product & { _id: string }) => void;
+  addContent: (product: (Product | Builder) & { _id: string }) => void;
+  addQuantity: (product: (Product | Builder) & { _id: string }) => void;
+  removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
+  removeContent: (product: (Product | Builder) & { _id: string }) => void;
+  getTotalPrice: () => number;
+  getTotalQuantity: () => number;
 };
 
 const initState: StateProps = {
   contents: [],
-  addContent: (product: Product) => {},
-  addQuantity: (product: Product) => {},
-  removeQuantity: (product: Product) => {},
-  removeContent: (product: Product) => {},
+  addContent: (product: (Product | Builder) & { _id: string }) => {},
+  addQuantity: (product: (Product | Builder) & { _id: string }) => {},
+  removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
+  removeContent: (product: (Product | Builder) & { _id: string }) => {},
+  getTotalPrice: () => 0,
+  getTotalQuantity: () => 0,
 };
 
 export const CartContext = createContext(initState);
@@ -38,11 +36,11 @@ export const CartContext = createContext(initState);
 const CartProvider = ({ children }: CartProps) => {
   const [contents, setContents] = useState<StateProps["contents"]>([]);
 
-  const addContent = (product: Product & { _id: string }) => {
+  const addContent = (product: (Product | Builder) & { _id: string }) => {
     setContents([{ product, quantity: 1 }]);
   };
 
-  const addQuantity = (product: Product & { _id: string }) => {
+  const addQuantity = (product: (Product | Builder) & { _id: string }) => {
     setContents(
       contents.map((content) =>
         content.product._id === product._id
@@ -52,7 +50,7 @@ const CartProvider = ({ children }: CartProps) => {
     );
   };
 
-  const removeQuantity = (product: Product & { _id: string }) => {
+  const removeQuantity = (product: (Product | Builder) & { _id: string }) => {
     setContents(
       contents.map((content) =>
         content.product._id === product._id
@@ -62,10 +60,37 @@ const CartProvider = ({ children }: CartProps) => {
     );
   };
 
-  const removeContent = (product: Product & { _id: string }) => {
+  const removeContent = (product: (Product | Builder) & { _id: string }) => {
     setContents(
       contents.filter((content) => content.product._id !== product._id)
     );
+  };
+
+  const getTotalPrice = () => {
+    let accumulator = 0;
+
+    contents.forEach((content) => {
+      // @ts-expect-error
+      if (content.product.totalPrice) {
+        // @ts-expect-error
+        accumulator += content.product.totalPrice * content.quantity;
+      } else {
+        // @ts-expect-error
+        accumulator += content.product.basePrice * content.quantity;
+      }
+    });
+
+    return accumulator;
+  };
+
+  const getTotalQuantity = () => {
+    let accumulator = 0;
+
+    contents.forEach((content) => {
+      accumulator += content.quantity;
+    });
+
+    return accumulator;
   };
 
   return (
@@ -76,6 +101,8 @@ const CartProvider = ({ children }: CartProps) => {
         addQuantity,
         removeContent,
         removeQuantity,
+        getTotalPrice,
+        getTotalQuantity,
       }}
     >
       {children}

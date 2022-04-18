@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from 'next/image';
+import { useContext } from "react";
+import { CartContext } from "contexts/CartContext";
 
 // components
 import { HeaderWithMenu } from "components/Header";
@@ -10,10 +12,11 @@ import minus from "public/images/-.svg";
 import plus from "public/images/+.svg";
 import ketik65 from "public/images/ketik65.png";
 import Arrow from "public/images/Arrow.png";
+import CartItem from "components/cart/CartItem";
 
+const Cart: NextPage = () => {
+  const { contents, getTotalPrice, getTotalQuantity } = useContext(CartContext);
 
-
-const cart: NextPage = () => {
   return (
     <>
       <Head>
@@ -47,8 +50,11 @@ const cart: NextPage = () => {
                   Select All
                 </label>
               </div>
-              <hr className="w-full bg-manatee-500"></hr>
+              {contents.map((item, index) => (
+                <CartItem key={index} item={item} />
+              ))}
 
+              <hr className="w-full bg-manatee-500"></hr>
               <div className="col-start-1 w-full col-span-6 bg-shark-500">
                 <div className="flex items-start justify-start justify-self-start">
                   <div id="product-checkbox" className="m-4">
@@ -203,10 +209,10 @@ const cart: NextPage = () => {
               </h2>
               <div id="item-price" className="flex justify-between">
                 <p className="m-5 mt-1 text-lg font-light text-gray-50">
-                  item price (3 items)
+                  item price ({getTotalQuantity()} items)
                 </p>
                 <p className="m-5 mt-1 text-lg font-light text-gray-50">
-                  $290.00
+                  Rp{getTotalPrice().toLocaleString()}
                 </p>
               </div>
               <div id="discount" className="flex justify-between">
@@ -225,7 +231,7 @@ const cart: NextPage = () => {
                   Total Price
                 </p>
                 <p className="m-5 mt-1 text-lg font-light text-gray-50">
-                  $267.50
+                  Rp{getTotalPrice().toLocaleString()}
                 </p>
               </div>
               <div
@@ -502,4 +508,4 @@ const cart: NextPage = () => {
   );
 };
 
-export default cart;
+export default Cart;

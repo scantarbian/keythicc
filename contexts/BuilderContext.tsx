@@ -73,6 +73,7 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     keyboardCase: undefined,
     keyboardColor: undefined,
     keyboardSize: "",
+    totalPrice: 0,
   });
   const [color, setColorStore] = useState<Color | null>(null);
   const [account, setAccount] = useState<Account | null>(null);

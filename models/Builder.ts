@@ -16,6 +16,9 @@ export class Builder {
   @prop({ type: String })
   public keyboardSize!: string;
 
+  @prop({ type: Number })
+  public totalPrice!: number;
+
   @prop({ ref: () => Product, autopopulate: true })
   public keyboardCase!: Ref<Product>;
 
