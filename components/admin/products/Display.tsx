@@ -132,14 +132,16 @@ const ProductDisplay = ({
         {editMode ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col w-1/2 gap-y-2 text-black"
+            className="grid grid-cols-4 gap-4 text-black items-center"
           >
+            <span className="text-right text-white">Name</span>
             <input
               type="text"
-              className="w-full"
+              className="col-span-3"
               {...register("name")}
               placeholder="Product name"
             />
+            <span className="text-right text-white">Type</span>
             <Controller
               name="type"
               control={control}
@@ -151,10 +153,11 @@ const ProductDisplay = ({
                     label: type.name,
                   }))}
                   placeholder="Select Type"
-                  className="w-full"
+                  className="w-full col-span-3"
                 />
               )}
             />
+            <span className="text-right text-white">Shelf Category</span>
             <Controller
               name="category"
               control={control}
@@ -166,36 +169,40 @@ const ProductDisplay = ({
                     label: category.name,
                   }))}
                   placeholder="Select Category"
-                  className="w-full"
+                  className="w-full col-span-3"
                 />
               )}
             />
+            <span className="text-right text-white">Description</span>
             <textarea
-              className="w-full resize-none h-28"
+              className="w-full resize-none h-28 col-span-3"
               {...register("description")}
               placeholder="Product description"
             />
+            <span className="text-right text-white">Price</span>
             <input
               type="number"
-              className="w-full"
+              className="w-full col-span-3"
               {...register("basePrice")}
               placeholder="Product price"
             />
+            <span className="text-right text-white">Stock</span>
             <input
               type="number"
-              className="w-full"
+              className="w-full col-span-3"
               {...register("stock")}
               placeholder="Product stock"
             />
+            <span className="text-right text-white">Footnotes</span>
             <input
               type="text"
-              className="w-full"
+              className="w-full col-span-3"
               {...register("footnotes")}
               placeholder="Footnotes"
             />
             <button
               type="submit"
-              className="px-4 py-2 mb-4 border-b-2 border-white hover:border-orange-400 hover:text-orange-400 text-white"
+              className="px-4 py-2 mb-4 border-b-2 col-start-4 border-white hover:border-orange-400 hover:text-orange-400 text-white"
             >
               Update
             </button>
