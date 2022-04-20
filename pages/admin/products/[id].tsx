@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 // database
 import dbConnect from "lib/mongo";
 import ProductModel, { Product } from "models/Product";
-import TypeMode, { Type } from "models/Type";
+import TypeModel, { Type } from "models/Type";
 import CategoryModel, { Category } from "models/Category";
 import { Image as Img } from "models/Image";
 // components
@@ -35,7 +35,13 @@ const ProductsDetailAdminView: NextPage = ({
     types,
     categories,
   }: {
-    product: Product & { _id: string; image: [Img & { _id: string }] };
+    product: Product & {
+      _id: string;
+      image: [Img & { _id: string }];
+      type: Type & {
+        _id: string;
+      };
+    };
     types: [Type & { _id: string }];
     categories: [Category & { _id: string }];
   } = JSON.parse(data);
@@ -85,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   await dbConnect();
 
   const product = await ProductModel.findById(query.id);
-  const types = await TypeMode.find();
+  const types = await TypeModel.find();
   const categories = await CategoryModel.find();
 
   return {

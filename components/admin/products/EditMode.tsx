@@ -1,4 +1,4 @@
-import { Product } from "models/Product";
+import { Product, KeycapMaterial, SwitchType } from "models/Product";
 import { Type } from "models/Type";
 import { Category } from "models/Category";
 import { Image as Img } from "models/Image";
@@ -9,7 +9,13 @@ import Select from "react-select";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 type Props = {
-  product: Product & { _id: string; image: [Img & { _id: string }] };
+  product: Product & {
+    _id: string;
+    image: [Img & { _id: string }];
+    type: Type & {
+      _id: string;
+    };
+  };
   types: [Type & { _id: string }];
   categories: [Category & { _id: string }];
   setEditMode: (editMode: boolean) => void;
@@ -30,6 +36,33 @@ type Inputs = {
     value: string;
     label: string;
   };
+  keythiccPoints: number;
+  manufacturer: string;
+  display: boolean;
+  customizable: boolean;
+  baseKeycaps: {
+    value: string;
+    label: string;
+  };
+  baseSwitches: {
+    value: string;
+    label: string;
+  };
+  wireless: boolean;
+  sizes: Array<string>;
+  colors: {
+    value: string;
+    label: string;
+  };
+  cases: {
+    value: string;
+    label: string;
+  };
+  material: KeycapMaterial;
+  switchType: SwitchType;
+  optical: boolean;
+  actuationDistance: number;
+  actuationForce: number;
 };
 
 const ProductEditMode = ({
@@ -53,8 +86,8 @@ const ProductEditMode = ({
       stock: product.stock,
       footnotes: product.footnote,
       type: {
-        value: String(product.type),
-        label: types.find((type) => type._id === String(product.type))?.name,
+        value: product.type._id,
+        label: product.type.name,
       },
       category: {
         value: String(product.category),

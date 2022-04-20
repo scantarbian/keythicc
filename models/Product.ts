@@ -8,13 +8,13 @@ import { Account } from "./Account";
 import { Image } from "./Image";
 import { Color } from "./Color";
 
-enum KeycapMaterial {
+export enum KeycapMaterial {
   ABS = "ABS",
   PBT = "PBT",
   POM = "POM",
 }
 
-enum SwitchType {
+export enum SwitchType {
   Linear = "Linear",
   Tactile = "Tactile",
   Clicky = "Clicky",

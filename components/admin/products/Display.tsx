@@ -15,7 +15,13 @@ const ProductDisplay = ({
   setEditMode,
   router,
 }: {
-  product: Product & { _id: string; image: [Img & { _id: string }] };
+  product: Product & {
+    _id: string;
+    image: [Img & { _id: string }];
+    type: Type & {
+      _id: string;
+    };
+  };
   types: [Type & { _id: string }];
   categories: [Category & { _id: string }];
   editMode: boolean;
@@ -25,7 +31,7 @@ const ProductDisplay = ({
   const data = [
     {
       name: "Type",
-      value: types.find((type) => type._id === String(product.type))?.name,
+      value: product.type.name,
     },
     {
       name: "Category",
