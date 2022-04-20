@@ -72,9 +72,9 @@ const ProductsDetailAdminView: NextPage = ({
             setEditMode={setEditMode}
             router={router}
           />
-          {product.viewerHistory && (
+          {/* {product.viewerHistory && (
             <TrackingTable viewerHistory={product.viewerHistory} />
-          )}
+          )} */}
         </div>
       </main>
     </>
