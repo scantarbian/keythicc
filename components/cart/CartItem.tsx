@@ -33,8 +33,7 @@ const CartItem = ({ item, selected }: Prop) => {
         <Image
           className="rounded-lg"
           src={
-            // @ts-expect-error
-            item.product.image[0] || ALTimage
+            ALTimage
           }
         />
       </div>

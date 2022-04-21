@@ -37,7 +37,27 @@ const CartProvider = ({ children }: CartProps) => {
   const [contents, setContents] = useState<StateProps["contents"]>([]);
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
-    setContents([{ product, quantity: 1 }]);
+    // append content to existing state
+    if (contents.find((content) => content.product._id === product._id)) {
+      setContents((prevState) =>
+        prevState.map((content) =>
+          content.product._id === product._id
+            ? {
+                product,
+                quantity: content.quantity + 1,
+              }
+            : content
+        )
+      );
+    } else {
+      setContents((prevState) => [
+        ...prevState,
+        {
+          product,
+          quantity: 1,
+        },
+      ]);
+    }
   };
 
   const addQuantity = (product: (Product | Builder) & { _id: string }) => {
