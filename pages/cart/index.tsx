@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 
@@ -25,180 +25,29 @@ const Cart: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <HeaderWithMenu current="/cart" />
+        <HeaderWithMenu current="/cart" className="mb-10" />
 
-        <div className="flex">
-          <div
-            id="MyCart"
-            className="max-w-screen-2xl mx-11 px-10 grid grid-cols-12 gap-4 mt-10 items-center"
-          >
-            <div className="col-start-1 col-span-6">
-              <h1 className="text-2xl font-semibold text-gray-50">My Cart</h1>
-            </div>
+        <div className="flex px-8">
+          <div className=" grid grid-cols-12 gap-4 items-center">
+            <h1 className="text-2xl font-semibold text-gray-50 col-span-12">
+              My Cart
+            </h1>
 
-            <div
-              id="Per-item"
-              className="col-start-1 w-full h-full col-span-7 bg-shark-500 items-center"
-            >
-              <div className="form-check">
+            <div className="col-start-1 w-full col-span-7 bg-shark-500 self-start ">
+              <label className="font-semibold text-gray-50">
                 <input
-                  className="form-check-input ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 checked:text-yellow-500 rounded-sm"
+                  className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 checked:text-yellow-500 rounded-sm"
                   type="checkbox"
                   value=""
                 />
-                <label className="form-check-label inline-block font-semibold text-gray-50">
-                  Select All
-                </label>
-              </div>
+                Select All
+              </label>
               {contents.map((item, index) => (
                 <CartItem key={index} item={item} />
               ))}
-
-              <hr className="w-full bg-manatee-500"></hr>
-              <div className="col-start-1 w-full col-span-6 bg-shark-500">
-                <div className="flex items-start justify-start justify-self-start">
-                  <div id="product-checkbox" className="m-4">
-                    <input
-                      className="form-check-input ml-3 m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-yellow-500 checked:text-yellow-500 rounded-sm"
-                      type="checkbox"
-                      value=""
-                    />
-                    <label className="form-check-label inline-block font-semibold text-gray-50"></label>
-                  </div>
-                  <div id="product-image" className="ml-2 my-3 mx-6">
-                    <Image className="rounded-lg" src={ALTimage} />
-                  </div>
-                  <div id="product-details" className="ml-2 my-3 mx-6">
-                    <div id="product-name">
-                      <p className="font-semibold text-gray-50">ALT</p>
-                    </div>
-                    <div id="product-desc">
-                      <p className="text-xs font-basic text-manatee-500">
-                        Space Gray / Barebone
-                      </p>
-                    </div>
-                    <div
-                      id="product-quantity"
-                      className="mt-2 border-2 w-3/5 flex border-gray-50 justify-around"
-                    >
-                      <Image className="rounded-lg" src={minus} />
-                      <p className="text-sm font-semibold text-gray-50 text-center">
-                        1
-                      </p>
-                      <Image className="rounded-lg" src={plus} />
-                    </div>
-                  </div>
-                  <div id="product-removenprice" className="ml-96 my-3 mx-6">
-                    <a
-                      href="#"
-                      className="underline font-semibold text-yellow-500"
-                    >
-                      Remove
-                    </a>
-                    <p className="mt-5 text-lg font-basic text-gray-50">$140</p>
-                  </div>
-                </div>
-                <hr className="w-full bg-manatee-500"></hr>
-              </div>
-              <div className="col-start-1 w-full col-span-6 bg-shark-500">
-                <div className="flex items-start justify-start justify-self-start">
-                  <div id="product-checkbox" className="m-4">
-                    <input
-                      className="form-check-input ml-3 m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-yellow-500 checked:text-yellow-500 rounded-sm"
-                      type="checkbox"
-                      value=""
-                    />
-                    <label className="form-check-label inline-block font-semibold text-gray-50"></label>
-                  </div>
-                  <div id="product-image" className="ml-2 my-3 mx-6">
-                    <Image className="rounded-lg" src={ALTimage} />
-                  </div>
-                  <div id="product-details" className="ml-2 my-3 mx-6">
-                    <div id="product-name">
-                      <p className="font-semibold text-gray-50">ALT</p>
-                    </div>
-                    <div id="product-desc">
-                      <p className="text-xs font-basic text-manatee-500">
-                        Space Gray / Barebone
-                      </p>
-                    </div>
-                    <div
-                      id="product-quantity"
-                      className="mt-2 border-2 w-3/5 flex border-gray-50 justify-around"
-                    >
-                      <Image className="rounded-lg" src={minus} />
-                      <p className="text-sm font-semibold text-gray-50 text-center">
-                        1
-                      </p>
-                      <Image className="rounded-lg" src={plus} />
-                    </div>
-                  </div>
-                  <div id="product-removenprice" className="ml-96 my-3 mx-6">
-                    <a
-                      href="#"
-                      className="underline font-semibold text-yellow-500"
-                    >
-                      Remove
-                    </a>
-                    <p className="mt-5 text-lg font-basic text-gray-50">$140</p>
-                  </div>
-                </div>
-                <hr className="w-full bg-manatee-500"></hr>
-              </div>
-              <div className="col-start-1 w-full col-span-6 bg-shark-500">
-                <div className="flex items-start justify-start justify-self-start">
-                  <div id="product-checkbox" className="m-4">
-                    <input
-                      className="form-check-input ml-3 m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-yellow-500 checked:text-yellow-500 rounded-sm"
-                      type="checkbox"
-                      value=""
-                    />
-                    <label className="form-check-label inline-block font-semibold text-gray-50"></label>
-                  </div>
-                  <div id="product-image" className="ml-2 my-3 mx-6">
-                    <Image className="rounded-lg" src={ALTimage} />
-                  </div>
-                  <div id="product-details" className="ml-2 my-3 mx-6">
-                    <div id="product-name">
-                      <p className="font-semibold text-gray-50">ALT</p>
-                    </div>
-                    <div id="product-desc">
-                      <p className="text-xs font-basic text-manatee-500">
-                        Space Gray / Barebone
-                      </p>
-                    </div>
-                    <div
-                      id="product-quantity"
-                      className="mt-2 border-2 w-3/5 flex border-gray-50 justify-around"
-                    >
-                      <Image className="rounded-lg" src={minus} />
-                      <p className="text-sm font-semibold text-gray-50 text-center">
-                        1
-                      </p>
-                      <Image className="rounded-lg" src={plus} />
-                    </div>
-                  </div>
-                  <div id="product-removenprice" className="ml-96 my-3 mx-6">
-                    <a
-                      href="#"
-                      className="underline font-semibold text-yellow-500"
-                    >
-                      Remove
-                    </a>
-                    <p className="mt-5 text-lg font-basic text-gray-50">$140</p>
-                  </div>
-                </div>
-                <hr className="w-full bg-manatee-500"></hr>
-              </div>
             </div>
-            <div
-              id="Summary"
-              className="ml-12 col-start-8 w-full h-full col-span-3 bg-shark-500 items-center"
-            >
-              <div
-                id="Coupon"
-                className="mt-10 m-5 flex bg-tuatara-500 rounded border-2 border-colonialwhite-500"
-              >
+            <div className="ml-12 col-start-8 w-full h-full col-span-3 bg-shark-500 items-center">
+              <div className="mt-10 m-5 flex bg-tuatara-500 rounded border-2 border-colonialwhite-500 ">
                 <h2 className="p-2 text-sm font-basic text-colonialwhite-500">
                   Use Coupon Code or KeyThicc Points
                 </h2>
@@ -215,7 +64,7 @@ const Cart: NextPage = () => {
                   Rp{getTotalPrice().toLocaleString()}
                 </p>
               </div>
-              <div id="discount" className="flex justify-between">
+              <div className="flex justify-between">
                 <p className="m-5 mt-1 text-lg font-light text-manatee-500">
                   Total item discount
                 </p>
@@ -234,10 +83,7 @@ const Cart: NextPage = () => {
                   Rp{getTotalPrice().toLocaleString()}
                 </p>
               </div>
-              <div
-                id="checkout"
-                className="m-4 p-4 bg-yellow-500 flex justify-center items-center"
-              >
+              <div className="m-4 p-4 bg-yellow-500 flex justify-center items-center">
                 <button className="text-center text-lg font-semibold text-black">
                   CHECKOUT
                 </button>
@@ -246,10 +92,7 @@ const Cart: NextPage = () => {
           </div>
         </div>
 
-        <div
-          id="Recommendation"
-          className="max-w-screen-2xl mx-11 px-10 grid grid-cols-12 gap-4 mt-10 items-center"
-        >
+        <div className="max-w-screen-2xl mx-11 px-10 grid grid-cols-12 gap-4 mt-10 items-center">
           <div className="col-start-1 col-span-7 flex items-center justify-between">
             <h1 className="text-2xl font-semibold text-gray-50">
               Recommendation
@@ -262,14 +105,8 @@ const Cart: NextPage = () => {
             </a>
           </div>
 
-          <div
-            id="item"
-            className="col-start-1 w-full h-full col-span-7 flex items-center space-evenly"
-          >
-            <div
-              id="per"
-              className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500"
-            >
+          <div className="col-start-1 w-full h-full col-span-7 flex items-center space-evenly">
+            <div className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500">
               <div className="justify-items-center">
                 <Image className="rounded-lg" src={ketik65} />
               </div>
@@ -325,10 +162,7 @@ const Cart: NextPage = () => {
               <p className="text-xs font-light text-gray-50">Customizable</p>
             </div>
 
-            <div
-              id="per"
-              className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500"
-            >
+            <div className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500">
               <div className="justify-items-center">
                 <Image className="rounded-lg" src={ketik65} />
               </div>
@@ -384,10 +218,7 @@ const Cart: NextPage = () => {
               <p className="text-xs font-light text-gray-50">Customizable</p>
             </div>
 
-            <div
-              id="per"
-              className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500"
-            >
+            <div className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500">
               <div className="justify-items-center">
                 <Image className="rounded-lg" src={ketik65} />
               </div>
@@ -443,10 +274,7 @@ const Cart: NextPage = () => {
               <p className="text-xs font-light text-gray-50">Customizable</p>
             </div>
 
-            <div
-              id="per"
-              className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500"
-            >
+            <div className="w-full h-full m-2 p-4 pb-2 pt-16 ml-0 col-span-1 bg-shark-500">
               <div className="justify-items-center">
                 <Image className="rounded-lg" src={ketik65} />
               </div>
