@@ -113,6 +113,7 @@ const ProductEditMode = ({
       },
       wireless: product.wireless,
       sizes: product.sizes,
+      cases: product.cases,
     },
   });
 
@@ -211,6 +212,21 @@ const ProductEditMode = ({
                     />
                   )}
                 />
+                <span className="text-right text-white">
+                  Available Materials (Cases)
+                </span>
+                <Controller
+                  name="cases"
+                  control={control}
+                  render={({ field }) => (
+                    <MultiTextInput
+                      {...field}
+                      className="w-full col-span-3"
+                      placeholder="Insert Case Materials (separate with comma)"
+                    />
+                  )}
+                />
+                <span className="text-right text-white">Available Colors</span>
               </>
             )}
           </>
