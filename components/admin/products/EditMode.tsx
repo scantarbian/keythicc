@@ -39,30 +39,30 @@ type Inputs = {
   keythiccPoints: number;
   manufacturer: string;
   display: boolean;
-  customizable: boolean;
-  baseKeycaps: {
+  customizable?: boolean;
+  baseKeycaps?: {
     value: string;
     label: string;
   };
-  baseSwitches: {
+  baseSwitches?: {
     value: string;
     label: string;
   };
-  wireless: boolean;
-  sizes: Array<string>;
-  colors: {
+  wireless?: boolean;
+  sizes?: Array<string>;
+  colors?: {
     value: string;
     label: string;
   };
-  cases: {
+  cases?: {
     value: string;
     label: string;
   };
-  material: KeycapMaterial;
-  switchType: SwitchType;
-  optical: boolean;
-  actuationDistance: number;
-  actuationForce: number;
+  material?: KeycapMaterial;
+  switchType?: SwitchType;
+  optical?: boolean;
+  actuationDistance?: number;
+  actuationForce?: number;
 };
 
 const ProductEditMode = ({
@@ -85,6 +85,8 @@ const ProductEditMode = ({
       basePrice: product.basePrice,
       stock: product.stock,
       footnotes: product.footnote,
+      keythiccPoints: product.keythiccPoints,
+      manufacturer: product.manufacturer,
       type: {
         value: product.type._id,
         label: product.type.name,
@@ -95,6 +97,8 @@ const ProductEditMode = ({
           (category) => category._id === String(product.category)
         )?.name,
       },
+      display: product.display,
+      customizable: product.customizable,
     },
   });
 
@@ -110,7 +114,10 @@ const ProductEditMode = ({
         description: data.description,
         basePrice: data.basePrice,
         stock: data.stock,
+        keythiccPoints: data.keythiccPoints,
+        manufacturer: data.manufacturer,
         footnotes: data.footnotes,
+        display: data.display,
         type: data.type?.value,
         category: data.category?.value,
       }),
@@ -120,6 +127,25 @@ const ProductEditMode = ({
         router.reload();
       }
     });
+  };
+
+  // switch based on types
+  const typeRelativeFields = () => {
+    switch (product.type.name.toLowerCase()) {
+      case "keyboard":
+        return (
+          <>
+            <span className="text-right text-white">Customizable</span>
+            <input
+              type="checkbox"
+              className="col-span-3"
+              {...register("customizable")}
+            />
+          </>
+        );
+      default:
+        return <></>;
+    }
   };
 
   return (
@@ -186,6 +212,20 @@ const ProductEditMode = ({
         {...register("stock")}
         placeholder="Product stock"
       />
+      <span className="text-right text-white">KeyThicc Points</span>
+      <input
+        type="number"
+        className="w-full col-span-3"
+        {...register("keythiccPoints")}
+        placeholder="KeyThicc Points"
+      />
+      <span className="text-right text-white">Manufacturer</span>
+      <input
+        type="text"
+        className="col-span-3"
+        {...register("manufacturer")}
+        placeholder="Product manufacturer"
+      />
       <span className="text-right text-white">Footnotes</span>
       <input
         type="text"
@@ -193,6 +233,9 @@ const ProductEditMode = ({
         {...register("footnotes")}
         placeholder="Footnotes"
       />
+      <span className="text-right text-white">Display</span>
+      <input type="checkbox" className="col-span-3" {...register("display")} />
+      {typeRelativeFields()}
       <button
         type="submit"
         className="px-4 py-2 mb-4 border-b-2 col-start-4 border-white hover:border-orange-400 hover:text-orange-400 text-white"
