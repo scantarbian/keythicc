@@ -77,8 +77,9 @@ export class Product extends TimeStamps {
   @prop({ ref: () => Color, autopopulate: true })
   public colors?: Ref<Color>[];
 
-  @prop({ ref: () => Product, autopopulate: true })
-  public cases?: Ref<Product>[];
+  // cases act as material but for keyboards
+  @prop({ type: Array })
+  public cases?: mongoose.Types.Array<string>;
 
   // these are only applicable if the type is "Keycaps"
   @prop({ type: String, enum: KeycapMaterial })

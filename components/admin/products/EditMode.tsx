@@ -5,6 +5,7 @@ import { Image as Img } from "models/Image";
 import { NextRouter } from "next/router";
 // components
 import Select from "react-select";
+import { MultiTextInput } from "./CustomFields";
 // hooks
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
@@ -58,10 +59,7 @@ type Inputs = {
     value: string;
     label: string;
   };
-  cases?: {
-    value: string;
-    label: string;
-  };
+  cases?: Array<string>;
   material?: KeycapMaterial;
   switchType?: SwitchType;
   optical?: boolean;
@@ -113,34 +111,40 @@ const ProductEditMode = ({
         value: product.baseSwitches?._id,
         label: product.baseSwitches?.name,
       },
+      wireless: product.wireless,
+      sizes: product.sizes,
     },
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    fetch("/api/product", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: product._id,
-        name: data.name,
-        description: data.description,
-        basePrice: data.basePrice,
-        stock: data.stock,
-        keythiccPoints: data.keythiccPoints,
-        manufacturer: data.manufacturer,
-        footnotes: data.footnotes,
-        display: data.display,
-        type: data.type?.value,
-        category: data.category?.value,
-      }),
-    }).then((res) => {
-      if (res.status === 200) {
-        setEditMode(false);
-        router.reload();
-      }
-    });
+    console.log(data);
+    // fetch("/api/product", {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     id: product._id,
+    //     name: data.name,
+    //     description: data.description,
+    //     basePrice: data.basePrice,
+    //     stock: data.stock,
+    //     keythiccPoints: data.keythiccPoints,
+    //     manufacturer: data.manufacturer,
+    //     footnotes: data.footnotes,
+    //     display: data.display,
+    //     type: data.type?.value,
+    //     category: data.category?.value,
+    //     baseKeycaps: data.baseKeycaps?.value,
+    //     baseSwitches: data.baseSwitches?.value,
+    //     customizable: data.customizable,
+    //   }),
+    // }).then((res) => {
+    //   if (res.status === 200) {
+    //     setEditMode(false);
+    //     router.reload();
+    //   }
+    // });
   };
 
   // switch based on types
@@ -154,6 +158,12 @@ const ProductEditMode = ({
               type="checkbox"
               className="col-span-3"
               {...register("customizable")}
+            />
+            <span className="text-right text-white">Wireless</span>
+            <input
+              type="checkbox"
+              className="col-span-3"
+              {...register("wireless")}
             />
             {baseKeycaps && baseSwitches && (
               <>
@@ -186,6 +196,18 @@ const ProductEditMode = ({
                       }))}
                       placeholder="Select Base Switch"
                       className="w-full col-span-3"
+                    />
+                  )}
+                />
+                <span className="text-right text-white">Available Sizes</span>
+                <Controller
+                  name="sizes"
+                  control={control}
+                  render={({ field }) => (
+                    <MultiTextInput
+                      {...field}
+                      className="w-full col-span-3"
+                      placeholder="Insert Sizes (separate with comma)"
                     />
                   )}
                 />
