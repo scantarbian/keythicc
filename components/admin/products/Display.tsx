@@ -14,6 +14,8 @@ const ProductDisplay = ({
   editMode,
   setEditMode,
   router,
+  baseKeycaps,
+  baseSwitches,
 }: {
   product: Product & {
     _id: string;
@@ -21,9 +23,13 @@ const ProductDisplay = ({
     type: Type & {
       _id: string;
     };
+    baseKeycaps?: Product & { _id: string };
+    baseSwitches?: Product & { _id: string };
   };
   types: [Type & { _id: string }];
   categories: [Category & { _id: string }];
+  baseKeycaps?: Array<Product & { _id: string }>;
+  baseSwitches?: Array<Product & { _id: string }>;
   editMode: boolean;
   setEditMode: (editMode: boolean) => void;
   router: NextRouter;
@@ -74,6 +80,8 @@ const ProductDisplay = ({
             categories={categories}
             setEditMode={setEditMode}
             router={router}
+            baseKeycaps={baseKeycaps}
+            baseSwitches={baseSwitches}
           />
         ) : (
           <>

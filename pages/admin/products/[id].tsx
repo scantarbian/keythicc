@@ -34,6 +34,8 @@ const ProductsDetailAdminView: NextPage = ({
     product,
     types,
     categories,
+    baseKeycaps,
+    baseSwitches,
   }: {
     product: Product & {
       _id: string;
@@ -41,9 +43,13 @@ const ProductsDetailAdminView: NextPage = ({
       type: Type & {
         _id: string;
       };
+      baseKeycaps: Product & { _id: string };
+      baseSwitches: Product & { _id: string };
     };
     types: [Type & { _id: string }];
     categories: [Category & { _id: string }];
+    baseKeycaps: Array<Product & { _id: string }>;
+    baseSwitches: Array<Product & { _id: string }>;
   } = JSON.parse(data);
 
   return (
@@ -74,6 +80,8 @@ const ProductsDetailAdminView: NextPage = ({
             product={product}
             categories={categories}
             types={types}
+            baseKeycaps={baseKeycaps}
+            baseSwitches={baseSwitches}
             editMode={editMode}
             setEditMode={setEditMode}
             router={router}
@@ -90,9 +98,34 @@ const ProductsDetailAdminView: NextPage = ({
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   await dbConnect();
 
-  const product = await ProductModel.findById(query.id);
+  let product = null;
+
+  try {
+    product = await ProductModel.findById(query.id);
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+
   const types = await TypeModel.find();
   const categories = await CategoryModel.find();
+  let baseKeycaps = null;
+  let baseSwitches = null;
+
+  // find supporting items
+  if ("name" in product.type! && product.type.name === "Keyboard") {
+    baseKeycaps = await ProductModel.find({
+      type: types.find((type) => type.name === "Keycaps")?._id,
+    });
+    baseSwitches = await ProductModel.find({
+      type: types.find((type) => type.name === "Switches")?._id,
+    });
+  }
 
   return {
     props: {
@@ -100,6 +133,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         product,
         types,
         categories,
+        baseKeycaps,
+        baseSwitches,
       }),
     },
   };

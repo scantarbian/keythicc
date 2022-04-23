@@ -15,11 +15,15 @@ type Props = {
     type: Type & {
       _id: string;
     };
+    baseKeycaps?: Product & { _id: string };
+    baseSwitches?: Product & { _id: string };
   };
   types: [Type & { _id: string }];
   categories: [Category & { _id: string }];
   setEditMode: (editMode: boolean) => void;
   router: NextRouter;
+  baseKeycaps?: Array<Product & { _id: string }>;
+  baseSwitches?: Array<Product & { _id: string }>;
 };
 
 type Inputs = {
@@ -71,6 +75,8 @@ const ProductEditMode = ({
   categories,
   setEditMode,
   router,
+  baseKeycaps,
+  baseSwitches,
 }: Props) => {
   const {
     register,
@@ -99,6 +105,14 @@ const ProductEditMode = ({
       },
       display: product.display,
       customizable: product.customizable,
+      baseKeycaps: {
+        value: product.baseKeycaps?._id,
+        label: product.baseKeycaps?.name,
+      },
+      baseSwitches: {
+        value: product.baseSwitches?._id,
+        label: product.baseSwitches?.name,
+      },
     },
   });
 
@@ -141,6 +155,42 @@ const ProductEditMode = ({
               className="col-span-3"
               {...register("customizable")}
             />
+            {baseKeycaps && baseSwitches && (
+              <>
+                <span className="text-right text-white">Base Keycaps</span>
+                <Controller
+                  name="baseKeycaps"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      options={baseKeycaps.map((keycap) => ({
+                        value: keycap._id,
+                        label: keycap.name,
+                      }))}
+                      placeholder="Select Base Keycap"
+                      className="w-full col-span-3"
+                    />
+                  )}
+                />
+                <span className="text-right text-white">Base Switches</span>
+                <Controller
+                  name="baseSwitches"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      options={baseSwitches.map((switches) => ({
+                        value: switches._id,
+                        label: switches.name,
+                      }))}
+                      placeholder="Select Base Switch"
+                      className="w-full col-span-3"
+                    />
+                  )}
+                />
+              </>
+            )}
           </>
         );
       default:
