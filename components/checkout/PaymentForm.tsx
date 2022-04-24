@@ -23,7 +23,8 @@ const SHIPPING_OPTIONS = [
 ];
 
 const PaymentForm = ({ className }: Prop) => {
-  const { setPhase, shipper, shipping, setCarrier } = useContext(CartContext);
+  const { setPhase, shipper, shipping, setCarrier, carrier } =
+    useContext(CartContext);
 
   return (
     <div className={`${className} text-white`}>
@@ -56,9 +57,14 @@ const PaymentForm = ({ className }: Prop) => {
             <span className="flex-1">
               <Select
                 options={SHIPPING_OPTIONS}
-                onChange={(value) => 
-                  setCarrier(value!.value)
+                value={
+                  carrier > 0
+                    ? SHIPPING_OPTIONS.find(
+                        (option) => option.value === carrier
+                      )
+                    : undefined
                 }
+                onChange={(value) => setCarrier(value!.value)}
                 placeholder="Select Shipping Method"
                 className="w-full"
                 styles={{
