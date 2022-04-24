@@ -44,7 +44,7 @@ const Cart: NextPage = () => {
                 <CartItem key={index} item={item} />
               ))}
             </div>
-            <PriceInfo className="col-start-8 col-span-3" />
+            <PriceInfo className="col-start-8 col-span-3 p-8 " />
           </div>
         </div>
       </main>

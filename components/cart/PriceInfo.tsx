@@ -7,14 +7,15 @@ import Link from "next/link";
 
 type Props = {
   className?: string;
+  displayOnly?: boolean;
 };
 
-const PriceInfo = ({ className }: Props) => {
+const PriceInfo = ({ className, displayOnly = false }: Props) => {
   const { contents, getTotalPrice, getTotalQuantity } = useContext(CartContext);
 
   return (
     <div
-      className={`gap-4 flex flex-col p-8 w-full bg-shark-500 self-start ${className}`}
+      className={`gap-4 flex flex-col w-full bg-shark-500 self-start ${className}`}
     >
       <div className="flex bg-tuatara-500 rounded border-2 border-colonialwhite-500 ">
         <h2 className="p-2 text-sm font-basic text-colonialwhite-500">
@@ -22,7 +23,9 @@ const PriceInfo = ({ className }: Props) => {
         </h2>
         <Image className="m-10" src={Arrow} />
       </div>
-      <h2 className=" text-2xl font-semibold text-gray-50">Summary</h2>
+      {!displayOnly && (
+        <h2 className=" text-2xl font-semibold text-gray-50">Summary</h2>
+      )}
       <div className="flex justify-between">
         <p className=" text-lg font-light text-gray-50">
           item price ({getTotalQuantity()} items)
@@ -46,18 +49,20 @@ const PriceInfo = ({ className }: Props) => {
           Rp{getTotalPrice().toLocaleString()}
         </p>
       </div>
-      <Link href="/cart/checkout">
-        <button
-          className={`text-center text-lg font-semibold text-black w-full p-4  ${
-            contents.length === 0
-              ? "opacity-50 cursor-not-allowed bg-gray-500"
-              : "bg-yellow-500 "
-          }`}
-          disabled={contents.length === 0}
-        >
-          CHECKOUT
-        </button>
-      </Link>
+      {!displayOnly && (
+        <Link href="/cart/checkout">
+          <button
+            className={`text-center text-lg font-semibold text-black w-full p-4  ${
+              contents.length === 0
+                ? "opacity-50 cursor-not-allowed bg-gray-500"
+                : "bg-yellow-500 "
+            }`}
+            disabled={contents.length === 0}
+          >
+            CHECKOUT
+          </button>
+        </Link>
+      )}
     </div>
   );
 };

@@ -24,7 +24,7 @@ type Inputs = {
 };
 
 const ShippingForm = ({ className }: ShippingFormProps) => {
-  const { contents } = useContext(CartContext);
+  const { setPhase } = useContext(CartContext);
 
   const {
     register,
@@ -36,6 +36,7 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
+    setPhase("payment");
   };
 
   return (

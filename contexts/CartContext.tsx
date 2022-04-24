@@ -14,6 +14,8 @@ type StateProps = {
         selected: boolean;
       }>
     | [];
+  phase: "information" | "payment";
+  setPhase: (phase: "information" | "payment") => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
@@ -26,6 +28,8 @@ type StateProps = {
 
 const initState: StateProps = {
   contents: [],
+  phase: "information",
+  setPhase: () => {},
   addContent: (product: (Product | Builder) & { _id: string }) => {},
   addQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
@@ -40,6 +44,7 @@ export const CartContext = createContext(initState);
 
 const CartProvider = ({ children }: CartProps) => {
   const [contents, setContents] = useState<StateProps["contents"]>([]);
+  const [phase, setPhase] = useState<StateProps["phase"]>("information");
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
@@ -160,6 +165,8 @@ const CartProvider = ({ children }: CartProps) => {
         getTotalQuantity,
         toggleSelect,
         toggleSelectAll,
+        phase,
+        setPhase,
       }}
     >
       {children}
