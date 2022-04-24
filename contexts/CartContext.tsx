@@ -11,12 +11,15 @@ type StateProps = {
     | Array<{
         product: (Product | Builder) & { _id: string };
         quantity: number;
+        selected: boolean;
       }>
     | [];
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeContent: (product: (Product | Builder) & { _id: string }) => void;
+  toggleSelect: (product: (Product | Builder) & { _id: string }) => void;
+  toggleSelectAll: () => void;
   getTotalPrice: () => number;
   getTotalQuantity: () => number;
 };
@@ -27,6 +30,8 @@ const initState: StateProps = {
   addQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeContent: (product: (Product | Builder) & { _id: string }) => {},
+  toggleSelect: (product: (Product | Builder) & { _id: string }) => {},
+  toggleSelectAll: () => {},
   getTotalPrice: () => 0,
   getTotalQuantity: () => 0,
 };
@@ -45,6 +50,7 @@ const CartProvider = ({ children }: CartProps) => {
             ? {
                 product,
                 quantity: content.quantity + 1,
+                selected: content.selected,
               }
             : content
         )
@@ -55,6 +61,7 @@ const CartProvider = ({ children }: CartProps) => {
         {
           product,
           quantity: 1,
+          selected: false,
         },
       ]);
     }
@@ -64,7 +71,11 @@ const CartProvider = ({ children }: CartProps) => {
     setContents(
       contents.map((content) =>
         content.product._id === product._id
-          ? { product, quantity: content.quantity + 1 }
+          ? {
+              product,
+              quantity: content.quantity + 1,
+              selected: content.selected,
+            }
           : content
       )
     );
@@ -74,7 +85,11 @@ const CartProvider = ({ children }: CartProps) => {
     setContents(
       contents.map((content) =>
         content.product._id === product._id
-          ? { product, quantity: content.quantity - 1 }
+          ? {
+              product,
+              quantity: content.quantity - 1,
+              selected: content.selected,
+            }
           : content
       )
     );
@@ -113,6 +128,26 @@ const CartProvider = ({ children }: CartProps) => {
     return accumulator;
   };
 
+  const toggleSelect = (product: (Product | Builder) & { _id: string }) => {
+    setContents(
+      contents.map((content) =>
+        content.product._id === product._id
+          ? { product, quantity: content.quantity, selected: !content.selected }
+          : content
+      )
+    );
+  };
+
+  const toggleSelectAll = () => {
+    setContents(
+      contents.map((content) => ({
+        product: content.product,
+        quantity: content.quantity,
+        selected: !contents.every((content) => content.selected),
+      }))
+    );
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -123,6 +158,8 @@ const CartProvider = ({ children }: CartProps) => {
         removeQuantity,
         getTotalPrice,
         getTotalQuantity,
+        toggleSelect,
+        toggleSelectAll,
       }}
     >
       {children}

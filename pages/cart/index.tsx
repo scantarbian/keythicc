@@ -15,7 +15,8 @@ import Arrow from "public/images/Arrow.png";
 import CartItem from "components/cart/CartItem";
 
 const Cart: NextPage = () => {
-  const { contents, getTotalPrice, getTotalQuantity } = useContext(CartContext);
+  const { contents, getTotalPrice, getTotalQuantity, toggleSelectAll } =
+    useContext(CartContext);
 
   return (
     <>
@@ -33,12 +34,13 @@ const Cart: NextPage = () => {
               My Cart
             </h1>
 
-            <div className="col-start-1 w-full col-span-7 bg-shark-500 self-start ">
+            <div className="col-start-1 w-full col-span-7 bg-shark-500 self-start divide-y-2">
               <label className="font-semibold text-gray-50">
                 <input
                   className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 checked:text-yellow-500 rounded-sm"
                   type="checkbox"
-                  value=""
+                  checked={contents.every((item) => item.selected)}
+                  onChange={() => toggleSelectAll()}
                 />
                 Select All
               </label>

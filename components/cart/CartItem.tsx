@@ -12,12 +12,12 @@ type Prop = {
   item: {
     product: (Product | Builder) & { _id: string };
     quantity: number;
+    selected: boolean;
   };
-  selected?: Boolean;
 };
 
-const CartItem = ({ item, selected }: Prop) => {
-  const { addQuantity, removeQuantity, removeContent } =
+const CartItem = ({ item }: Prop) => {
+  const { addQuantity, removeQuantity, removeContent, toggleSelect } =
     useContext(CartContext);
 
   return (
@@ -26,16 +26,12 @@ const CartItem = ({ item, selected }: Prop) => {
         <input
           className="form-check-input ml-3 m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-orange-500 rounded-sm"
           type="checkbox"
-          value=""
+          checked={item.selected}
+          onChange={() => toggleSelect(item.product)}
         />
       </div>
       <div id="product-image" className="ml-2 my-3 mx-6">
-        <Image
-          className="rounded-lg"
-          src={
-            ALTimage
-          }
-        />
+        <Image className="rounded-lg" src={ALTimage} />
       </div>
       <div id="product-details" className="ml-2 my-3 mx-6">
         <div id="product-name">
@@ -88,9 +84,11 @@ const CartItem = ({ item, selected }: Prop) => {
         </button>
         <p className="mt-5 text-lg font-basic text-gray-50">
           Rp
-          {/* prettier-ignore */
-          // @ts-expect-error
-          (item.product.basePrice || item.product.totalPrice) * item.quantity.toLocaleString()}
+          {
+            /* prettier-ignore */
+            // @ts-expect-error
+            (item.product.basePrice || item.product.totalPrice) * item.quantity.toLocaleString()
+          }
         </p>
       </div>
     </div>
