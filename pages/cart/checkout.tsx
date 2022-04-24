@@ -10,7 +10,7 @@ import ItemList from "components/checkout/ItemList";
 
 const Checkout: NextPage = () => {
   const router = useRouter();
-  const { phase, setPhase } = useContext(CartContext);
+  const { phase, setPhase, carrier } = useContext(CartContext);
 
   const phaseSwitch = () => {
     switch (phase) {
@@ -35,13 +35,13 @@ const Checkout: NextPage = () => {
           <span className="font-bold text-4xl ">KeyThicc</span>
           <div className="flex divide-x-2 font-bold">
             <span
-              className="hover:cursor-pointer px-2 hover:text-orange-400"
+              className="cursor-pointer px-2 hover:text-orange-400"
               onClick={() => router.back()}
             >
               {"<"}
             </span>
             <span
-              className={`hover:cursor-pointer px-2 hover:text-orange-400 ${
+              className={`cursor-pointer px-2 hover:text-orange-400 ${
                 phase === "information" ? "text-orange-400" : ""
               }`}
               onClick={() => setPhase("information")}
@@ -50,8 +50,13 @@ const Checkout: NextPage = () => {
             </span>
             <span
               className={`px-2 ${
-                phase === "payment" ? "text-orange-400" : "text-gray-500"
+                carrier > 0
+                  ? phase === "payment"
+                    ? "text-orange-400 cursor-pointer"
+                    : "text-white cursor-pointer "
+                  : "text-gray-500"
               }`}
+              onClick={() => carrier > 0 && setPhase("payment")}
             >
               {"Ship & Pay"}
             </span>
