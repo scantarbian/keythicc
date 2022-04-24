@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 // components
 import ShippingForm from "components/checkout/ShippingForm";
+import ItemList from "components/checkout/ItemList";
 
 const Checkout: NextPage = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ const Checkout: NextPage = () => {
         </div>
         <span className="bg-special-grey pt-8 pr-8" />
         <ShippingForm className="p-8" />
+        <ItemList className="p-8 bg-special-grey" />
       </main>
     </>
   );

@@ -14,75 +14,80 @@ type Prop = {
     quantity: number;
     selected: boolean;
   };
+  displayOnly?: boolean;
+  className?: string;
 };
 
-const CartItem = ({ item }: Prop) => {
+const CartItem = ({ item, displayOnly = false, className }: Prop) => {
   const { addQuantity, removeQuantity, removeContent, toggleSelect } =
     useContext(CartContext);
 
   return (
-    <div className="flex">
-      <div id="product-checkbox" className="m-4">
+    <div className={`flex items-center p-4 gap-x-4 ${className}`}>
+      {!displayOnly && (
         <input
-          className="form-check-input ml-3 m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-orange-500 rounded-sm"
+          className="form-check-input m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-orange-500 rounded-sm"
           type="checkbox"
           checked={item.selected}
           onChange={() => toggleSelect(item.product)}
         />
+      )}
+
+      <Image className="rounded-lg" src={ALTimage} />
+
+      <div className="flex-1">
+        <p className="font-semibold text-gray-50">
+          {
+            // @ts-expect-error
+            item.product.name || `${item.product.baseKeyboard.name} (Builder)`
+          }
+        </p>
+
+        <p className="text-xs font-basic text-manatee-500">
+          Space Gray / Barebone
+        </p>
+
+        {displayOnly ? (
+          <span className="text-white">{`${item.quantity} ${
+            item.quantity > 1 ? "items" : "item"
+          }`}</span>
+        ) : (
+          <div className="mt-2 border-2 w-20 flex border-gray-50 justify-around items-center">
+            <button
+              className="rounded-lg flex items-center p-2"
+              disabled={item.quantity === 1}
+              onClick={() => {
+                removeQuantity(item.product);
+              }}
+            >
+              <Image src={minus} />
+            </button>
+            <p className="text-sm font-semibold text-gray-50 text-center">
+              {item.quantity}
+            </p>
+            <button
+              className="rounded-lg flex items-center p-2"
+              onClick={() => {
+                addQuantity(item.product);
+              }}
+            >
+              <Image className="rounded-lg" src={plus} />
+            </button>
+          </div>
+        )}
       </div>
-      <div id="product-image" className="ml-2 my-3 mx-6">
-        <Image className="rounded-lg" src={ALTimage} />
-      </div>
-      <div id="product-details" className="ml-2 my-3 mx-6">
-        <div id="product-name">
-          <p className="font-semibold text-gray-50">
-            {
-              // @ts-expect-error
-              item.product.name || `${item.product.baseKeyboard.name} (Builder)`
-            }
-          </p>
-        </div>
-        <div id="product-desc">
-          <p className="text-xs font-basic text-manatee-500">
-            Space Gray / Barebone
-          </p>
-        </div>
-        <div
-          id="product-quantity"
-          className="mt-2 border-2 w-3/5 flex border-gray-50 justify-around items-center"
-        >
+      <div className="flex flex-col justify-between items-end">
+        {!displayOnly && (
           <button
-            className="rounded-lg flex items-center p-2"
-            disabled={item.quantity === 1}
             onClick={() => {
-              removeQuantity(item.product);
+              removeContent(item.product);
             }}
+            className="underline font-semibold text-yellow-500"
           >
-            <Image src={minus} />
+            Remove
           </button>
-          <p className="text-sm font-semibold text-gray-50 text-center">
-            {item.quantity}
-          </p>
-          <button
-            className="rounded-lg flex items-center p-2"
-            onClick={() => {
-              addQuantity(item.product);
-            }}
-          >
-            <Image className="rounded-lg" src={plus} />
-          </button>
-        </div>
-      </div>
-      <div id="product-removenprice" className="ml-96 my-3 mx-6">
-        <button
-          onClick={() => {
-            removeContent(item.product);
-          }}
-          className="underline font-semibold text-yellow-500"
-        >
-          Remove
-        </button>
-        <p className="mt-5 text-lg font-basic text-gray-50">
+        )}
+        <p className="text-lg font-basic text-gray-50">
           Rp
           {
             /* prettier-ignore */

@@ -116,12 +116,23 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
             placeholder="Address"
           />
           <input
+            type="text"
+            {...register("postalcode")}
+            className="bg-black border-white rounded-md"
+            placeholder="Postal code"
+          />
+          <input
             type="tel"
             {...register("phonenumber")}
             className="bg-black border-white rounded-md"
             placeholder="Phone number"
           />
         </div>
+        <button
+          className={`text-center text-lg font-semibold text-black w-full p-4 bg-yellow-500`}
+        >
+          SHIP & PAY
+        </button>
       </form>
     </div>
   );
