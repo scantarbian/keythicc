@@ -19,6 +19,8 @@ type StateProps = {
   phase: "information" | "payment";
   shipper: Account;
   shipping: Shipping;
+  carrier: number;
+  setCarrier: (carrier: number) => void;
   setPhase: (phase: "information" | "payment") => void;
   setShipper: (shipper: Account) => void;
   setShipping: (shipping: Shipping) => void;
@@ -37,6 +39,8 @@ const initState: StateProps = {
   phase: "information",
   shipper: {} as Account,
   shipping: {} as Shipping,
+  carrier: 0,
+  setCarrier: () => {},
   setPhase: () => {},
   setShipper: () => {},
   setShipping: () => {},
@@ -59,6 +63,7 @@ const CartProvider = ({ children }: CartProps) => {
   const [shipping, setShipping] = useState<StateProps["shipping"]>(
     {} as Shipping
   );
+  const [carrier, setCarrier] = useState<StateProps["carrier"]>(0);
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
@@ -134,7 +139,7 @@ const CartProvider = ({ children }: CartProps) => {
       }
     });
 
-    return accumulator;
+    return accumulator + carrier;
   };
 
   const getTotalQuantity = () => {
@@ -185,6 +190,8 @@ const CartProvider = ({ children }: CartProps) => {
         setShipper,
         shipping,
         setShipping,
+        carrier,
+        setCarrier,
       }}
     >
       {children}

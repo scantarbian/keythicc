@@ -2,6 +2,7 @@ import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Billing } from "./Billing";
 import { Shipping } from "./Shipping";
+import { Order } from "./Order";
 import { Cart } from "./Cart";
 export class Account extends TimeStamps {
   @prop({ type: String })
@@ -35,6 +36,9 @@ export class Account extends TimeStamps {
 
   @prop({ type: Number, default: 0 })
   public keythiccPoints?: number;
+
+  // @prop({ ref: () => Order, type: Array })
+  // public orders?: Ref<Order>[];
 
   // @prop({ ref: () => Cart })
   // public cart?: Ref<Cart>;

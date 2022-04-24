@@ -14,6 +14,21 @@ export class Order extends TimeStamps {
 
   @prop({ ref: () => Builder, autopopulate: true, type: Array })
   public builderItems?: Ref<Builder>[];
+
+  @prop({ ref: () => Billing, autopopulate: true })
+  public billing?: Ref<Billing>;
+
+  @prop({ ref: () => Shipping, autopopulate: true })
+  public shipping?: Ref<Shipping>;
+
+  @prop({ type: Number, default: 0 })
+  public keythiccPoints?: number;
+
+  @prop({ type: Number, default: 0 })
+  public shippingPrice?: number;
+
+  @prop({ type: Number, default: 0 })
+  public totalPrice?: number;
 }
 
 export default getModelForClass(Order);
