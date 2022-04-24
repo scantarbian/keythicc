@@ -8,7 +8,7 @@ export class Account extends TimeStamps {
   public email!: string;
 
   @prop({ type: String })
-  public password!: string;
+  public password?: string;
 
   @prop({ type: String })
   public fullname!: string;
