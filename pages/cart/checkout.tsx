@@ -5,11 +5,23 @@ import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 // components
 import ShippingForm from "components/checkout/ShippingForm";
+import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
 
 const Checkout: NextPage = () => {
   const router = useRouter();
   const { phase, setPhase } = useContext(CartContext);
+
+  const phaseSwitch = () => {
+    switch (phase) {
+      case "information":
+        return <ShippingForm className="p-16" />;
+      case "payment":
+        return <PaymentForm className="p-16" />;
+      default:
+        return <></>;
+    }
+  };
 
   return (
     <>
@@ -46,7 +58,7 @@ const Checkout: NextPage = () => {
           </div>
         </div>
         <span className="bg-special-grey pt-16 pr-16" />
-        <ShippingForm className="p-16 " />
+        {phaseSwitch()}
         <ItemList className="p-16 bg-special-grey" />
       </main>
     </>

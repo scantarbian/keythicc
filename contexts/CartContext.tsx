@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useState } from "react";
 import { Product } from "models/Product";
 import { Builder } from "models/Builder";
+import { Shipping } from "models/Shipping";
+import { Account } from "models/Account";
 
 type CartProps = {
   children: ReactNode;
@@ -15,7 +17,11 @@ type StateProps = {
       }>
     | [];
   phase: "information" | "payment";
+  shipper: Account;
+  shipping: Shipping;
   setPhase: (phase: "information" | "payment") => void;
+  setShipper: (shipper: Account) => void;
+  setShipping: (shipping: Shipping) => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
@@ -29,7 +35,11 @@ type StateProps = {
 const initState: StateProps = {
   contents: [],
   phase: "information",
+  shipper: {} as Account,
+  shipping: {} as Shipping,
   setPhase: () => {},
+  setShipper: () => {},
+  setShipping: () => {},
   addContent: (product: (Product | Builder) & { _id: string }) => {},
   addQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
@@ -45,6 +55,10 @@ export const CartContext = createContext(initState);
 const CartProvider = ({ children }: CartProps) => {
   const [contents, setContents] = useState<StateProps["contents"]>([]);
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
+  const [shipper, setShipper] = useState<StateProps["shipper"]>({} as Account);
+  const [shipping, setShipping] = useState<StateProps["shipping"]>(
+    {} as Shipping
+  );
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
@@ -167,6 +181,10 @@ const CartProvider = ({ children }: CartProps) => {
         toggleSelectAll,
         phase,
         setPhase,
+        shipper,
+        setShipper,
+        shipping,
+        setShipping,
       }}
     >
       {children}

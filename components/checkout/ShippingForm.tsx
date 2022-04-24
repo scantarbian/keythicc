@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useSession } from "next-auth/react";
 // components
 import Select from "react-select";
 // country data
@@ -11,7 +12,7 @@ type ShippingFormProps = {
 };
 
 type Inputs = {
-  email?: string;
+  email: string;
   fullname: string;
   company: string;
   country: {
@@ -24,7 +25,14 @@ type Inputs = {
 };
 
 const ShippingForm = ({ className }: ShippingFormProps) => {
-  const { setPhase } = useContext(CartContext);
+  const { setPhase, setShipper, shipper, shipping, setShipping } =
+    useContext(CartContext);
+
+  const { data: session, status } = useSession();
+
+  if (status === "authenticated") {
+    setShipper(session.user);
+  }
 
   const {
     register,
@@ -32,10 +40,38 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: {
+      email: shipper?.email || session?.user?.email,
+      fullname: shipping?.fullname || session?.user?.fullname,
+      company: shipping?.company,
+      country: {
+        value: shipping?.country,
+        label: countries.find((country) => country.code === shipping?.country)
+          ?.name,
+      },
+      address: shipping?.address,
+      postalcode: shipping?.postalcode,
+      phonenumber: shipping?.phonenumber,
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    if (!shipper.email) {
+      setShipper({
+        email: data.email,
+      });
+    }
+
+    setShipping({
+      fullname: data.fullname,
+      company: data.company,
+      country: data.country.value,
+      address: data.address,
+      postalcode: data.postalcode,
+      phonenumber: data.phonenumber,
+    });
+
     setPhase("payment");
   };
 
@@ -49,7 +85,10 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
           <span className="text-2xl font-bold mb-6">Contact Information</span>
           <input
             type="text"
-            {...register("email")}
+            {...register("email", {
+              required: true,
+              pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            })}
             className="bg-black border-white rounded-md"
             placeholder="Email"
           />
@@ -101,7 +140,9 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
           />
           <input
             type="text"
-            {...register("fullname")}
+            {...register("fullname", {
+              required: true,
+            })}
             className="bg-black border-white rounded-md"
             placeholder="Full name"
           />
@@ -112,19 +153,25 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
             placeholder="Company (optional)"
           />
           <textarea
-            {...register("company")}
+            {...register("address", {
+              required: true,
+            })}
             className="bg-black border-white rounded-md h-28 resize-none"
             placeholder="Address"
           />
           <input
             type="text"
-            {...register("postalcode")}
+            {...register("postalcode", {
+              required: true,
+            })}
             className="bg-black border-white rounded-md"
             placeholder="Postal code"
           />
           <input
             type="tel"
-            {...register("phonenumber")}
+            {...register("phonenumber", {
+              required: true,
+            })}
             className="bg-black border-white rounded-md"
             placeholder="Phone number"
           />

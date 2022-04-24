@@ -11,10 +11,10 @@ export class Account extends TimeStamps {
   public password?: string;
 
   @prop({ type: String })
-  public fullname!: string;
+  public fullname?: string;
 
   @prop({ type: Boolean, default: false })
-  public verified!: boolean;
+  public verified?: boolean;
 
   @prop({ type: String })
   public googleId?: string;
@@ -23,16 +23,18 @@ export class Account extends TimeStamps {
   public image?: string;
 
   @prop({ type: Boolean, default: false })
-  public administrator!: boolean;
+  public administrator?: boolean;
 
-  @prop({ ref: () => Billing, type: () => Array })
+  // stores credit card data
+  @prop({ ref: () => Billing, type: Array })
   public billing?: Ref<Billing>[];
 
-  @prop({ ref: () => Shipping, type: () => Array })
+  // stores user address
+  @prop({ ref: () => Shipping, type: Array })
   public shipping?: Ref<Shipping>[];
 
   @prop({ type: Number, default: 0 })
-  public keythiccPoints!: number;
+  public keythiccPoints?: number;
 
   // @prop({ ref: () => Cart })
   // public cart?: Ref<Cart>;
