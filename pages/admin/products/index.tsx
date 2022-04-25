@@ -16,7 +16,7 @@ import ProductModel, { Product } from "models/Product";
 import TypeMode, { Type } from "models/Type";
 import CategoryModel, { Category } from "models/Category";
 
-const ProductsHome: NextPage = ({
+const ProductsAdmin: NextPage = ({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -83,4 +83,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default ProductsHome;
+export default ProductsAdmin;

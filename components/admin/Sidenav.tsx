@@ -37,6 +37,11 @@ const menuItems = [
       </svg>
     ),
   },
+  {
+    title: "Users",
+    href: "/admin/users",
+    icon: <></>,
+  },
 ];
 
 const Sidenav = ({
