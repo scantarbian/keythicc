@@ -11,8 +11,13 @@ type Props = {
 };
 
 const PriceInfo = ({ className, displayOnly = false }: Props) => {
-  const { contents, getTotalPrice, getTotalQuantity, carrier } =
-    useContext(CartContext);
+  const {
+    contents,
+    getTotalPrice,
+    getTotalQuantity,
+    getTotalPriceWithShipping,
+    carrier,
+  } = useContext(CartContext);
 
   return (
     <div
@@ -55,7 +60,7 @@ const PriceInfo = ({ className, displayOnly = false }: Props) => {
       <div className="flex justify-between">
         <p className=" text-lg font-light text-gray-50">Total Price</p>
         <p className="text-lg font-light text-gray-50">
-          Rp{getTotalPrice().toLocaleString()}
+          Rp{getTotalPriceWithShipping().toLocaleString()}
         </p>
       </div>
       {!displayOnly && (

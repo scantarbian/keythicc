@@ -32,6 +32,7 @@ type StateProps = {
   toggleSelectAll: () => void;
   getTotalPrice: () => number;
   getTotalQuantity: () => number;
+  getTotalPriceWithShipping: () => number;
 };
 
 const initState: StateProps = {
@@ -52,6 +53,7 @@ const initState: StateProps = {
   toggleSelectAll: () => {},
   getTotalPrice: () => 0,
   getTotalQuantity: () => 0,
+  getTotalPriceWithShipping: () => 0,
 };
 
 export const CartContext = createContext(initState);
@@ -139,7 +141,11 @@ const CartProvider = ({ children }: CartProps) => {
       }
     });
 
-    return accumulator + carrier;
+    return accumulator;
+  };
+
+  const getTotalPriceWithShipping = () => {
+    return getTotalPrice() + carrier;
   };
 
   const getTotalQuantity = () => {
@@ -182,6 +188,7 @@ const CartProvider = ({ children }: CartProps) => {
         removeQuantity,
         getTotalPrice,
         getTotalQuantity,
+        getTotalPriceWithShipping,
         toggleSelect,
         toggleSelectAll,
         phase,
