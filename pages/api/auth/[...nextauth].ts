@@ -24,7 +24,7 @@ export default NextAuth({
 
           if (
             user &&
-            bcrypt.compareSync(credentials?.password ?? "", user.password)
+            bcrypt.compareSync(credentials?.password ?? "", user.password!)
           ) {
             return {
               id: user._id.toString(),
