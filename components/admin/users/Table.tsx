@@ -2,6 +2,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 // hooks
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 // data
 import { Account } from "models/Account";
 
@@ -19,6 +20,7 @@ type Row = {
 const UserTable = ({ users, className }: TableProps) => {
   const router = useRouter();
   const [data, setData] = useState<Row[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setData(users);
@@ -47,6 +49,9 @@ const UserTable = ({ users, className }: TableProps) => {
                 method: "DELETE",
               }).then(() => {
                 setData(data.filter((item) => item._id !== row._id));
+                enqueueSnackbar("User deleted", {
+                  variant: "success",
+                });
               });
             }}
           >

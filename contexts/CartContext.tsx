@@ -3,6 +3,8 @@ import { Product } from "models/Product";
 import { Builder } from "models/Builder";
 import { Shipping } from "models/Shipping";
 import { Account } from "models/Account";
+// hooks
+import { useSnackbar } from "notistack";
 
 type CartProps = {
   children: ReactNode;
@@ -66,6 +68,7 @@ const CartProvider = ({ children }: CartProps) => {
     {} as Shipping
   );
   const [carrier, setCarrier] = useState<StateProps["carrier"]>(0);
+  const { enqueueSnackbar } = useSnackbar();
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
@@ -91,6 +94,7 @@ const CartProvider = ({ children }: CartProps) => {
         },
       ]);
     }
+    enqueueSnackbar("Added to cart", { variant: "success" });
   };
 
   const addQuantity = (product: (Product | Builder) & { _id: string }) => {
