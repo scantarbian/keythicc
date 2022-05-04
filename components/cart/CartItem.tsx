@@ -92,7 +92,7 @@ const CartItem = ({ item, displayOnly = false, className }: Prop) => {
           {
             /* prettier-ignore */
             // @ts-expect-error
-            (item.product.basePrice || item.product.totalPrice) * item.quantity.toLocaleString()
+            ((item.product.basePrice || item.product.totalPrice) * item.quantity).toLocaleString()
           }
         </p>
       </div>
