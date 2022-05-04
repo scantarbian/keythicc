@@ -90,7 +90,7 @@ const CartProvider = ({ children }: CartProps) => {
         {
           product,
           quantity: 1,
-          selected: false,
+          selected: true,
         },
       ]);
     }
@@ -134,16 +134,18 @@ const CartProvider = ({ children }: CartProps) => {
   const getTotalPrice = () => {
     let accumulator = 0;
 
-    contents.forEach((content) => {
-      // @ts-expect-error
-      if (content.product.totalPrice) {
+    contents
+      .filter((item) => item.selected)
+      .forEach((content) => {
         // @ts-expect-error
-        accumulator += content.product.totalPrice * content.quantity;
-      } else {
-        // @ts-expect-error
-        accumulator += content.product.basePrice * content.quantity;
-      }
-    });
+        if (content.product.totalPrice) {
+          // @ts-expect-error
+          accumulator += content.product.totalPrice * content.quantity;
+        } else {
+          // @ts-expect-error
+          accumulator += content.product.basePrice * content.quantity;
+        }
+      });
 
     return accumulator;
   };
@@ -155,9 +157,11 @@ const CartProvider = ({ children }: CartProps) => {
   const getTotalQuantity = () => {
     let accumulator = 0;
 
-    contents.forEach((content) => {
-      accumulator += content.quantity;
-    });
+    contents
+      .filter((item) => item.selected)
+      .forEach((content) => {
+        accumulator += content.quantity;
+      });
 
     return accumulator;
   };

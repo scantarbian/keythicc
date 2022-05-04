@@ -14,9 +14,11 @@ const ItemList = ({ className }: ItemListProps) => {
   return (
     <div className={`${className} flex flex-col gap-8`}>
       <div className="flex flex-col divide-y-2 ">
-        {contents.map((item, index) => (
-          <CartItem key={index} item={item} displayOnly className="px-20" />
-        ))}
+        {contents
+          .filter((item) => item.selected)
+          .map((item, index) => (
+            <CartItem key={index} item={item} displayOnly className="px-20" />
+          ))}
       </div>
       <PriceInfo displayOnly />
     </div>
