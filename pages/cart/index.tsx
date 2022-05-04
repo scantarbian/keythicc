@@ -31,12 +31,16 @@ const Cart: NextPage = () => {
             </h1>
 
             <div className="w-full col-span-7 bg-shark-500 self-start divide-y-2">
-              <label className="font-semibold text-gray-50">
+              <label className="font-semibold text-gray-50 items-center flex">
                 <input
-                  className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 checked:text-yellow-500 rounded-sm"
+                  className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 disabled:border-gray-500 checked:text-yellow-500 rounded-sm"
                   type="checkbox"
-                  checked={contents.every((item) => item.selected)}
+                  checked={
+                    contents.length > 0 &&
+                    contents.every((item) => item.selected)
+                  }
                   onChange={() => toggleSelectAll()}
+                  disabled={contents.length === 0}
                 />
                 Select All
               </label>
