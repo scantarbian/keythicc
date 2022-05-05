@@ -11,6 +11,8 @@ import { CartContext } from "contexts/CartContext";
 import ShippingForm from "components/checkout/ShippingForm";
 import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
+// fetch headers
+import { shipper } from "lib/fetchHeaders";
 
 const Checkout: NextPage = ({
   countries,
@@ -77,10 +79,6 @@ const Checkout: NextPage = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const shipperHeaders = new Headers();
-
-  shipperHeaders.append("X-API-Key", process.env.SHIPPER_API_KEY!);
-
   const countries: Array<{
     id: number;
     name: string;
@@ -88,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }> = await fetch(
     `${process.env.SHIPPER_URL}/v3/location/countries?limit=250`,
     {
-      headers: shipperHeaders,
+      headers: shipper(),
     }
   )
     .then((res) => res.json())
