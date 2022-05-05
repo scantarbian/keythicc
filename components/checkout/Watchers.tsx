@@ -4,6 +4,8 @@ import { ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
 // Types
 import { Inputs } from "./ShippingForm";
+// fetch headers
+import { shipper } from "lib/fetchHeaders";
 
 const emailWatcherResponse = async (email: string) => {
   return await fetch("/api/account" + `?email=${email}`, {
@@ -66,4 +68,37 @@ export const EmailWatcher = ({
   }, [email]);
 
   return <>{element}</>;
+};
+
+const countryFetcher = async (value: number) => {
+  return await fetch(`/api/shipper/getProvinces?country_id=${value}`, {
+    method: "GET",
+    headers: shipper(),
+  })
+    .then((res) => res.json())
+    .then((res) => res.data);
+};
+
+export const countryWatcher = (control: Control<Inputs>) => {
+  const country = useWatch({
+    control,
+    name: "country",
+  });
+
+  const [provinces, setProvinces] = useState<
+    Array<{
+      id: number;
+      name: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    if (country && country.value === 228) {
+      countryFetcher(country.value).then((res) => {
+        setProvinces(res);
+      });
+    }
+  }, [country]);
+
+  return provinces;
 };

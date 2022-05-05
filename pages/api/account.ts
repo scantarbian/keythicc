@@ -117,10 +117,10 @@ export default async function handler(
         });
       }
       default: {
-        res.status(405).end();
+        return res.status(405).end();
       }
     }
   } catch (error: any) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }

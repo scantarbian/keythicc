@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "contexts/CartContext";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 // components
-import Select from "react-select";
-import { EmailWatcher } from "./Watchers";
+import Select, { StylesConfig, GroupBase } from "react-select";
+import { EmailWatcher, countryWatcher } from "./Watchers";
 
 type ShippingFormProps = {
   className?: string;
@@ -23,12 +23,76 @@ export type Inputs = {
     value: number;
     label: string;
   };
+  province?: {
+    value: number;
+    label: string;
+  };
+  city?: {
+    value: number;
+    label: string;
+  };
+  suburb?: {
+    value: number;
+    label: string;
+  };
+  area?: {
+    value: number;
+    label: string;
+  };
   address: string;
   postalcode: string;
   phonenumber: string;
 };
 
+const selectStyleConfig: StylesConfig<
+  {
+    value: number;
+    label: string;
+  },
+  false,
+  GroupBase<{
+    value: number;
+    label: string;
+  }>
+> = {
+  option: (provided, state) => ({
+    ...provided,
+    color: "#fff",
+    backgroundColor: state.isSelected
+      ? "rgb(251 146 60)"
+      : state.isFocused
+      ? "rgb(251 146 60 / 0.5)"
+      : "#000",
+  }),
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: "#000",
+    color: "#fff",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: "#000",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: "#fff",
+  }),
+  input: (provided) => ({
+    ...provided,
+    color: "#fff",
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    color: "#fff",
+  }),
+};
+
 const ShippingForm = ({ className, countries }: ShippingFormProps) => {
+  const [provinces, setProvinces] = useState<Array<any>>([]);
+  const [cities, setCities] = useState<Array<any>>([]);
+  const [suburbs, setSuburbs] = useState<Array<any>>([]);
+  const [areas, setAreas] = useState<Array<any>>([]);
+
   const { setPhase, setShipper, shipper, shipping, setShipping } =
     useContext(CartContext);
 
@@ -49,16 +113,27 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
       email: shipper?.email || session?.user?.email,
       fullname: shipping?.fullname || session?.user?.fullname,
       company: shipping?.company,
-      country: {
-        value: shipping?.country,
-        label: countries.find((country) => country.id === shipping?.country)
-          ?.name,
-      },
+      country: shipping?.country
+        ? {
+            value: shipping?.country,
+            label: countries.find((country) => country.id === shipping?.country)
+              ?.name,
+          }
+        : undefined,
       address: shipping?.address,
       postalcode: shipping?.postalcode,
       phonenumber: shipping?.phonenumber,
     },
   });
+
+  const selectedCountry = watch("country");
+  const provincesData = countryWatcher(control);
+
+  useEffect(() => {
+    if (provincesData) {
+      setProvinces(provincesData);
+    }
+  }, [provincesData]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!shipper.email) {
@@ -120,38 +195,7 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
                 }))}
                 placeholder="Select Country"
                 className="w-full"
-                styles={{
-                  option: (provided, state) => ({
-                    ...provided,
-                    color: "#fff",
-                    backgroundColor: state.isSelected
-                      ? "rgb(251 146 60)"
-                      : state.isFocused
-                      ? "rgb(251 146 60 / 0.5)"
-                      : "#000",
-                  }),
-                  control: (provided) => ({
-                    ...provided,
-                    backgroundColor: "#000",
-                    color: "#fff",
-                  }),
-                  menu: (provided) => ({
-                    ...provided,
-                    backgroundColor: "#000",
-                  }),
-                  singleValue: (provided) => ({
-                    ...provided,
-                    color: "#fff",
-                  }),
-                  input: (provided) => ({
-                    ...provided,
-                    color: "#fff",
-                  }),
-                  placeholder: (provided) => ({
-                    ...provided,
-                    color: "#fff",
-                  }),
-                }}
+                styles={selectStyleConfig}
               />
             )}
           />
@@ -170,6 +214,75 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
             className="bg-black border-white rounded-md"
             placeholder="Company (optional)"
           />
+          {selectedCountry && selectedCountry.value === 228 && (
+            <>
+              <Controller
+                name="province"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={provinces.map((province) => ({
+                      value: province.id,
+                      label: `${province.name}`,
+                    }))}
+                    placeholder="Select Province"
+                    className="w-full"
+                    styles={selectStyleConfig}
+                  />
+                )}
+              />
+              <Controller
+                name="city"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={cities.map((city) => ({
+                      value: city.id,
+                      label: `${city.name}`,
+                    }))}
+                    placeholder="Select City"
+                    className="w-full"
+                    styles={selectStyleConfig}
+                  />
+                )}
+              />
+              <Controller
+                name="suburb"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={suburbs.map((suburb) => ({
+                      value: suburb.id,
+                      label: `${suburb.name}`,
+                    }))}
+                    placeholder="Select Suburb"
+                    className="w-full"
+                    styles={selectStyleConfig}
+                  />
+                )}
+              />
+              <Controller
+                name="area"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={areas.map((area) => ({
+                      value: area.id,
+                      label: `${area.name}`,
+                    }))}
+                    placeholder="Select Area"
+                    className="w-full"
+                    styles={selectStyleConfig}
+                  />
+                )}
+              />
+            </>
+          )}
+
           <textarea
             {...register("address", {
               required: true,
