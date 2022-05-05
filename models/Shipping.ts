@@ -8,7 +8,7 @@ export class Shipping {
   public company?: string;
 
   @prop({ type: String })
-  public country!: string;
+  public country!: number;
 
   @prop({ type: String })
   public address!: string;

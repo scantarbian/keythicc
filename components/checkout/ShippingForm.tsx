@@ -5,11 +5,14 @@ import { useSession } from "next-auth/react";
 // components
 import Select from "react-select";
 import { EmailWatcher } from "./Watchers";
-// country data
-import countries from "lib/countries.json";
 
 type ShippingFormProps = {
   className?: string;
+  countries: Array<{
+    id: number;
+    name: string;
+    code: string;
+  }>;
 };
 
 export type Inputs = {
@@ -17,7 +20,7 @@ export type Inputs = {
   fullname: string;
   company: string;
   country: {
-    value: string;
+    value: number;
     label: string;
   };
   address: string;
@@ -25,7 +28,7 @@ export type Inputs = {
   phonenumber: string;
 };
 
-const ShippingForm = ({ className }: ShippingFormProps) => {
+const ShippingForm = ({ className, countries }: ShippingFormProps) => {
   const { setPhase, setShipper, shipper, shipping, setShipping } =
     useContext(CartContext);
 
@@ -48,7 +51,7 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
       company: shipping?.company,
       country: {
         value: shipping?.country,
-        label: countries.find((country) => country.code === shipping?.country)
+        label: countries.find((country) => country.id === shipping?.country)
           ?.name,
       },
       address: shipping?.address,
@@ -112,8 +115,8 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
               <Select
                 {...field}
                 options={countries.map((country) => ({
-                  value: country.code,
-                  label: `${country.emoji} ${country.name}`,
+                  value: country.id,
+                  label: `${country.name}`,
                 }))}
                 placeholder="Select Country"
                 className="w-full"

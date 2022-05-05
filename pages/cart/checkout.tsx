@@ -1,4 +1,8 @@
-import { NextPage } from "next";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPage,
+} from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -8,14 +12,16 @@ import ShippingForm from "components/checkout/ShippingForm";
 import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
 
-const Checkout: NextPage = () => {
+const Checkout: NextPage = ({
+  countries,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { phase, setPhase, carrier } = useContext(CartContext);
 
   const phaseSwitch = () => {
     switch (phase) {
       case "information":
-        return <ShippingForm className="p-16" />;
+        return <ShippingForm className="p-16" countries={countries} />;
       case "payment":
         return <PaymentForm className="p-16" />;
       default:
@@ -68,6 +74,31 @@ const Checkout: NextPage = () => {
       </main>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const shipperHeaders = new Headers();
+
+  shipperHeaders.append("X-API-Key", process.env.SHIPPER_API_KEY!);
+
+  const countries: Array<{
+    id: number;
+    name: string;
+    code: string;
+  }> = await fetch(
+    `${process.env.SHIPPER_URL}/v3/location/countries?limit=250`,
+    {
+      headers: shipperHeaders,
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => res.data);
+
+  return {
+    props: {
+      countries: countries,
+    },
+  };
 };
 
 export default Checkout;
