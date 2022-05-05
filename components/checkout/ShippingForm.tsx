@@ -88,13 +88,21 @@ const selectStyleConfig: StylesConfig<
 };
 
 const ShippingForm = ({ className, countries }: ShippingFormProps) => {
-  const [provinces, setProvinces] = useState<Array<any>>([]);
-  const [cities, setCities] = useState<Array<any>>([]);
-  const [suburbs, setSuburbs] = useState<Array<any>>([]);
-  const [areas, setAreas] = useState<Array<any>>([]);
-
-  const { setPhase, setShipper, shipper, shipping, setShipping } =
-    useContext(CartContext);
+  const {
+    setPhase,
+    setShipper,
+    shipper,
+    shipping,
+    setShipping,
+    provinces,
+    cities,
+    areas,
+    suburbs,
+    setProvinces,
+    setCities,
+    setAreas,
+    setSuburbs,
+  } = useContext(CartContext);
 
   const { data: session, status } = useSession();
 

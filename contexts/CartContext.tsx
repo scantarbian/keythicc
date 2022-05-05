@@ -22,6 +22,14 @@ type StateProps = {
   shipper: Account;
   shipping: Shipping;
   carrier: number;
+  provinces: Array<any>;
+  cities: Array<any>;
+  suburbs: Array<any>;
+  areas: Array<any>;
+  setProvinces: (provinces: Array<any>) => void;
+  setCities: (cities: Array<any>) => void;
+  setSuburbs: (suburbs: Array<any>) => void;
+  setAreas: (areas: Array<any>) => void;
   setCarrier: (carrier: number) => void;
   setPhase: (phase: "information" | "payment") => void;
   setShipper: (shipper: Account) => void;
@@ -43,6 +51,14 @@ const initState: StateProps = {
   shipper: {} as Account,
   shipping: {} as Shipping,
   carrier: 0,
+  provinces: [],
+  cities: [],
+  suburbs: [],
+  areas: [],
+  setProvinces: () => {},
+  setCities: () => {},
+  setSuburbs: () => {},
+  setAreas: () => {},
   setCarrier: () => {},
   setPhase: () => {},
   setShipper: () => {},
@@ -68,6 +84,10 @@ const CartProvider = ({ children }: CartProps) => {
     {} as Shipping
   );
   const [carrier, setCarrier] = useState<StateProps["carrier"]>(0);
+  const [provinces, setProvinces] = useState<StateProps["provinces"]>([]);
+  const [cities, setCities] = useState<StateProps["cities"]>([]);
+  const [suburbs, setSuburbs] = useState<StateProps["suburbs"]>([]);
+  const [areas, setAreas] = useState<StateProps["areas"]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
@@ -207,6 +227,14 @@ const CartProvider = ({ children }: CartProps) => {
         setShipping,
         carrier,
         setCarrier,
+        provinces,
+        setProvinces,
+        cities,
+        setCities,
+        suburbs,
+        setSuburbs,
+        areas,
+        setAreas,
       }}
     >
       {children}
