@@ -70,7 +70,7 @@ export const EmailWatcher = ({
   return <>{element}</>;
 };
 
-const countryFetcher = async (value: number) => {
+const getProvinces = async (value: number) => {
   return await fetch(`/api/shipper/getProvinces?country_id=${value}`, {
     method: "GET",
     headers: shipper(),
@@ -94,7 +94,7 @@ export const countryWatcher = (control: Control<Inputs>) => {
 
   useEffect(() => {
     if (country && country.value === 228) {
-      countryFetcher(country.value).then((res) => {
+      getProvinces(country.value).then((res) => {
         setProvinces(res);
       });
     }
@@ -103,7 +103,7 @@ export const countryWatcher = (control: Control<Inputs>) => {
   return provinces;
 };
 
-const provinceFetcher = async (value: number) => {
+const getCities = async (value: number) => {
   return await fetch(`/api/shipper/getCities?province_id=${value}`, {
     method: "GET",
     headers: shipper(),
@@ -127,11 +127,77 @@ export const provinceWatcher = (control: Control<Inputs>) => {
 
   useEffect(() => {
     if (province) {
-      provinceFetcher(province.value).then((res) => {
+      getCities(province.value).then((res) => {
         setCities(res);
       });
     }
   }, [province]);
 
   return cities;
+};
+
+const getSuburbs = async (value: number) => {
+  return await fetch(`/api/shipper/getSuburbs?city_id=${value}`, {
+    method: "GET",
+    headers: shipper(),
+  })
+    .then((res) => res.json())
+    .then((res) => res.data);
+};
+
+export const cityWatcher = (control: Control<Inputs>) => {
+  const city = useWatch({
+    control,
+    name: "city",
+  });
+
+  const [suburbs, setSuburbs] = useState<
+    Array<{
+      id: number;
+      name: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    if (city) {
+      getSuburbs(city.value).then((res) => {
+        setSuburbs(res);
+      });
+    }
+  }, [city]);
+
+  return suburbs;
+};
+
+const getAreas = async (value: number) => {
+  return await fetch(`/api/shipper/getAreas?suburb_id=${value}`, {
+    method: "GET",
+    headers: shipper(),
+  })
+    .then((res) => res.json())
+    .then((res) => res.data);
+};
+
+export const suburbWatcher = (control: Control<Inputs>) => {
+  const suburb = useWatch({
+    control,
+    name: "suburb",
+  });
+
+  const [areas, setAreas] = useState<
+    Array<{
+      id: number;
+      name: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    if (suburb) {
+      getAreas(suburb.value).then((res) => {
+        setAreas(res);
+      });
+    }
+  }, [suburb]);
+
+  return areas;
 };

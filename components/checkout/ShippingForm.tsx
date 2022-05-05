@@ -4,7 +4,13 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 // components
 import Select, { StylesConfig, GroupBase } from "react-select";
-import { EmailWatcher, countryWatcher, provinceWatcher } from "./Watchers";
+import {
+  EmailWatcher,
+  countryWatcher,
+  provinceWatcher,
+  cityWatcher,
+  suburbWatcher,
+} from "./Watchers";
 
 type ShippingFormProps = {
   className?: string;
@@ -137,6 +143,8 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
   const selectedCountry = watch("country");
   const provincesData = countryWatcher(control);
   const citiesData = provinceWatcher(control);
+  const suburbsData = cityWatcher(control);
+  const areasData = suburbWatcher(control);
 
   useEffect(() => {
     if (provincesData) {
@@ -146,7 +154,15 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
     if (citiesData) {
       setCities(citiesData);
     }
-  }, [provincesData, citiesData]);
+
+    if (suburbsData) {
+      setSuburbs(suburbsData);
+    }
+
+    if (areasData) {
+      setAreas(areasData);
+    }
+  }, [provincesData, citiesData, areasData, suburbsData]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!shipper.email) {
