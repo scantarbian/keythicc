@@ -139,25 +139,26 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
             value: shipping?.province,
             label: provinces.find(
               (province) => province.id === shipping?.province
-            ),
+            ).name,
           }
         : undefined,
       city: shipping?.city
         ? {
             value: shipping?.city,
-            label: cities.find((city) => city.id === shipping?.city),
+            label: cities.find((city) => city.id === shipping?.city).name,
           }
         : undefined,
       suburb: shipping?.suburb
         ? {
             value: shipping?.suburb,
-            label: suburbs.find((suburb) => suburb.id === shipping?.suburb),
+            label: suburbs.find((suburb) => suburb.id === shipping?.suburb)
+              .name,
           }
         : undefined,
       area: shipping?.area
         ? {
             value: shipping?.area,
-            label: areas.find((area) => area.id === shipping?.area),
+            label: areas.find((area) => area.id === shipping?.area).name,
           }
         : undefined,
       address: shipping?.address,
@@ -166,29 +167,12 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
     },
   });
 
+  // init watchers
   const selectedCountry = watch("country");
-  const provincesData = countryWatcher(control);
-  const citiesData = provinceWatcher(control);
-  const suburbsData = cityWatcher(control);
-  const areasData = suburbWatcher(control);
-
-  useEffect(() => {
-    if (provincesData) {
-      setProvinces(provincesData);
-    }
-
-    if (citiesData) {
-      setCities(citiesData);
-    }
-
-    if (suburbsData) {
-      setSuburbs(suburbsData);
-    }
-
-    if (areasData) {
-      setAreas(areasData);
-    }
-  }, [provincesData, citiesData, areasData, suburbsData]);
+  countryWatcher(control);
+  provinceWatcher(control);
+  cityWatcher(control);
+  suburbWatcher(control);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!shipper.email) {
@@ -201,6 +185,10 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
       fullname: data.fullname,
       company: data.company,
       country: data.country.value,
+      province: data.province?.value,
+      city: data.city?.value,
+      suburb: data.suburb?.value,
+      area: data.area?.value,
       address: data.address,
       postalcode: data.postalcode,
       phonenumber: data.phonenumber,

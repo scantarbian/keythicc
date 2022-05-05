@@ -1,11 +1,13 @@
 import { useWatch, Control } from "react-hook-form";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useContext } from "react";
 // components
 import Link from "next/link";
 // Types
 import { Inputs } from "./ShippingForm";
 // fetch headers
 import { shipper } from "lib/fetchHeaders";
+// context
+import { CartContext } from "contexts/CartContext";
 
 const emailWatcherResponse = async (email: string) => {
   return await fetch("/api/account" + `?email=${email}`, {
@@ -80,17 +82,12 @@ const getProvinces = async (value: number) => {
 };
 
 export const countryWatcher = (control: Control<Inputs>) => {
+  const { setProvinces } = useContext(CartContext);
+
   const country = useWatch({
     control,
     name: "country",
   });
-
-  const [provinces, setProvinces] = useState<
-    Array<{
-      id: number;
-      name: string;
-    }>
-  >([]);
 
   useEffect(() => {
     if (country && country.value === 228) {
@@ -99,8 +96,6 @@ export const countryWatcher = (control: Control<Inputs>) => {
       });
     }
   }, [country]);
-
-  return provinces;
 };
 
 const getCities = async (value: number) => {
@@ -113,17 +108,12 @@ const getCities = async (value: number) => {
 };
 
 export const provinceWatcher = (control: Control<Inputs>) => {
+  const { setCities } = useContext(CartContext);
+
   const province = useWatch({
     control,
     name: "province",
   });
-
-  const [cities, setCities] = useState<
-    Array<{
-      id: number;
-      name: string;
-    }>
-  >([]);
 
   useEffect(() => {
     if (province) {
@@ -132,8 +122,6 @@ export const provinceWatcher = (control: Control<Inputs>) => {
       });
     }
   }, [province]);
-
-  return cities;
 };
 
 const getSuburbs = async (value: number) => {
@@ -146,17 +134,12 @@ const getSuburbs = async (value: number) => {
 };
 
 export const cityWatcher = (control: Control<Inputs>) => {
+  const { setSuburbs } = useContext(CartContext);
+
   const city = useWatch({
     control,
     name: "city",
   });
-
-  const [suburbs, setSuburbs] = useState<
-    Array<{
-      id: number;
-      name: string;
-    }>
-  >([]);
 
   useEffect(() => {
     if (city) {
@@ -165,8 +148,6 @@ export const cityWatcher = (control: Control<Inputs>) => {
       });
     }
   }, [city]);
-
-  return suburbs;
 };
 
 const getAreas = async (value: number) => {
@@ -179,17 +160,12 @@ const getAreas = async (value: number) => {
 };
 
 export const suburbWatcher = (control: Control<Inputs>) => {
+  const { setAreas } = useContext(CartContext);
+
   const suburb = useWatch({
     control,
     name: "suburb",
   });
-
-  const [areas, setAreas] = useState<
-    Array<{
-      id: number;
-      name: string;
-    }>
-  >([]);
 
   useEffect(() => {
     if (suburb) {
@@ -198,6 +174,4 @@ export const suburbWatcher = (control: Control<Inputs>) => {
       });
     }
   }, [suburb]);
-
-  return areas;
 };
