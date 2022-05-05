@@ -4,7 +4,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 // components
 import Select, { StylesConfig, GroupBase } from "react-select";
-import { EmailWatcher, countryWatcher } from "./Watchers";
+import { EmailWatcher, countryWatcher, provinceWatcher } from "./Watchers";
 
 type ShippingFormProps = {
   className?: string;
@@ -128,12 +128,17 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
 
   const selectedCountry = watch("country");
   const provincesData = countryWatcher(control);
+  const citiesData = provinceWatcher(control);
 
   useEffect(() => {
     if (provincesData) {
       setProvinces(provincesData);
     }
-  }, [provincesData]);
+
+    if (citiesData) {
+      setCities(citiesData);
+    }
+  }, [provincesData, citiesData]);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!shipper.email) {

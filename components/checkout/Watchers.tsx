@@ -102,3 +102,36 @@ export const countryWatcher = (control: Control<Inputs>) => {
 
   return provinces;
 };
+
+const provinceFetcher = async (value: number) => {
+  return await fetch(`/api/shipper/getCities?province_id=${value}`, {
+    method: "GET",
+    headers: shipper(),
+  })
+    .then((res) => res.json())
+    .then((res) => res.data);
+};
+
+export const provinceWatcher = (control: Control<Inputs>) => {
+  const province = useWatch({
+    control,
+    name: "province",
+  });
+
+  const [cities, setCities] = useState<
+    Array<{
+      id: number;
+      name: string;
+    }>
+  >([]);
+
+  useEffect(() => {
+    if (province) {
+      provinceFetcher(province.value).then((res) => {
+        setCities(res);
+      });
+    }
+  }, [province]);
+
+  return cities;
+};
