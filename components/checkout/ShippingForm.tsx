@@ -134,6 +134,32 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
               ?.name,
           }
         : undefined,
+      province: shipping?.province
+        ? {
+            value: shipping?.province,
+            label: provinces.find(
+              (province) => province.id === shipping?.province
+            ),
+          }
+        : undefined,
+      city: shipping?.city
+        ? {
+            value: shipping?.city,
+            label: cities.find((city) => city.id === shipping?.city),
+          }
+        : undefined,
+      suburb: shipping?.suburb
+        ? {
+            value: shipping?.suburb,
+            label: suburbs.find((suburb) => suburb.id === shipping?.suburb),
+          }
+        : undefined,
+      area: shipping?.area
+        ? {
+            value: shipping?.area,
+            label: areas.find((area) => area.id === shipping?.area),
+          }
+        : undefined,
       address: shipping?.address,
       postalcode: shipping?.postalcode,
       phonenumber: shipping?.phonenumber,
