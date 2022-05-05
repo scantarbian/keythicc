@@ -24,6 +24,33 @@ export default async function handler(
           });
         }
 
+        // handle presence of email queries
+        // used in validating shipping email
+        if (req.query.email) {
+          const account = await AccountModel.findOne({
+            email: req.query.email,
+          });
+
+          if (account && account.password) {
+            return res.status(200).json({
+              success: true,
+              password: true,
+            });
+          }
+
+          if (account) {
+            return res.status(200).json({
+              success: true,
+              password: false,
+            });
+          }
+
+          return res.status(404).json({
+            success: false,
+            message: "Account not found",
+          });
+        }
+
         const accounts = await AccountModel.find();
 
         return res.status(200).json({

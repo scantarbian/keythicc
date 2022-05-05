@@ -4,6 +4,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 // components
 import Select from "react-select";
+import Link from "next/link";
 // country data
 import countries from "lib/countries.json";
 
@@ -22,6 +23,40 @@ type Inputs = {
   address: string;
   postalcode: string;
   phonenumber: string;
+};
+
+const handleEmailError = (errors: string) => {
+  switch (errors) {
+    case "1":
+      return (
+        <>
+          Email already registered, please{" "}
+          <Link href={"/auth"}>
+            <a className="underline">log in</a>
+          </Link>
+        </>
+      );
+    case "2":
+      return (
+        <>
+          Email exists but not registered, please{" "}
+          <Link href={"/auth/register"}>
+            <a className="underline">sign up</a>
+          </Link>
+        </>
+      );
+    case "3":
+      return (
+        <>
+          Email not yet registered, please{" "}
+          <Link href={"/auth/register"}>
+            <a className="underline">sign up</a>
+          </Link>
+        </>
+      );
+    default:
+      return errors;
+  }
 };
 
 const ShippingForm = ({ className }: ShippingFormProps) => {
@@ -88,10 +123,37 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
             {...register("email", {
               required: true,
               pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              validate: {
+                emailRegistered: async (value) => {
+                  if (status !== "authenticated") {
+                    return await fetch("/api/account" + `?email=${value}`, {
+                      method: "GET",
+                    })
+                      .then((res) => res.json())
+                      .then((res) => {
+                        if (res.success && res.password) {
+                          return "1"; //"Email already registered, please log in"
+                        } else if (res.success && !res.password) {
+                          return "2"; // "Email exists but not registered, please sign up"
+                        } else {
+                          return "3"; // "Email not yet registered, please sign up"
+                        }
+                      });
+                  } else {
+                    return undefined;
+                  }
+                },
+              },
             })}
             className="bg-black border-white rounded-md"
             placeholder="Email"
+            disabled={status === "authenticated"}
           />
+          {errors && errors.email?.message && (
+            <span className="text-yellow-500 mt-3">
+              {handleEmailError(errors.email?.message)}
+            </span>
+          )}
         </div>
         <div className="flex flex-col gap-4">
           <span className="text-2xl font-bold mb-2">Shipping Information</span>
@@ -134,6 +196,10 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
                     ...provided,
                     color: "#fff",
                   }),
+                  placeholder: (provided) => ({
+                    ...provided,
+                    color: "#fff",
+                  }),
                 }}
               />
             )}
@@ -145,6 +211,7 @@ const ShippingForm = ({ className }: ShippingFormProps) => {
             })}
             className="bg-black border-white rounded-md"
             placeholder="Full name"
+            disabled={status === "authenticated"}
           />
           <input
             type="text"
