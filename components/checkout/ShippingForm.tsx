@@ -6,10 +6,10 @@ import { useSession } from "next-auth/react";
 import Select, { StylesConfig, GroupBase } from "react-select";
 import {
   EmailWatcher,
-  countryWatcher,
-  provinceWatcher,
-  cityWatcher,
-  suburbWatcher,
+  useCountryWatcher,
+  useProvinceWatcher,
+  useCityWatcher,
+  useSuburbWatcher,
 } from "./Watchers";
 
 type ShippingFormProps = {
@@ -169,10 +169,10 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
 
   // init watchers
   const selectedCountry = watch("country");
-  countryWatcher(control);
-  provinceWatcher(control);
-  cityWatcher(control);
-  suburbWatcher(control);
+  useCountryWatcher(control);
+  useProvinceWatcher(control);
+  useCityWatcher(control);
+  useSuburbWatcher(control);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     if (!shipper.email) {
