@@ -16,7 +16,6 @@ const PaymentForm = ({ className }: Prop) => {
     <div className={`${className} text-white`}>
       <div className="flex flex-col gap-6">
         <span className="text-2xl font-bold">Shipping Details</span>
-        <span>Shipper.id integration coming soon</span>
         <div className="border border-white rounded-md p-2 flex flex-col divide-y divide">
           <div className="p-2 flex justify-between">
             <span className="w-1/6">Contact</span>

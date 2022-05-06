@@ -179,15 +179,21 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
       });
     }
 
-    fetch(
-      `/api/shipper/getDomesticPricing?destination_area_id=${
-        data.area?.value
-      }&item_value=${getTotalPrice()}`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        setProviders(res.data.pricings);
-      });
+    if (data.country.value === 228) {
+      // handle domestic shipment
+      fetch(
+        `/api/shipper/getDomesticPricing?destination_area_id=${
+          data.area?.value
+        }&item_value=${getTotalPrice()}`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setProviders(res.data.pricings);
+        });
+    } else {
+      // handle international shipment [TO-DO]
+    }
+
 
     setShipping({
       fullname: data.fullname,
