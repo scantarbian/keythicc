@@ -10,6 +10,33 @@ type CartProps = {
   children: ReactNode;
 };
 
+export type Provider = {
+  logistic: {
+    id: number;
+    name: string;
+    logo_url: string;
+    code: string;
+    company_name: string;
+  };
+  rate: {
+    id: number;
+    name: string;
+    type: string;
+    description: string;
+    full_description: string;
+    is_hubless: boolean;
+  };
+  min_day: number;
+  max_day: number;
+  unit_price: number;
+  insurance_fee: number;
+  must_use_insurance: boolean;
+  total_price: number;
+  currency: string;
+  final_price: number;
+  insurance_applied: boolean;
+};
+
 type StateProps = {
   contents:
     | Array<{
@@ -21,7 +48,8 @@ type StateProps = {
   phase: "information" | "payment";
   shipper: Account;
   shipping: Shipping;
-  carrier: number;
+  provider: Provider;
+  providers: Array<Provider>;
   provinces: Array<any>;
   cities: Array<any>;
   suburbs: Array<any>;
@@ -30,7 +58,8 @@ type StateProps = {
   setCities: (cities: Array<any>) => void;
   setSuburbs: (suburbs: Array<any>) => void;
   setAreas: (areas: Array<any>) => void;
-  setCarrier: (carrier: number) => void;
+  setProvider: (provider: Provider) => void;
+  setProviders: (providers: Array<Provider>) => void;
   setPhase: (phase: "information" | "payment") => void;
   setShipper: (shipper: Account) => void;
   setShipping: (shipping: Shipping) => void;
@@ -50,7 +79,8 @@ const initState: StateProps = {
   phase: "information",
   shipper: {} as Account,
   shipping: {} as Shipping,
-  carrier: 0,
+  provider: {} as Provider,
+  providers: [],
   provinces: [],
   cities: [],
   suburbs: [],
@@ -59,7 +89,8 @@ const initState: StateProps = {
   setCities: () => {},
   setSuburbs: () => {},
   setAreas: () => {},
-  setCarrier: () => {},
+  setProvider: () => {},
+  setProviders: () => {},
   setPhase: () => {},
   setShipper: () => {},
   setShipping: () => {},
@@ -83,7 +114,10 @@ const CartProvider = ({ children }: CartProps) => {
   const [shipping, setShipping] = useState<StateProps["shipping"]>(
     {} as Shipping
   );
-  const [carrier, setCarrier] = useState<StateProps["carrier"]>(0);
+  const [provider, setProvider] = useState<StateProps["provider"]>(
+    {} as Provider
+  );
+  const [providers, setProviders] = useState<StateProps["providers"]>([]);
   const [provinces, setProvinces] = useState<StateProps["provinces"]>([]);
   const [cities, setCities] = useState<StateProps["cities"]>([]);
   const [suburbs, setSuburbs] = useState<StateProps["suburbs"]>([]);
@@ -171,7 +205,7 @@ const CartProvider = ({ children }: CartProps) => {
   };
 
   const getTotalPriceWithShipping = () => {
-    return getTotalPrice() + carrier;
+    return getTotalPrice() + (provider.final_price || 0);
   };
 
   const getTotalQuantity = () => {
@@ -225,8 +259,10 @@ const CartProvider = ({ children }: CartProps) => {
         setShipper,
         shipping,
         setShipping,
-        carrier,
-        setCarrier,
+        provider,
+        providers,
+        setProviders,
+        setProvider,
         provinces,
         setProvinces,
         cities,

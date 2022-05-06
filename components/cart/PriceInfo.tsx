@@ -16,7 +16,7 @@ const PriceInfo = ({ className, displayOnly = false }: Props) => {
     getTotalPrice,
     getTotalQuantity,
     getTotalPriceWithShipping,
-    carrier,
+    provider,
   } = useContext(CartContext);
 
   return (
@@ -46,11 +46,11 @@ const PriceInfo = ({ className, displayOnly = false }: Props) => {
         </p>
         <p className="text-lg font-light text-manatee-500">-$22.50</p>
       </div>
-      {carrier > 0 && (
+      {provider.final_price && (
         <div className="flex justify-between">
           <p className=" text-lg font-light text-gray-50">Shipping</p>
           <p className=" text-lg font-light text-gray-50">
-            Rp{carrier.toLocaleString()}
+            Rp{provider.final_price.toLocaleString()}
           </p>
         </div>
       )}

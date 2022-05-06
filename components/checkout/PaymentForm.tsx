@@ -7,23 +7,9 @@ type Prop = {
   className?: string;
 };
 
-const SHIPPING_OPTIONS = [
-  {
-    label: "Standard",
-    value: 25000,
-  },
-  {
-    label: "Express",
-    value: 35000,
-  },
-  {
-    label: "Overnight",
-    value: 45000,
-  },
-];
 
 const PaymentForm = ({ className }: Prop) => {
-  const { setPhase, shipper, shipping, setCarrier, carrier } =
+  const { setPhase, shipper, shipping, providers, provider, setProvider } =
     useContext(CartContext);
 
   return (
@@ -56,15 +42,29 @@ const PaymentForm = ({ className }: Prop) => {
             <span className="w-1/6">Method</span>
             <span className="flex-1">
               <Select
-                options={SHIPPING_OPTIONS}
+                options={providers.map((provider) => ({
+                  label: `${provider.logistic.name} - ${
+                    provider.rate.name
+                  } (Rp${provider.final_price.toLocaleString()})`,
+                  value: provider.rate.id,
+                }))}
                 value={
-                  carrier > 0
-                    ? SHIPPING_OPTIONS.find(
-                        (option) => option.value === carrier
-                      )
+                  provider.logistic && provider.rate
+                    ? {
+                        label: `${provider.logistic.name} - ${
+                          provider.rate.name
+                        } (Rp${provider.final_price.toLocaleString()})`,
+                        value: provider.rate.id,
+                      }
                     : undefined
                 }
-                onChange={(value) => setCarrier(value!.value)}
+                onChange={(value) => {
+                  setProvider(
+                    providers.find(
+                      (provider) => provider.rate.id === value!.value
+                    )!
+                  );
+                }}
                 placeholder="Select Shipping Method"
                 className="w-full"
                 styles={{

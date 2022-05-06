@@ -5,7 +5,7 @@ import {
 } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "contexts/CartContext";
 // components
 import ShippingForm from "components/checkout/ShippingForm";
@@ -13,12 +13,24 @@ import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
 // fetch headers
 import { shipper } from "lib/fetchHeaders";
+// hooks
+import { useSnackbar } from "notistack";
 
 const Checkout: NextPage = ({
   countries,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { phase, setPhase, carrier } = useContext(CartContext);
+  const { enqueueSnackbar } = useSnackbar();
+  const { phase, setPhase, provider, contents } = useContext(CartContext);
+
+  useEffect(() => {
+    if (!contents.some((content) => content.selected)) {
+      router.push("/products");
+      enqueueSnackbar("Your cart is empty", {
+        variant: "error",
+      });
+    }
+  }, []);
 
   const phaseSwitch = () => {
     switch (phase) {
@@ -58,13 +70,13 @@ const Checkout: NextPage = ({
             </span>
             <span
               className={`px-2 ${
-                carrier > 0
+                provider
                   ? phase === "payment"
                     ? "text-orange-400 cursor-pointer"
                     : "text-white cursor-pointer "
                   : "text-gray-500"
               }`}
-              onClick={() => carrier > 0 && setPhase("payment")}
+              onClick={() => provider && setPhase("payment")}
             >
               {"Ship & Pay"}
             </span>

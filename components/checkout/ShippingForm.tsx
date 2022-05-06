@@ -104,10 +104,8 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
     cities,
     areas,
     suburbs,
-    setProvinces,
-    setCities,
-    setAreas,
-    setSuburbs,
+    getTotalPrice,
+    setProviders,
   } = useContext(CartContext);
 
   const { data: session, status } = useSession();
@@ -180,6 +178,16 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
         email: data.email,
       });
     }
+
+    fetch(
+      `/api/shipper/getDomesticPricing?destination_area_id=${
+        data.area?.value
+      }&item_value=${getTotalPrice()}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setProviders(res.data.pricings);
+      });
 
     setShipping({
       fullname: data.fullname,
