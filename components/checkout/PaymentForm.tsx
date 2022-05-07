@@ -27,7 +27,7 @@ const PaymentForm = ({ className }: Prop) => {
     providers,
     provider,
     setProvider,
-    payment_method,
+    paymentMethod,
     setPaymentMethod,
   } = useContext(CartContext);
 
@@ -94,10 +94,10 @@ const PaymentForm = ({ className }: Prop) => {
         <Select
           options={AVAILABLE_METHODS}
           value={
-            payment_method > 0
+            paymentMethod > 0
               ? {
-                  label: AVAILABLE_METHODS[payment_method - 1].label,
-                  value: payment_method,
+                  label: AVAILABLE_METHODS[paymentMethod - 1].label,
+                  value: paymentMethod,
                 }
               : undefined
           }
