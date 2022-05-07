@@ -50,7 +50,7 @@ export type Inputs = {
   phonenumber: string;
 };
 
-const selectStyleConfig: StylesConfig<
+export const selectStyleConfig: StylesConfig<
   {
     value: number;
     label: string;

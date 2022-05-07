@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
+import { selectStyleConfig } from "./ShippingForm";
+import { AVAILABLE_METHODS } from "./PaymentMethods";
 // components
 import Select from "react-select";
 
@@ -7,10 +9,17 @@ type Prop = {
   className?: string;
 };
 
-
 const PaymentForm = ({ className }: Prop) => {
-  const { setPhase, shipper, shipping, providers, provider, setProvider } =
-    useContext(CartContext);
+  const {
+    setPhase,
+    shipper,
+    shipping,
+    providers,
+    provider,
+    setProvider,
+    payment_method,
+    setPaymentMethod,
+  } = useContext(CartContext);
 
   return (
     <div className={`${className} text-white`}>
@@ -66,45 +75,29 @@ const PaymentForm = ({ className }: Prop) => {
                 }}
                 placeholder="Select Shipping Method"
                 className="w-full"
-                styles={{
-                  option: (provided, state) => ({
-                    ...provided,
-                    color: "#fff",
-                    backgroundColor: state.isSelected
-                      ? "rgb(251 146 60)"
-                      : state.isFocused
-                      ? "rgb(251 146 60 / 0.5)"
-                      : "#000",
-                  }),
-                  control: (provided) => ({
-                    ...provided,
-                    backgroundColor: "#000",
-                    color: "#fff",
-                    border: "none",
-                  }),
-                  valueContainer: (provided) => ({
-                    ...provided,
-                    padding: 0,
-                  }),
-                  menu: (provided) => ({
-                    ...provided,
-                    backgroundColor: "#000",
-                  }),
-                  singleValue: (provided) => ({
-                    ...provided,
-                    color: "#fff",
-                  }),
-                  input: (provided) => ({
-                    ...provided,
-                    color: "#fff",
-                  }),
-                }}
+                styles={selectStyleConfig}
               />
             </span>
           </div>
         </div>
         <span className="text-2xl font-bold">Payment Details</span>
-        <span>Midtrans integration coming soon</span>
+        <Select
+          options={AVAILABLE_METHODS}
+          value={
+            payment_method > 0
+              ? {
+                  label: AVAILABLE_METHODS[payment_method].label,
+                  value: payment_method,
+                }
+              : undefined
+          }
+          onChange={(value) => {
+            setPaymentMethod(value!.value);
+          }}
+          placeholder="Select Payment Method"
+          className="w-full"
+          styles={selectStyleConfig}
+        />
       </div>
     </div>
   );

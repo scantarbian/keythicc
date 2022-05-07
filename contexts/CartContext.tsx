@@ -48,6 +48,7 @@ type StateProps = {
   phase: "information" | "payment";
   shipper: Account;
   shipping: Shipping;
+  payment_method: number;
   provider: Provider;
   providers: Array<Provider>;
   provinces: Array<any>;
@@ -61,6 +62,7 @@ type StateProps = {
   setProvider: (provider: Provider) => void;
   setProviders: (providers: Array<Provider>) => void;
   setPhase: (phase: "information" | "payment") => void;
+  setPaymentMethod: (payment_method: number) => void;
   setShipper: (shipper: Account) => void;
   setShipping: (shipping: Shipping) => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
@@ -85,6 +87,8 @@ const initState: StateProps = {
   cities: [],
   suburbs: [],
   areas: [],
+  payment_method: 0,
+  setPaymentMethod: () => {},
   setProvinces: () => {},
   setCities: () => {},
   setSuburbs: () => {},
@@ -122,6 +126,9 @@ const CartProvider = ({ children }: CartProps) => {
   const [cities, setCities] = useState<StateProps["cities"]>([]);
   const [suburbs, setSuburbs] = useState<StateProps["suburbs"]>([]);
   const [areas, setAreas] = useState<StateProps["areas"]>([]);
+  const [payment_method, setPaymentMethod] = useState<StateProps["payment_method"]>(
+    0
+  );
   const { enqueueSnackbar } = useSnackbar();
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
@@ -243,6 +250,8 @@ const CartProvider = ({ children }: CartProps) => {
   return (
     <CartContext.Provider
       value={{
+        payment_method,
+        setPaymentMethod,
         contents,
         addContent,
         addQuantity,
