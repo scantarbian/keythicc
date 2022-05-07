@@ -1,13 +1,23 @@
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 import { selectStyleConfig } from "./ShippingForm";
-import { AVAILABLE_METHODS } from "./PaymentMethods";
 // components
 import Select from "react-select";
 
 type Prop = {
   className?: string;
 };
+
+const AVAILABLE_METHODS = [
+  {
+    value: 1,
+    label: "Credit Card",
+  },
+  {
+    value: 2,
+    label: "GoPay",
+  },
+];
 
 const PaymentForm = ({ className }: Prop) => {
   const {
@@ -86,7 +96,7 @@ const PaymentForm = ({ className }: Prop) => {
           value={
             payment_method > 0
               ? {
-                  label: AVAILABLE_METHODS[payment_method].label,
+                  label: AVAILABLE_METHODS[payment_method - 1].label,
                   value: payment_method,
                 }
               : undefined
