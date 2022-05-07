@@ -191,7 +191,16 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
           setProviders(res.data.pricings);
         });
     } else {
-      // handle international shipment [TO-DO]
+      // handle international shipment
+      fetch(
+        `/api/shipper/getInternationalPricing?destination_country_id=${
+          data.country.value
+        }&item_price=${getTotalPrice()}`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setProviders(res.data.pricings);
+        });
     }
 
 
