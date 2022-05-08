@@ -6,7 +6,7 @@ import { CartContext } from "contexts/CartContext";
 export const CreditCard = () => {
   const { data: session, status } = useSession();
 
-  const { orderId } = useContext(CartContext);
+  const { orderId, setPhase, setIframeUrl } = useContext(CartContext);
 
   type Inputs = {
     number: number;
@@ -35,10 +35,30 @@ export const CreditCard = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...data,
+        cvv: data.cvv,
+        number: data.number,
+        expiry_month: data.expiry_month,
+        expiry_year: data.expiry_year,
         order_id: orderId,
+        customer_details: {
+          billing: {
+            name: data.name,
+          },
+        },
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.transaction_status === "capture") {
+          console.log("SUCCESS");
+          // patch transaction_id to order
+        }
+
+        if (res.redirect_url) {
+          setPhase("verify");
+          setIframeUrl(res.redirect_url);
+        }
+      });
 
     console.log(data);
   };

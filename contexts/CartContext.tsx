@@ -46,7 +46,7 @@ type StateProps = {
         selected: boolean;
       }>
     | [];
-  phase: "information" | "payment";
+  phase: "information" | "payment" | "verify";
   shipper: Account;
   destination: Address & { _id?: string };
   paymentMethod: number;
@@ -56,6 +56,7 @@ type StateProps = {
   cities: Array<any>;
   suburbs: Array<any>;
   areas: Array<any>;
+  iframeUrl: string | undefined;
   setOrderId: (orderId: string) => void;
   setProvinces: (provinces: Array<any>) => void;
   setCities: (cities: Array<any>) => void;
@@ -63,10 +64,11 @@ type StateProps = {
   setAreas: (areas: Array<any>) => void;
   setProvider: (provider: Provider | undefined) => void;
   setProviders: (providers: Array<Provider>) => void;
-  setPhase: (phase: "information" | "payment") => void;
+  setPhase: (phase: "information" | "payment" | "verify") => void;
   setPaymentMethod: (paymentMethod: number) => void;
   setShipper: (shipper: Account) => void;
   setDestination: (destination: Address & { _id?: string }) => void;
+  setIframeUrl: (iframeUrl: string | undefined) => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
@@ -91,6 +93,7 @@ const initState: StateProps = {
   suburbs: [],
   areas: [],
   paymentMethod: 0,
+  iframeUrl: undefined,
   setOrderId: () => {},
   setPaymentMethod: () => {},
   setProvinces: () => {},
@@ -102,6 +105,7 @@ const initState: StateProps = {
   setPhase: () => {},
   setShipper: () => {},
   setDestination: () => {},
+  setIframeUrl: () => {},
   addContent: (product: (Product | Builder) & { _id: string }) => {},
   addQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
@@ -132,6 +136,7 @@ const CartProvider = ({ children }: CartProps) => {
   const [paymentMethod, setPaymentMethod] =
     useState<StateProps["paymentMethod"]>(0);
   const { enqueueSnackbar } = useSnackbar();
+  const [iframeUrl, setIframeUrl] = useState<StateProps["iframeUrl"]>(undefined);
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
@@ -268,6 +273,8 @@ const CartProvider = ({ children }: CartProps) => {
         toggleSelectAll,
         phase,
         setPhase,
+        iframeUrl,
+        setIframeUrl,
         shipper,
         setShipper,
         destination,
