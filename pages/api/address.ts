@@ -31,6 +31,16 @@ export default async function handler(
           });
         }
 
+        if (req.query.email) {
+          const address = await AddressModel.find({
+            email: req.query.email,
+          });
+
+          return res.status(200).json({
+            address,
+          });
+        }
+
         const addresses = await AddressModel.find();
 
         return res.status(200).json({

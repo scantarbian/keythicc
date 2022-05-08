@@ -6,9 +6,16 @@ import { Billing } from "./Billing";
 import { Address } from "./Address";
 import { Product } from "./Product";
 import { Builder } from "./Builder";
+import { Account } from "./Account";
 
 @plugin(autopopulate as any)
 export class Order extends TimeStamps {
+  @prop({ ref: () => Account })
+  public account?: Ref<Account>;
+
+  @prop({ type: String })
+  public email?: string;
+
   @prop({ ref: () => Product, autopopulate: true, type: Array })
   public items!: Ref<Product>[];
 
