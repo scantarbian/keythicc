@@ -126,41 +126,11 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
       email: shipper?.email || session?.user?.email,
       fullname: destination?.fullname || session?.user?.fullname,
       company: destination?.company,
-      country: destination?.country
-        ? {
-            value: destination?.country,
-            label: countries.find(
-              (country) => country.id === destination?.country
-            )?.name,
-          }
-        : undefined,
-      province: destination?.province
-        ? {
-            value: destination?.province,
-            label: provinces.find(
-              (province) => province.id === destination?.province
-            ).name,
-          }
-        : undefined,
-      city: destination?.city
-        ? {
-            value: destination?.city,
-            label: cities.find((city) => city.id === destination?.city).name,
-          }
-        : undefined,
-      suburb: destination?.suburb
-        ? {
-            value: destination?.suburb,
-            label: suburbs.find((suburb) => suburb.id === destination?.suburb)
-              .name,
-          }
-        : undefined,
-      area: destination?.area
-        ? {
-            value: destination?.area,
-            label: areas.find((area) => area.id === destination?.area).name,
-          }
-        : undefined,
+      country: destination.country || undefined,
+      province: destination.province || undefined,
+      city: destination.city || undefined,
+      suburb: destination.suburb || undefined,
+      area: destination.area || undefined,
       address: destination?.address,
       postalcode: destination?.postalcode,
       phonenumber: destination?.phonenumber,
@@ -208,17 +178,32 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
     setDestination({
       fullname: data.fullname,
       company: data.company,
-      country: data.country.value,
-      province: data.province?.value,
-      city: data.city?.value,
-      suburb: data.suburb?.value,
-      area: data.area?.value,
+      country: data.country,
+      province: data.province,
+      city: data.city,
+      suburb: data.suburb,
+      area: data.area,
       address: data.address,
       postalcode: data.postalcode,
       phonenumber: data.phonenumber,
     });
 
     setPhase("payment");
+
+    if (status === "authenticated" && data.saveAddress) {
+      fetch(`/api/address`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          account: session.user._id,
+          email: data.email,
+          fullname: data.fullname,
+          company: data.company,
+        }),
+      });
+    }
   };
 
   return (

@@ -1,12 +1,17 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useContext } from "react";
 
 export const CreditCard = () => {
+  const { data: session, status } = useSession();
+
   type Inputs = {
     number: number;
     name: string;
     expiry_month: number;
     expiry_year: number;
     cvv: number;
+    saveInfo?: boolean;
   };
 
   const {
@@ -18,6 +23,9 @@ export const CreditCard = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (status === "authenticated" && data.saveInfo) {
+    }
+
     console.log(data);
   };
 

@@ -14,20 +14,35 @@ export class Address {
   @prop({ type: String })
   public company?: string;
 
-  @prop({ type: String })
-  public country!: number;
+  @prop({ type: Object })
+  public country!: {
+    value: number;
+    label: string;
+  };
 
-  @prop({ type: Number })
-  public province?: number;
+  @prop({ type: Object })
+  public province?: {
+    value: number;
+    label: string;
+  };
 
-  @prop({ type: Number })
-  public city?: number;
+  @prop({ type: Object })
+  public city?: {
+    value: number;
+    label: string;
+  };
 
-  @prop({ type: Number })
-  public suburb?: number;
+  @prop({ type: Object })
+  public suburb?: {
+    value: number;
+    label: string;
+  };
 
-  @prop({ type: Number })
-  public area?: number;
+  @prop({ type: Object })
+  public area?: {
+    value: number;
+    label: string;
+  };
 
   @prop({ type: String })
   public address!: string;
