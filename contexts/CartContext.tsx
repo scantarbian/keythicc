@@ -50,7 +50,7 @@ type StateProps = {
   shipper: Account;
   destination: Address & { _id?: string };
   paymentMethod: number;
-  provider: Provider;
+  provider: Provider | undefined;
   providers: Array<Provider>;
   provinces: Array<any>;
   cities: Array<any>;
@@ -61,7 +61,7 @@ type StateProps = {
   setCities: (cities: Array<any>) => void;
   setSuburbs: (suburbs: Array<any>) => void;
   setAreas: (areas: Array<any>) => void;
-  setProvider: (provider: Provider) => void;
+  setProvider: (provider: Provider | undefined) => void;
   setProviders: (providers: Array<Provider>) => void;
   setPhase: (phase: "information" | "payment") => void;
   setPaymentMethod: (paymentMethod: number) => void;
@@ -84,7 +84,7 @@ const initState: StateProps = {
   phase: "information",
   shipper: {} as Account,
   destination: {} as Address & { _id?: string },
-  provider: {} as Provider,
+  provider: {} as Provider | undefined,
   providers: [],
   provinces: [],
   cities: [],
@@ -123,9 +123,7 @@ const CartProvider = ({ children }: CartProps) => {
   const [destination, setDestination] = useState<StateProps["destination"]>(
     {} as Address & { _id?: string }
   );
-  const [provider, setProvider] = useState<StateProps["provider"]>(
-    {} as Provider
-  );
+  const [provider, setProvider] = useState<StateProps["provider"]>(undefined);
   const [providers, setProviders] = useState<StateProps["providers"]>([]);
   const [provinces, setProvinces] = useState<StateProps["provinces"]>([]);
   const [cities, setCities] = useState<StateProps["cities"]>([]);
@@ -216,7 +214,7 @@ const CartProvider = ({ children }: CartProps) => {
   };
 
   const getTotalPriceWithShipping = () => {
-    return getTotalPrice() + (provider.final_price || 0);
+    return getTotalPrice() + (provider?.final_price || 0);
   };
 
   const getTotalQuantity = () => {

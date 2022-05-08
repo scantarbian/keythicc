@@ -46,7 +46,7 @@ const PriceInfo = ({ className, displayOnly = false }: Props) => {
         </p>
         <p className="text-lg font-light text-manatee-500">-$22.50</p>
       </div>
-      {provider.final_price && (
+      {provider?.final_price && (
         <div className="flex justify-between">
           <p className=" text-lg font-light text-gray-50">Shipping</p>
           <p className=" text-lg font-light text-gray-50">

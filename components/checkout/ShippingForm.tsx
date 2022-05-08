@@ -107,6 +107,7 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
     suburbs,
     getTotalPrice,
     setProviders,
+    setProvider
   } = useContext(CartContext);
 
   const { data: session, status } = useSession();
@@ -145,6 +146,19 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
   useSuburbWatcher(control);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const basicDestinationData = {
+      fullname: data.fullname,
+      company: data.company,
+      country: data.country,
+      province: data.province,
+      city: data.city,
+      suburb: data.suburb,
+      area: data.area,
+      address: data.address,
+      postalcode: data.postalcode,
+      phonenumber: data.phonenumber,
+    };
+
     if (!shipper.email) {
       setShipper({
         email: data.email,
@@ -161,6 +175,7 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
         .then((res) => res.json())
         .then((res) => {
           setProviders(res.data.pricings);
+          setProvider(undefined);
         });
     } else {
       // handle international shipment
@@ -172,10 +187,12 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
         .then((res) => res.json())
         .then((res) => {
           setProviders(res.data.pricings);
+          setProvider(undefined);
         });
     }
 
     if (!destination._id) {
+      // if user wants to save their address, we'll associate it with their account id
       if (status === "authenticated" && data.saveAddress) {
         fetch(`/api/address`, {
           method: "POST",
@@ -185,35 +202,19 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
           body: JSON.stringify({
             account: session.user._id,
             email: data.email,
-            fullname: data.fullname,
-            company: data.company,
-            country: data.country,
-            province: data.province,
-            city: data.city,
-            suburb: data.suburb,
-            area: data.area,
-            address: data.address,
-            postalcode: data.postalcode,
-            phonenumber: data.phonenumber,
+            ...basicDestinationData,
           }),
         })
           .then((res) => res.json())
           .then((res) => {
             setDestination({
-              fullname: data.fullname,
-              company: data.company,
-              country: data.country,
-              province: data.province,
-              city: data.city,
-              suburb: data.suburb,
-              area: data.area,
-              address: data.address,
-              postalcode: data.postalcode,
-              phonenumber: data.phonenumber,
+              ...basicDestinationData,
               _id: res.address._id,
             });
           });
       } else {
+        // if not? well, we still need it
+        // so save it anyway
         fetch(`/api/address`, {
           method: "POST",
           headers: {
@@ -221,36 +222,19 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
           },
           body: JSON.stringify({
             email: data.email,
-            fullname: data.fullname,
-            company: data.company,
-            country: data.country,
-            province: data.province,
-            city: data.city,
-            suburb: data.suburb,
-            area: data.area,
-            address: data.address,
-            postalcode: data.postalcode,
-            phonenumber: data.phonenumber,
+            ...basicDestinationData,
           }),
         })
           .then((res) => res.json())
           .then((res) => {
             setDestination({
-              fullname: data.fullname,
-              company: data.company,
-              country: data.country,
-              province: data.province,
-              city: data.city,
-              suburb: data.suburb,
-              area: data.area,
-              address: data.address,
-              postalcode: data.postalcode,
-              phonenumber: data.phonenumber,
+              ...basicDestinationData,
               _id: res.address._id,
             });
           });
       }
     } else {
+      // this handles the case where the user is editing their address
       fetch(`/api/address/`, {
         method: "PATCH",
         headers: {
@@ -259,31 +243,13 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
         body: JSON.stringify({
           id: destination._id,
           email: data.email,
-          fullname: data.fullname,
-          company: data.company,
-          country: data.country,
-          province: data.province,
-          city: data.city,
-          suburb: data.suburb,
-          area: data.area,
-          address: data.address,
-          postalcode: data.postalcode,
-          phonenumber: data.phonenumber,
+          ...basicDestinationData,
         }),
       })
         .then((res) => res.json())
         .then((res) => {
           setDestination({
-            fullname: data.fullname,
-            company: data.company,
-            country: data.country,
-            province: data.province,
-            city: data.city,
-            suburb: data.suburb,
-            area: data.area,
-            address: data.address,
-            postalcode: data.postalcode,
-            phonenumber: data.phonenumber,
+            ...basicDestinationData,
             _id: res.address._id,
           });
         });

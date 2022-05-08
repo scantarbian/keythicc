@@ -51,7 +51,7 @@ const PaymentForm = ({ className }: Prop) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (providers.length > 0 && provider.rate.id !== undefined) {
+    if (providers.length > 0 && provider !== undefined) {
       // create order on provider select
       // if order id is set, changes in provider would result in order updates
       if (orderId) {
@@ -146,7 +146,7 @@ const PaymentForm = ({ className }: Prop) => {
                   value: provider.rate.id,
                 }))}
                 value={
-                  provider.logistic && provider.rate
+                  provider !== undefined
                     ? {
                         label: `${provider.logistic.name} - ${
                           provider.rate.name

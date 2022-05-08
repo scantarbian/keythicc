@@ -1,9 +1,12 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import { useContext } from "react";
+import { CartContext } from "contexts/CartContext";
 
 export const CreditCard = () => {
   const { data: session, status } = useSession();
+
+  const { orderId } = useContext(CartContext);
 
   type Inputs = {
     number: number;
@@ -33,6 +36,7 @@ export const CreditCard = () => {
       },
       body: JSON.stringify({
         ...data,
+        order_id: orderId,
       }),
     });
 
