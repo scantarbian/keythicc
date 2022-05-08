@@ -51,60 +51,62 @@ const PaymentForm = ({ className }: Prop) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    // create order on provider select
-    // if order id is set, changes in provider would result in order updates
-    if (orderId) {
-      fetch("/api/order", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: orderId,
-          shipperServiceData: {
-            logisticName: provider.logistic.name,
-            rateName: provider.rate.name,
-            rateId: provider.rate.id,
-            totalPrice: provider.final_price,
+    if (providers.length > 0 && provider) {
+      // create order on provider select
+      // if order id is set, changes in provider would result in order updates
+      if (orderId) {
+        fetch("/api/order", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
           },
-        }),
-      });
-    } else {
-      // post
-      fetch("/api/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          account: session?.user._id,
-          email: shipper.email,
-          items: contents.map((content) => {
-            // @ts-expect-error
-            if (!content.product.total_price) {
-              return content.product._id;
-            }
+          body: JSON.stringify({
+            id: orderId,
+            shipperServiceData: {
+              logisticName: provider.logistic.name,
+              rateName: provider.rate.name,
+              rateId: provider.rate.id,
+              totalPrice: provider.final_price,
+            },
           }),
-          builderItems: contents.map((content) => {
-            // @ts-expect-error
-            if (content.product.total_price) {
-              return content.product._id;
-            }
-          }),
-          shipperServiceData: {
-            logisticName: provider.logistic.name,
-            rateName: provider.rate.name,
-            rateId: provider.rate.id,
-            totalPrice: provider.final_price,
-          },
-          destination: destination._id,
-          price: getTotalPriceWithShipping(),
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setOrderId(res.order._id);
         });
+      } else {
+        // post
+        fetch("/api/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            account: session?.user._id,
+            email: shipper.email,
+            items: contents.map((content) => {
+              // @ts-expect-error
+              if (!content.product.total_price) {
+                return content.product._id;
+              }
+            }),
+            builderItems: contents.map((content) => {
+              // @ts-expect-error
+              if (content.product.total_price) {
+                return content.product._id;
+              }
+            }),
+            shipperServiceData: {
+              logisticName: provider.logistic.name,
+              rateName: provider.rate.name,
+              rateId: provider.rate.id,
+              totalPrice: provider.final_price,
+            },
+            destination: destination._id,
+            price: getTotalPriceWithShipping(),
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            setOrderId(res.order._id);
+          });
+      }
     }
   }, [provider]);
 
