@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "lib/mongo";
-import CategoryModel from "models/Category";
+import AddressModel from "models/Address";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,30 +13,39 @@ export default async function handler(
 
     switch (method) {
       case "GET": {
-        // handle presence of id queries
         if (req.query.id) {
-          const category = await CategoryModel.findById(req.query.id);
+          const address = await AddressModel.findById(req.query.id);
 
           return res.status(200).json({
-            category,
+            address,
           });
         }
 
-        const categories = await CategoryModel.find();
+        if (req.query.accountId) {
+          const address = await AddressModel.find({
+            account: req.query.accountId,
+          });
+
+          return res.status(200).json({
+            address,
+          });
+        }
+
+        const addresses = await AddressModel.find();
 
         return res.status(200).json({
-          categories,
+          addresses,
         });
       }
       case "POST": {
-        const category = await CategoryModel.create(req.body);
+        const address = await AddressModel.create(req.body);
 
         return res.status(200).json({
-          category,
+          address,
         });
       }
       case "PATCH": {
-        const category = await CategoryModel.findByIdAndUpdate(
+        const address = await AddressModel.findByIdAndUpdate(
           req.body.id,
           req.body,
           {
@@ -45,22 +54,22 @@ export default async function handler(
         );
 
         return res.status(200).json({
-          category,
+          address,
         });
       }
       case "DELETE": {
         const { id } = req.query;
 
-        const category = await CategoryModel.findByIdAndDelete(id);
+        const address = await AddressModel.findByIdAndDelete(id);
 
         return res.status(200).json({
-          category,
+          address,
         });
       }
       default:
         return res.status(405).end();
     }
-  } catch (error: any) {
+  } catch (error) {
     return res.status(500).json(error);
   }
 }
