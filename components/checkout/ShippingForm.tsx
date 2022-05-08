@@ -190,19 +190,63 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
 
     setPhase("payment");
 
-    if (status === "authenticated" && data.saveAddress) {
-      fetch(`/api/address`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          account: session.user._id,
-          email: data.email,
-          fullname: data.fullname,
-          company: data.company,
-        }),
-      });
+    if (!destination._id) {
+      if (status === "authenticated" && data.saveAddress) {
+        fetch(`/api/address`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            account: session.user._id,
+            email: data.email,
+            fullname: data.fullname,
+            company: data.company,
+            country: data.country,
+            province: data.province,
+            city: data.city,
+            suburb: data.suburb,
+            area: data.area,
+            address: data.address,
+            postalcode: data.postalcode,
+            phonenumber: data.phonenumber,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            setDestination({
+              ...destination,
+              _id: res.address._id,
+            });
+          });
+      } else {
+        fetch(`/api/address`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.email,
+            fullname: data.fullname,
+            company: data.company,
+            country: data.country,
+            province: data.province,
+            city: data.city,
+            suburb: data.suburb,
+            area: data.area,
+            address: data.address,
+            postalcode: data.postalcode,
+            phonenumber: data.phonenumber,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            setDestination({
+              ...destination,
+              _id: res.address._id,
+            });
+          });
+      }
     }
   };
 
@@ -235,7 +279,7 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
         </div>
         <div className="flex flex-col gap-4">
           <span className="text-2xl font-bold mb-2">
-            destination Information
+            Destination Information
           </span>
           <Controller
             name="country"
@@ -260,7 +304,6 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
             })}
             className="bg-black border-white rounded-md"
             placeholder="Full name"
-            disabled={status === "authenticated"}
           />
           <input
             type="text"

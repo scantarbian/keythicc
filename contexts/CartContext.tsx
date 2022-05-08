@@ -47,7 +47,7 @@ type StateProps = {
     | [];
   phase: "information" | "payment";
   shipper: Account;
-  destination: Address;
+  destination: Address & { _id?: string };
   paymentMethod: number;
   provider: Provider;
   providers: Array<Provider>;
@@ -64,7 +64,7 @@ type StateProps = {
   setPhase: (phase: "information" | "payment") => void;
   setPaymentMethod: (paymentMethod: number) => void;
   setShipper: (shipper: Account) => void;
-  setDestination: (destination: Address) => void;
+  setDestination: (destination: Address & { _id?: string }) => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
@@ -80,7 +80,7 @@ const initState: StateProps = {
   contents: [],
   phase: "information",
   shipper: {} as Account,
-  destination: {} as Address,
+  destination: {} as Address & { _id?: string },
   provider: {} as Provider,
   providers: [],
   provinces: [],
@@ -116,7 +116,7 @@ const CartProvider = ({ children }: CartProps) => {
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
   const [shipper, setShipper] = useState<StateProps["shipper"]>({} as Account);
   const [destination, setDestination] = useState<StateProps["destination"]>(
-    {} as Address
+    {} as Address & { _id?: string }
   );
   const [provider, setProvider] = useState<StateProps["provider"]>(
     {} as Provider

@@ -19,10 +19,10 @@ export class Order extends TimeStamps {
   public billing?: Ref<Billing>;
 
   @prop({ ref: () => Address, autopopulate: true })
-  public destination?: Ref<Address>;
+  public destination: Ref<Address>;
 
   @prop({ type: String })
-  public shipperId!: string;
+  public shipperId?: string;
 
   @prop({ type: Number, default: 0 })
   public keythiccPoints?: number;
