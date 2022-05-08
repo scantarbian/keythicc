@@ -3,6 +3,7 @@ import { CartContext } from "contexts/CartContext";
 import { selectStyleConfig } from "./ShippingForm";
 // components
 import Select from "react-select";
+import { GoPay, CreditCard } from "./PaymentMethods";
 
 type Prop = {
   className?: string;
@@ -18,6 +19,17 @@ const AVAILABLE_METHODS = [
     label: "GoPay",
   },
 ];
+
+const displayPaymentForm = (method: number) => {
+  switch (method) {
+    case 1:
+      return <CreditCard />;
+    case 2:
+      return <GoPay />;
+    default:
+      return <></>;
+  }
+};
 
 const PaymentForm = ({ className }: Prop) => {
   const {
@@ -108,6 +120,9 @@ const PaymentForm = ({ className }: Prop) => {
           className="w-full"
           styles={selectStyleConfig}
         />
+        <div className="border border-white rounded-md p-2 flex flex-col divide-y divide bg-special-grey">
+          {displayPaymentForm(paymentMethod)}
+        </div>
       </div>
     </div>
   );

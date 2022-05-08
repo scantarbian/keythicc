@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -202,7 +202,6 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
           setProviders(res.data.pricings);
         });
     }
-
 
     setShipping({
       fullname: data.fullname,
