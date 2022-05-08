@@ -48,6 +48,11 @@ const PaymentForm = ({ className }: Prop) => {
   useEffect(() => {
     // create order on provider select
     // if order id is set, changes in provider would result in order updates
+    if (orderId) {
+      // patch
+    } else {
+      // post
+    }
   }, [provider]);
 
   return (
