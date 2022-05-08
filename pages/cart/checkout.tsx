@@ -11,6 +11,7 @@ import { CartContext } from "contexts/CartContext";
 import ShippingForm from "components/checkout/ShippingForm";
 import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
+import VerifyPayment from "components/checkout/VerifyPayment";
 // fetch headers
 import { shipper } from "lib/fetchHeaders";
 // hooks
@@ -21,7 +22,8 @@ const Checkout: NextPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { phase, setPhase, provider, contents } = useContext(CartContext);
+  const { phase, setPhase, provider, contents, iframeUrl } =
+    useContext(CartContext);
 
   useEffect(() => {
     if (!contents.some((content) => content.selected)) {
@@ -38,6 +40,8 @@ const Checkout: NextPage = ({
         return <ShippingForm className="p-16" countries={countries} />;
       case "payment":
         return <PaymentForm className="p-16" />;
+      case "verify":
+        return <VerifyPayment className="p-16" />;
       default:
         return <></>;
     }
@@ -80,6 +84,19 @@ const Checkout: NextPage = ({
             >
               {"Ship & Pay"}
             </span>
+            {iframeUrl && (
+              <span
+                className={`px-2 ${
+                  provider
+                    ? phase === "verify"
+                      ? "text-orange-400 cursor-pointer"
+                      : "text-white cursor-pointer "
+                    : "text-gray-500"
+                }`}
+              >
+                {"Verification"}
+              </span>
+            )}
           </div>
         </div>
         <span className="bg-special-grey pt-16 pr-16" />

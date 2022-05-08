@@ -6,7 +6,8 @@ import { CartContext } from "contexts/CartContext";
 export const CreditCard = () => {
   const { data: session, status } = useSession();
 
-  const { orderId, setPhase, setIframeUrl } = useContext(CartContext);
+  const { orderId, setPhase, setIframeUrl, getTotalPriceWithShipping } =
+    useContext(CartContext);
 
   type Inputs = {
     number: number;
@@ -40,6 +41,7 @@ export const CreditCard = () => {
         expiry_month: data.expiry_month,
         expiry_year: data.expiry_year,
         order_id: orderId,
+        gross_amount: getTotalPriceWithShipping(),
         customer_details: {
           billing: {
             name: data.name,
