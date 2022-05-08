@@ -21,7 +21,6 @@ export default async function handler(
         if (!cardToken.token_id) {
           return res.status(400).json(cardToken);
         }
-        console.log(cardToken);
 
         const chargeResponse = await midtrans.charge({
           chargeCreditCard: {
@@ -36,8 +35,6 @@ export default async function handler(
             },
           },
         });
-
-        console.log(chargeResponse);
 
         return res.status(200).json(chargeResponse);
       }

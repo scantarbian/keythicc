@@ -26,6 +26,16 @@ export const CreditCard = () => {
     if (status === "authenticated" && data.saveInfo) {
     }
 
+    fetch("/api/midtrans/card", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
+
     console.log(data);
   };
 

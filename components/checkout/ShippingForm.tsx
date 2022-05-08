@@ -175,21 +175,6 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
         });
     }
 
-    setDestination({
-      fullname: data.fullname,
-      company: data.company,
-      country: data.country,
-      province: data.province,
-      city: data.city,
-      suburb: data.suburb,
-      area: data.area,
-      address: data.address,
-      postalcode: data.postalcode,
-      phonenumber: data.phonenumber,
-    });
-
-    setPhase("payment");
-
     if (!destination._id) {
       if (status === "authenticated" && data.saveAddress) {
         fetch(`/api/address`, {
@@ -215,7 +200,16 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
           .then((res) => res.json())
           .then((res) => {
             setDestination({
-              ...destination,
+              fullname: data.fullname,
+              company: data.company,
+              country: data.country,
+              province: data.province,
+              city: data.city,
+              suburb: data.suburb,
+              area: data.area,
+              address: data.address,
+              postalcode: data.postalcode,
+              phonenumber: data.phonenumber,
               _id: res.address._id,
             });
           });
@@ -242,12 +236,60 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
           .then((res) => res.json())
           .then((res) => {
             setDestination({
-              ...destination,
+              fullname: data.fullname,
+              company: data.company,
+              country: data.country,
+              province: data.province,
+              city: data.city,
+              suburb: data.suburb,
+              area: data.area,
+              address: data.address,
+              postalcode: data.postalcode,
+              phonenumber: data.phonenumber,
               _id: res.address._id,
             });
           });
       }
+    } else {
+      fetch(`/api/address/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: destination._id,
+          email: data.email,
+          fullname: data.fullname,
+          company: data.company,
+          country: data.country,
+          province: data.province,
+          city: data.city,
+          suburb: data.suburb,
+          area: data.area,
+          address: data.address,
+          postalcode: data.postalcode,
+          phonenumber: data.phonenumber,
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          setDestination({
+            fullname: data.fullname,
+            company: data.company,
+            country: data.country,
+            province: data.province,
+            city: data.city,
+            suburb: data.suburb,
+            area: data.area,
+            address: data.address,
+            postalcode: data.postalcode,
+            phonenumber: data.phonenumber,
+            _id: res.address._id,
+          });
+        });
     }
+
+    setPhase("payment");
   };
 
   return (

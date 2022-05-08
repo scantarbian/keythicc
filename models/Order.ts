@@ -41,6 +41,10 @@ export class Order extends TimeStamps {
     finalPrice: number;
   };
 
+  // transaction id from midtrans
+  @prop({ type: String })
+  public transactionId?: string;
+
   @prop({ type: Number })
   public keythiccPoints?: number;
 

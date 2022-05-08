@@ -51,7 +51,7 @@ const PaymentForm = ({ className }: Prop) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (providers.length > 0 && provider) {
+    if (providers.length > 0 && provider.rate.id !== undefined) {
       // create order on provider select
       // if order id is set, changes in provider would result in order updates
       if (orderId) {
