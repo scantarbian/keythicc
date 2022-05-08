@@ -22,8 +22,8 @@ export class Order extends TimeStamps {
   @prop({ ref: () => Builder, autopopulate: true, type: Array })
   public builderItems?: Ref<Builder>[];
 
-  @prop({ ref: () => Billing, autopopulate: true })
-  public billing?: Ref<Billing>;
+  // @prop({ ref: () => Billing, autopopulate: true })
+  // public billing?: Ref<Billing>;
 
   @prop({ ref: () => Address, autopopulate: true })
   public destination: Ref<Address>;
@@ -33,17 +33,19 @@ export class Order extends TimeStamps {
   public shipperId?: string;
 
   // shipper rate_id
-  @prop({ type: Number })
-  public shipperServiceId?: number;
+  @prop({ type: Object })
+  public shipperServiceData!: {
+    logisticName: string;
+    rateName: string;
+    rateId: number;
+    finalPrice: number;
+  };
 
   @prop({ type: Number })
   public keythiccPoints?: number;
 
-  @prop({ type: Number, default: 0 })
-  public shippingPrice!: number;
-
-  @prop({ type: Number, default: 0 })
-  public totalPrice!: number;
+  @prop({ type: Number })
+  public price!: number;
 }
 
 export default getModelForClass(Order);
