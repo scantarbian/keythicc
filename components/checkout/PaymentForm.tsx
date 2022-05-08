@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CartContext } from "contexts/CartContext";
 import { selectStyleConfig } from "./ShippingForm";
 // components
@@ -33,6 +33,8 @@ const displayPaymentForm = (method: number) => {
 
 const PaymentForm = ({ className }: Prop) => {
   const {
+    orderId,
+    setOrderId,
     setPhase,
     shipper,
     destination,
@@ -42,6 +44,11 @@ const PaymentForm = ({ className }: Prop) => {
     paymentMethod,
     setPaymentMethod,
   } = useContext(CartContext);
+
+  useEffect(() => {
+    // create order on provider select
+    // if order id is set, changes in provider would result in order updates
+  }, [provider]);
 
   return (
     <div className={`${className} text-white`}>

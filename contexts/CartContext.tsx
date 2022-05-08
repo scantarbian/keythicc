@@ -38,6 +38,7 @@ export type Provider = {
 };
 
 type StateProps = {
+  orderId: string | undefined;
   contents:
     | Array<{
         product: (Product | Builder) & { _id: string };
@@ -55,6 +56,7 @@ type StateProps = {
   cities: Array<any>;
   suburbs: Array<any>;
   areas: Array<any>;
+  setOrderId: (orderId: string) => void;
   setProvinces: (provinces: Array<any>) => void;
   setCities: (cities: Array<any>) => void;
   setSuburbs: (suburbs: Array<any>) => void;
@@ -77,6 +79,7 @@ type StateProps = {
 };
 
 const initState: StateProps = {
+  orderId: undefined,
   contents: [],
   phase: "information",
   shipper: {} as Account,
@@ -88,6 +91,7 @@ const initState: StateProps = {
   suburbs: [],
   areas: [],
   paymentMethod: 0,
+  setOrderId: () => {},
   setPaymentMethod: () => {},
   setProvinces: () => {},
   setCities: () => {},
@@ -112,6 +116,7 @@ const initState: StateProps = {
 export const CartContext = createContext(initState);
 
 const CartProvider = ({ children }: CartProps) => {
+  const [orderId, setOrderId] = useState<string | undefined>(undefined);
   const [contents, setContents] = useState<StateProps["contents"]>([]);
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
   const [shipper, setShipper] = useState<StateProps["shipper"]>({} as Account);
@@ -249,6 +254,8 @@ const CartProvider = ({ children }: CartProps) => {
   return (
     <CartContext.Provider
       value={{
+        orderId,
+        setOrderId,
         paymentMethod,
         setPaymentMethod,
         contents,
