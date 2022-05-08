@@ -3,7 +3,7 @@ import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import autopopulate from "mongoose-autopopulate";
 
 import { Billing } from "./Billing";
-import { Shipping } from "./Shipping";
+import { Address } from "./Address";
 import { Product } from "./Product";
 import { Builder } from "./Builder";
 
@@ -18,8 +18,11 @@ export class Order extends TimeStamps {
   @prop({ ref: () => Billing, autopopulate: true })
   public billing?: Ref<Billing>;
 
-  @prop({ ref: () => Shipping, autopopulate: true })
-  public shipping?: Ref<Shipping>;
+  @prop({ ref: () => Address, autopopulate: true })
+  public destination?: Ref<Address>;
+
+  @prop({ type: String })
+  public shipperId!: string;
 
   @prop({ type: Number, default: 0 })
   public keythiccPoints?: number;

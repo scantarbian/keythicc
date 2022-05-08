@@ -1,6 +1,13 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { Account } from "./Account";
 
-export class Shipping {
+export class Address {
+  @prop({ ref: () => Account })
+  public account?: Ref<Account>;
+
+  @prop({ type: String })
+  public email?: string;
+
   @prop({ type: String })
   public fullname!: string;
 
@@ -32,4 +39,4 @@ export class Shipping {
   public phonenumber!: string;
 }
 
-export default getModelForClass(Shipping);
+export default getModelForClass(Address);

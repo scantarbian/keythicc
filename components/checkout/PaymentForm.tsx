@@ -35,7 +35,7 @@ const PaymentForm = ({ className }: Prop) => {
   const {
     setPhase,
     shipper,
-    shipping,
+    destination,
     providers,
     provider,
     setProvider,
@@ -60,7 +60,7 @@ const PaymentForm = ({ className }: Prop) => {
           </div>
           <div className="p-2 flex justify-between">
             <span className="w-1/6">Ship to</span>
-            <span className="flex-1">{shipping.address}</span>
+            <span className="flex-1">{destination.address}</span>
             <a
               className="underline hover:text-orange-400 cursor-pointer"
               onClick={() => setPhase("information")}

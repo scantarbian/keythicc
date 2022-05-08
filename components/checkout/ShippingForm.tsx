@@ -12,7 +12,7 @@ import {
   useSuburbWatcher,
 } from "./Watchers";
 
-type ShippingFormProps = {
+type destinationFormProps = {
   className?: string;
   countries: Array<{
     id: number;
@@ -48,6 +48,7 @@ export type Inputs = {
   address: string;
   postalcode: string;
   phonenumber: string;
+  saveAddress?: boolean;
 };
 
 export const selectStyleConfig: StylesConfig<
@@ -93,13 +94,13 @@ export const selectStyleConfig: StylesConfig<
   }),
 };
 
-const ShippingForm = ({ className, countries }: ShippingFormProps) => {
+const destinationForm = ({ className, countries }: destinationFormProps) => {
   const {
     setPhase,
     setShipper,
     shipper,
-    shipping,
-    setShipping,
+    destination,
+    setDestination,
     provinces,
     cities,
     areas,
@@ -123,45 +124,46 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
   } = useForm<Inputs>({
     defaultValues: {
       email: shipper?.email || session?.user?.email,
-      fullname: shipping?.fullname || session?.user?.fullname,
-      company: shipping?.company,
-      country: shipping?.country
+      fullname: destination?.fullname || session?.user?.fullname,
+      company: destination?.company,
+      country: destination?.country
         ? {
-            value: shipping?.country,
-            label: countries.find((country) => country.id === shipping?.country)
-              ?.name,
+            value: destination?.country,
+            label: countries.find(
+              (country) => country.id === destination?.country
+            )?.name,
           }
         : undefined,
-      province: shipping?.province
+      province: destination?.province
         ? {
-            value: shipping?.province,
+            value: destination?.province,
             label: provinces.find(
-              (province) => province.id === shipping?.province
+              (province) => province.id === destination?.province
             ).name,
           }
         : undefined,
-      city: shipping?.city
+      city: destination?.city
         ? {
-            value: shipping?.city,
-            label: cities.find((city) => city.id === shipping?.city).name,
+            value: destination?.city,
+            label: cities.find((city) => city.id === destination?.city).name,
           }
         : undefined,
-      suburb: shipping?.suburb
+      suburb: destination?.suburb
         ? {
-            value: shipping?.suburb,
-            label: suburbs.find((suburb) => suburb.id === shipping?.suburb)
+            value: destination?.suburb,
+            label: suburbs.find((suburb) => suburb.id === destination?.suburb)
               .name,
           }
         : undefined,
-      area: shipping?.area
+      area: destination?.area
         ? {
-            value: shipping?.area,
-            label: areas.find((area) => area.id === shipping?.area).name,
+            value: destination?.area,
+            label: areas.find((area) => area.id === destination?.area).name,
           }
         : undefined,
-      address: shipping?.address,
-      postalcode: shipping?.postalcode,
-      phonenumber: shipping?.phonenumber,
+      address: destination?.address,
+      postalcode: destination?.postalcode,
+      phonenumber: destination?.phonenumber,
     },
   });
 
@@ -203,7 +205,7 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
         });
     }
 
-    setShipping({
+    setDestination({
       fullname: data.fullname,
       company: data.company,
       country: data.country.value,
@@ -247,7 +249,9 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
           )}
         </div>
         <div className="flex flex-col gap-4">
-          <span className="text-2xl font-bold mb-2">Shipping Information</span>
+          <span className="text-2xl font-bold mb-2">
+            destination Information
+          </span>
           <Controller
             name="country"
             control={control}
@@ -371,6 +375,16 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
             className="bg-black border-white rounded-md"
             placeholder="Phone number"
           />
+          {status === "authenticated" && (
+            <label className="items-center flex gap-2">
+              <input
+                type="checkbox"
+                className="h-7 w-7 border-2 border-yellow-500 bg-shark-500 checked:text-yellow-500 rounded-sm"
+                {...register("saveAddress")}
+              />
+              Save Address
+            </label>
+          )}
         </div>
         <button
           className={`text-center text-lg font-semibold text-black w-full p-4 bg-yellow-500`}
@@ -382,4 +396,4 @@ const ShippingForm = ({ className, countries }: ShippingFormProps) => {
   );
 };
 
-export default ShippingForm;
+export default destinationForm;

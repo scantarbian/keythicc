@@ -1,7 +1,7 @@
 import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { Billing } from "./Billing";
-import { Shipping } from "./Shipping";
+import { Address } from "./Address";
 import { Order } from "./Order";
 import { Cart } from "./Cart";
 export class Account extends TimeStamps {
@@ -29,10 +29,6 @@ export class Account extends TimeStamps {
   // stores credit card data
   @prop({ ref: () => Billing, type: Array })
   public billing?: Ref<Billing>[];
-
-  // stores user address
-  @prop({ ref: () => Shipping, type: Array })
-  public shipping?: Ref<Shipping>[];
 
   @prop({ type: Number, default: 0 })
   public keythiccPoints?: number;

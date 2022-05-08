@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { Product } from "models/Product";
 import { Builder } from "models/Builder";
-import { Shipping } from "models/Shipping";
+import { Address } from "models/Address";
 import { Account } from "models/Account";
 // hooks
 import { useSnackbar } from "notistack";
@@ -47,7 +47,7 @@ type StateProps = {
     | [];
   phase: "information" | "payment";
   shipper: Account;
-  shipping: Shipping;
+  destination: Address;
   paymentMethod: number;
   provider: Provider;
   providers: Array<Provider>;
@@ -64,7 +64,7 @@ type StateProps = {
   setPhase: (phase: "information" | "payment") => void;
   setPaymentMethod: (paymentMethod: number) => void;
   setShipper: (shipper: Account) => void;
-  setShipping: (shipping: Shipping) => void;
+  setDestination: (destination: Address) => void;
   addContent: (product: (Product | Builder) & { _id: string }) => void;
   addQuantity: (product: (Product | Builder) & { _id: string }) => void;
   removeQuantity: (product: (Product | Builder) & { _id: string }) => void;
@@ -80,7 +80,7 @@ const initState: StateProps = {
   contents: [],
   phase: "information",
   shipper: {} as Account,
-  shipping: {} as Shipping,
+  destination: {} as Address,
   provider: {} as Provider,
   providers: [],
   provinces: [],
@@ -97,7 +97,7 @@ const initState: StateProps = {
   setProviders: () => {},
   setPhase: () => {},
   setShipper: () => {},
-  setShipping: () => {},
+  setDestination: () => {},
   addContent: (product: (Product | Builder) & { _id: string }) => {},
   addQuantity: (product: (Product | Builder) & { _id: string }) => {},
   removeQuantity: (product: (Product | Builder) & { _id: string }) => {},
@@ -115,8 +115,8 @@ const CartProvider = ({ children }: CartProps) => {
   const [contents, setContents] = useState<StateProps["contents"]>([]);
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
   const [shipper, setShipper] = useState<StateProps["shipper"]>({} as Account);
-  const [shipping, setShipping] = useState<StateProps["shipping"]>(
-    {} as Shipping
+  const [destination, setDestination] = useState<StateProps["destination"]>(
+    {} as Address
   );
   const [provider, setProvider] = useState<StateProps["provider"]>(
     {} as Provider
@@ -265,8 +265,8 @@ const CartProvider = ({ children }: CartProps) => {
         setPhase,
         shipper,
         setShipper,
-        shipping,
-        setShipping,
+        destination,
+        setDestination,
         provider,
         providers,
         setProviders,
