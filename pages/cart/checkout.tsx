@@ -77,7 +77,7 @@ const Checkout: NextPage = ({
                 provider
                   ? phase === "payment"
                     ? "text-orange-400 cursor-pointer"
-                    : "text-white cursor-pointer "
+                    : "text-white cursor-pointer hover:text-orange-400"
                   : "text-gray-500"
               }`}
               onClick={() => provider && setPhase("payment")}
