@@ -37,6 +37,8 @@ export type Provider = {
   insurance_applied: boolean;
 };
 
+type Phases = "information" | "payment" | "verify" | "success";
+
 type StateProps = {
   orderId: string | undefined;
   contents:
@@ -46,7 +48,7 @@ type StateProps = {
         selected: boolean;
       }>
     | [];
-  phase: "information" | "payment" | "verify";
+  phase: Phases;
   shipper: Account;
   destination: Address & { _id?: string };
   paymentMethod: number;
@@ -64,7 +66,7 @@ type StateProps = {
   setAreas: (areas: Array<any>) => void;
   setProvider: (provider: Provider | undefined) => void;
   setProviders: (providers: Array<Provider>) => void;
-  setPhase: (phase: "information" | "payment" | "verify") => void;
+  setPhase: (phase: Phases) => void;
   setPaymentMethod: (paymentMethod: number) => void;
   setShipper: (shipper: Account) => void;
   setDestination: (destination: Address & { _id?: string }) => void;

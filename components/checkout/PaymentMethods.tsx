@@ -51,9 +51,20 @@ export const CreditCard = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        fetch("/api/order", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: orderId,
+            transactionId: res.data.transaction_id,
+            transactionStatus: res.data.transaction_status,
+          }),
+        });
+
         if (res.transaction_status === "capture") {
-          console.log("SUCCESS");
-          // patch transaction_id to order
+          // set phase to success
         }
 
         if (res.redirect_url) {

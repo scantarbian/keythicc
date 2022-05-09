@@ -41,9 +41,17 @@ export class Order extends TimeStamps {
     finalPrice: number;
   };
 
+  // shipper status
+  @prop({ type: String })
+  public shipperStatus?: string;
+
   // transaction id from midtrans
   @prop({ type: String })
   public transactionId?: string;
+
+  // midtrans transaction status
+  @prop({ type: String })
+  public transactionStatus?: string;
 
   @prop({ type: Number })
   public keythiccPoints?: number;
