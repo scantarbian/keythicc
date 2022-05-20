@@ -1,10 +1,11 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState, useEffect } from "react";
 import { Product } from "models/Product";
 import { Builder } from "models/Builder";
 import { Address } from "models/Address";
 import { Account } from "models/Account";
 // hooks
 import { useSnackbar } from "notistack";
+import { useSession } from "next-auth/react";
 
 type CartProps = {
   children: ReactNode;
@@ -122,9 +123,6 @@ const initState: StateProps = {
 export const CartContext = createContext(initState);
 
 const CartProvider = ({ children }: CartProps) => {
-  // on init, when logged in, get the user's cart
-  // if there's none, create an empty cart
-
   const [orderId, setOrderId] = useState<string | undefined>(undefined);
   const [contents, setContents] = useState<StateProps["contents"]>([]);
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
@@ -143,6 +141,38 @@ const CartProvider = ({ children }: CartProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const [iframeUrl, setIframeUrl] =
     useState<StateProps["iframeUrl"]>(undefined);
+
+  // on init, when logged in, get the user's cart
+  // if there's none, create an empty cart
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session && session.user) {
+      const { user } = session;
+
+      fetch(`/api/cart?accountId=${user._id}`, {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          // if cart doesn't exist, create one
+          if (res.cart === null) {
+            fetch(`/api/cart`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                account: user._id,
+              }),
+            });
+          } else {
+            setContents(res.cart.items);
+          }
+          console.log(res.cart);
+        });
+    }
+  }, [session]);
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state

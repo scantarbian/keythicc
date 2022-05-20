@@ -1,13 +1,10 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 
 // components
 import { HeaderWithMenu } from "components/Header";
-import Arrow from "public/images/Arrow.png";
 import CartItem from "components/cart/CartItem";
 import PriceInfo from "components/cart/PriceInfo";
 

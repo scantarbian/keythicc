@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "lib/mongo";
-import CartModel from "models/Order";
+import CartModel from "models/Cart";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +22,7 @@ export default async function handler(
         }
 
         if (query.accountId) {
-          const cart = await CartModel.find({
+          const cart = await CartModel.findOne({
             account: query.accountId,
           });
 
@@ -38,6 +38,19 @@ export default async function handler(
         });
       }
       case "POST": {
+        const testExistence = await CartModel.findOne({
+          account: body.account,
+        });
+
+        // only create a new cart if one doesn't exist
+        // for the particular account
+        if (testExistence !== null) {
+          return res.status(200).json({
+            message: "Cart already exists for this account.",
+            cart: testExistence,
+          });
+        }
+
         const cart = await CartModel.create(body);
 
         return res.status(200).json({
