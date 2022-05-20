@@ -94,7 +94,7 @@ export const selectStyleConfig: StylesConfig<
   }),
 };
 
-const destinationForm = ({ className, countries }: destinationFormProps) => {
+const DestinationForm = ({ className, countries }: destinationFormProps) => {
   const {
     setPhase,
     setShipper,
@@ -432,4 +432,4 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
   );
 };
 
-export default destinationForm;
+export default DestinationForm;
