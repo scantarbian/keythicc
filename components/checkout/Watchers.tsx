@@ -81,7 +81,7 @@ const getProvinces = async (value: number) => {
     .then((res) => res.data);
 };
 
-export const initCountryWatcher = (control: Control<Inputs>) => {
+export const InitCountryWatcher = (control: Control<Inputs>) => {
   const { setProvinces } = useContext(CartContext);
 
   const country = useWatch({
@@ -107,7 +107,7 @@ const getCities = async (value: number) => {
     .then((res) => res.data);
 };
 
-export const initProvinceWatcher = (control: Control<Inputs>) => {
+export const InitProvinceWatcher = (control: Control<Inputs>) => {
   const { setCities } = useContext(CartContext);
 
   const province = useWatch({
@@ -133,7 +133,7 @@ const getSuburbs = async (value: number) => {
     .then((res) => res.data);
 };
 
-export const initCityWatcher = (control: Control<Inputs>) => {
+export const InitCityWatcher = (control: Control<Inputs>) => {
   const { setSuburbs } = useContext(CartContext);
 
   const city = useWatch({
@@ -159,7 +159,7 @@ const getAreas = async (value: number) => {
     .then((res) => res.data);
 };
 
-export const initSuburbWatcher = (control: Control<Inputs>) => {
+export const InitSuburbWatcher = (control: Control<Inputs>) => {
   const { setAreas } = useContext(CartContext);
 
   const suburb = useWatch({
