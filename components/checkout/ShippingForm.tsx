@@ -6,10 +6,10 @@ import { useSession } from "next-auth/react";
 import Select, { StylesConfig, GroupBase } from "react-select";
 import {
   EmailWatcher,
-  useCountryWatcher,
-  useProvinceWatcher,
-  useCityWatcher,
-  useSuburbWatcher,
+  initCountryWatcher,
+  initProvinceWatcher,
+  initCityWatcher,
+  initSuburbWatcher,
 } from "./Watchers";
 
 type destinationFormProps = {
@@ -107,7 +107,7 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
     suburbs,
     getTotalPrice,
     setProviders,
-    setProvider
+    setProvider,
   } = useContext(CartContext);
 
   const { data: session, status } = useSession();
@@ -140,10 +140,10 @@ const destinationForm = ({ className, countries }: destinationFormProps) => {
 
   // init watchers
   const selectedCountry = watch("country");
-  useCountryWatcher(control);
-  useProvinceWatcher(control);
-  useCityWatcher(control);
-  useSuburbWatcher(control);
+  initCountryWatcher(control);
+  initProvinceWatcher(control);
+  initCityWatcher(control);
+  initSuburbWatcher(control);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const basicDestinationData = {
