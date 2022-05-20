@@ -27,9 +27,6 @@ export class Account extends TimeStamps {
 
   // @prop({ ref: () => Order, type: Array })
   // public orders?: Ref<Order>[];
-
-  // @prop({ ref: () => Cart })
-  // public cart?: Ref<Cart>;
 }
 
 export default getModelForClass(Account);
