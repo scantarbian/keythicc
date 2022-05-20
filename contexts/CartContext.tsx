@@ -174,6 +174,23 @@ const CartProvider = ({ children }: CartProps) => {
     }
   }, [session]);
 
+  // update cart everytime content changes
+  useEffect(() => {
+    if (session && session.user) {
+      const { user } = session;
+
+      fetch(`/api/cart?accountId=${user._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: contents,
+        }),
+      });
+    }
+  }, [contents]);
+
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
     if (contents.find((content) => content.product._id === product._id)) {

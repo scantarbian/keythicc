@@ -58,6 +58,20 @@ export default async function handler(
         });
       }
       case "PATCH": {
+        if (query.accountId) {
+          const cart = await CartModel.findOneAndUpdate(
+            {
+              account: query.accountId,
+            },
+            body,
+            { new: true }
+          );
+
+          return res.status(200).json({
+            cart,
+          });
+        }
+
         const cart = await CartModel.findByIdAndUpdate(body.id, body, {
           new: true,
         });
