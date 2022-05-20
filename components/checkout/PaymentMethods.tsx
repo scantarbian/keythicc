@@ -58,8 +58,8 @@ export const CreditCard = () => {
           },
           body: JSON.stringify({
             id: orderId,
-            transactionId: res.data.transaction_id,
-            transactionStatus: res.data.transaction_status,
+            transactionId: res.transaction_id,
+            transactionStatus: res.transaction_status,
           }),
         });
 
