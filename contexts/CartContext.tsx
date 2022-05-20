@@ -169,7 +169,7 @@ const CartProvider = ({ children }: CartProps) => {
           } else {
             setContents(res.cart.items);
           }
-          console.log(res.cart);
+          console.log(res.cart.items);
         });
     }
   }, [session]);
