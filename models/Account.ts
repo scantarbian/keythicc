@@ -24,9 +24,6 @@ export class Account extends TimeStamps {
 
   @prop({ type: Number, default: 0 })
   public keythiccPoints?: number;
-
-  // @prop({ ref: () => Order, type: Array })
-  // public orders?: Ref<Order>[];
 }
 
 export default getModelForClass(Account);

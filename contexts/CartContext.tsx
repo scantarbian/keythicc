@@ -122,6 +122,9 @@ const initState: StateProps = {
 export const CartContext = createContext(initState);
 
 const CartProvider = ({ children }: CartProps) => {
+  // on init, when logged in, get the user's cart
+  // if there's none, create an empty cart
+
   const [orderId, setOrderId] = useState<string | undefined>(undefined);
   const [contents, setContents] = useState<StateProps["contents"]>([]);
   const [phase, setPhase] = useState<StateProps["phase"]>("information");
@@ -138,7 +141,8 @@ const CartProvider = ({ children }: CartProps) => {
   const [paymentMethod, setPaymentMethod] =
     useState<StateProps["paymentMethod"]>(0);
   const { enqueueSnackbar } = useSnackbar();
-  const [iframeUrl, setIframeUrl] = useState<StateProps["iframeUrl"]>(undefined);
+  const [iframeUrl, setIframeUrl] =
+    useState<StateProps["iframeUrl"]>(undefined);
 
   const addContent = (product: (Product | Builder) & { _id: string }) => {
     // append content to existing state
