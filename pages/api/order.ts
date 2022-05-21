@@ -22,22 +22,22 @@ export default async function handler(
         }
 
         if (query.accountId) {
-          const order = await OrderModel.find({
+          const orders = await OrderModel.find({
             account: query.accountId,
           });
 
           return res.status(200).json({
-            order,
+            orders,
           });
         }
 
         if (query.email) {
-          const order = await OrderModel.find({
+          const orders = await OrderModel.find({
             email: query.email,
           });
 
           return res.status(200).json({
-            order,
+            orders,
           });
         }
 
