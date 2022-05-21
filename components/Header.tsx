@@ -1,6 +1,8 @@
 import Link from "next/link";
 import useSettings from "hooks/useSettings";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useContext } from "react";
+// context
+import { CartContext } from "contexts/CartContext";
 
 const menuItems = [
   {
@@ -32,6 +34,8 @@ const Header = ({
   const [cartHover, setCartHover] = useState(false);
   const [searchHover, setSearchHover] = useState(false);
   const [menuHover, setMenuHover] = useState(false);
+
+  const { contents } = useContext(CartContext);
 
   return (
     <header
@@ -95,6 +99,17 @@ const Header = ({
                   setCartHover(false);
                 }}
               >
+                {contents.length > 0 && (
+                  <span
+                    className={`${
+                      cartHover || current === "/cart"
+                        ? "text-yellow-500"
+                        : "text-white"
+                    }`}
+                  >
+                    {contents.length}
+                  </span>
+                )}
                 <svg
                   width="29"
                   height="29"
