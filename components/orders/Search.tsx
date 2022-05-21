@@ -2,6 +2,8 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useState } from "react";
 // types
 import { Order } from "models/Order";
+// components
+import Details from "./Details";
 
 type Inputs = {
   orderId: string;
@@ -21,7 +23,12 @@ const Search = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    alert(data.orderId);
+    fetch(`/api/order?id=${data.orderId}`).then((res) => {
+      res.json().then((data) => {
+        setResult(data.order);
+        console.log(data.order);
+      });
+    });
   };
 
   return (
@@ -45,6 +52,7 @@ const Search = () => {
           SEARCH
         </button>
       </form>
+      {result && <Details order={result} />}
     </div>
   );
 };
