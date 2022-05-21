@@ -1,11 +1,19 @@
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useState } from "react";
+// types
+import { Order } from "models/Order";
 
 type Inputs = {
   orderId: string;
 };
 
 const Search = () => {
+  const [result, setResult] = useState<
+    Order & {
+      _id: string;
+    }
+  >();
+
   const {
     register,
     handleSubmit,
@@ -13,7 +21,7 @@ const Search = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
+    alert(data.orderId);
   };
 
   return (

@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
+import { useSession } from "next-auth/react";
 
 // components
 import { HeaderWithMenu } from "components/Header";
@@ -11,6 +12,8 @@ import PriceInfo from "components/cart/PriceInfo";
 
 const Cart: NextPage = () => {
   const { contents, toggleSelectAll } = useContext(CartContext);
+
+  const { status } = useSession();
 
   return (
     <>
