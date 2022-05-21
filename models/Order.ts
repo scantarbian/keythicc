@@ -8,6 +8,20 @@ import { Product } from "./Product";
 import { Builder } from "./Builder";
 import { Account } from "./Account";
 
+class ShipperServiceData {
+  @prop({ type: String })
+  public logisticName!: string;
+
+  @prop({ type: String })
+  public rateName!: string;
+
+  @prop({ type: Number })
+  public rateId!: number;
+
+  @prop({ type: Number })
+  public finalPrice!: number;
+}
+
 @plugin(autopopulate as any)
 export class Order extends TimeStamps {
   @prop({ ref: () => Account })
@@ -33,13 +47,8 @@ export class Order extends TimeStamps {
   public shipperId?: string;
 
   // shipper rate_id
-  @prop({ type: Object })
-  public shipperServiceData!: {
-    logisticName: string;
-    rateName: string;
-    rateId: number;
-    finalPrice: number;
-  };
+  @prop({ type: ShipperServiceData })
+  public shipperServiceData!: ShipperServiceData;
 
   // shipper status
   @prop({ type: String })

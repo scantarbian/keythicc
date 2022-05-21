@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "contexts/CartContext";
 
@@ -21,32 +22,38 @@ const Cart: NextPage = () => {
       <main>
         <HeaderWithMenu current="/cart" className="mb-10" />
 
-        <div className="flex px-8">
-          <div className=" grid grid-cols-12 gap-4 items-center">
-            <h1 className="text-2xl font-semibold text-gray-50 col-span-12">
-              My Cart
-            </h1>
+        <div className=" grid grid-cols-12 gap-4 items-center px-8">
+          <div className="col-span-12 flex divide-x">
+            <Link href="/cart">
+              <a className="text-2xl font-semibold text-gray-50 hover:text-yellow-500 px-4">
+                My Cart
+              </a>
+            </Link>
 
-            <div className="w-full col-span-7 bg-shark-500 self-start divide-y-2">
-              <label className="font-semibold text-gray-50 items-center flex">
-                <input
-                  className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 disabled:border-gray-500 checked:text-yellow-500 rounded-sm"
-                  type="checkbox"
-                  checked={
-                    contents.length > 0 &&
-                    contents.every((item) => item.selected)
-                  }
-                  onChange={() => toggleSelectAll()}
-                  disabled={contents.length === 0}
-                />
-                Select All
-              </label>
-              {contents.map((item, index) => (
-                <CartItem key={index} item={item} />
-              ))}
-            </div>
-            <PriceInfo className="col-start-8 col-span-3 p-8 " />
+            <Link href="/orders">
+              <a className="text-2xl font-semibold text-gray-50 hover:text-yellow-500 px-4">
+                My Orders
+              </a>
+            </Link>
           </div>
+          <div className="w-full col-span-7 bg-shark-500 self-start divide-y-2">
+            <label className="font-semibold text-gray-50 items-center flex">
+              <input
+                className="ml-8 m-5 h-7 w-7 border-2 border-yellow-500 bg-shark-500 disabled:border-gray-500 checked:text-yellow-500 rounded-sm"
+                type="checkbox"
+                checked={
+                  contents.length > 0 && contents.every((item) => item.selected)
+                }
+                onChange={() => toggleSelectAll()}
+                disabled={contents.length === 0}
+              />
+              Select All
+            </label>
+            {contents.map((item, index) => (
+              <CartItem key={index} item={item} />
+            ))}
+          </div>
+          <PriceInfo className="col-start-8 col-span-3 p-8 " />
         </div>
       </main>
     </>
