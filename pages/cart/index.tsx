@@ -32,7 +32,7 @@ const Cart: NextPage = () => {
 
             <Link href="/orders">
               <a className="text-2xl font-semibold text-gray-50 hover:text-yellow-500 px-4">
-                My Orders
+                {status === "authenticated" ? `My Orders` : `Search Orders`}
               </a>
             </Link>
           </div>

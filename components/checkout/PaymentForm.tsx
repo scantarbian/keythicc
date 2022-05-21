@@ -48,7 +48,7 @@ const PaymentForm = ({ className }: Prop) => {
     getTotalPriceWithShipping,
   } = useContext(CartContext);
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (providers.length > 0 && provider !== undefined) {
