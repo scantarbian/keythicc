@@ -64,7 +64,7 @@ export const CreditCard = () => {
         });
 
         if (res.transaction_status === "capture") {
-          // set phase to success
+          setPhase("success");
         }
 
         if (res.redirect_url) {

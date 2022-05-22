@@ -6,15 +6,28 @@ type Props = {
 };
 
 const VerifyPayment = ({ className }: Props) => {
-  const { iframeUrl, setPhase } = useContext(CartContext);
+  const { iframeUrl, setPhase, orderId } = useContext(CartContext);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // listen to message from window
   useEffect(() => {
     window.addEventListener("message", (event) => {
-      if (event.data) {
-        console.log("message", event.data);
+      if (event.data && event.data.status_code) {
+        if (event.data.status_code === "200") {
+          fetch("/api/order", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: orderId,
+              transactionStatus: event.data.transaction_status,
+            }),
+          }).then((res) => {
+            setPhase("success");
+          });
+        }
       }
     });
   }, []);

@@ -12,6 +12,7 @@ import ShippingForm from "components/checkout/ShippingForm";
 import PaymentForm from "components/checkout/PaymentForm";
 import ItemList from "components/checkout/ItemList";
 import VerifyPayment from "components/checkout/VerifyPayment";
+import Success from "components/checkout/Success";
 // fetch headers
 import { shipper } from "lib/fetchHeaders";
 // hooks
@@ -42,6 +43,8 @@ const Checkout: NextPage = ({
         return <PaymentForm className="p-16" />;
       case "verify":
         return <VerifyPayment className="p-16" />;
+      case "success":
+        return <Success className="p-16" />;
       default:
         return <></>;
     }

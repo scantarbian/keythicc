@@ -574,7 +574,7 @@ export const AddressSelector = ({
             className="p-4 border-2 border-yellow-500 flex items-center gap-x-4"
           >
             <input
-              className="m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-orange-500 rounded-sm"
+              className="m-4 h-7 w-7 border-2 border-stormdust-500 bg-shark-500 checked:border-orange-500 rounded-full"
               type="radio"
               {...register("addressId", {
                 required: true,
