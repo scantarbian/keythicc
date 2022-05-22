@@ -9,7 +9,13 @@ type BuilderProps = {
   baseKeyboard: Product & { _id: string };
 };
 
+type BasicMock = {
+  name: string;
+  price: number;
+};
+
 type StateProps = {
+  basePrice: number;
   currentStage: number;
   estimatedTotal: number;
   estimatedShipDate: Date;
@@ -20,19 +26,30 @@ type StateProps = {
   switches: Product | null;
   color: Color | null;
   account: Account | null;
+
   setStage: (stage: number) => void;
   setEstimatedTotal: (total: number) => void;
   setEstimatedShipDate: (date: Date) => void;
   setKeyThiccPoints: (points: number) => void;
   setKeyboard: (keyboard: Product & { _id: string }) => void;
-  setKeyboardSize: (size: string) => void;
   setKeycaps: (keycaps: Product & { _id: string }) => void;
   setSwitches: (switches: Product & { _id: string }) => void;
   setColor: (color: Color & { _id: string }) => void;
   setAccount: (account: Account & { _id: string }) => void;
+  // mocks
+  setKeyboardSize: (size: BasicMock) => void;
+  mockCaseStore: BasicMock;
+  mockColorStore: BasicMock;
+  mockSizeStore: BasicMock;
+  setKeyboardCaseMock: (mock: BasicMock) => void;
+  setKeyboardColorMock: (mock: BasicMock) => void;
+  // setMockCaseStore: (mock: BasicMock) => void;
+  // setMockColorStore: (mock: BasicMock) => void;
+  // setMockSizeStore: (mock: BasicMock) => void;
 };
 
 const initState: StateProps = {
+  basePrice: 0,
   currentStage: 0,
   estimatedTotal: 0,
   estimatedShipDate: new Date(),
@@ -48,18 +65,29 @@ const initState: StateProps = {
   setEstimatedShipDate: (date: Date) => {},
   setKeyThiccPoints: (points: number) => {},
   setKeyboard: (keyboard: Product & { _id: string }) => {},
-  setKeyboardSize: (size: string) => {},
   setKeycaps: (keycaps: Product & { _id: string }) => {},
   setSwitches: (switches: Product & { _id: string }) => {},
   setColor: (color: Color & { _id: string }) => {},
   setAccount: (account: Account & { _id: string }) => {},
+  // mocks
+  setKeyboardSize: (size: BasicMock) => {},
+  setKeyboardCaseMock: (mock: BasicMock) => {},
+  setKeyboardColorMock: (mock: BasicMock) => {},
+  mockCaseStore: {} as BasicMock,
+  mockColorStore: {} as BasicMock,
+  mockSizeStore: {} as BasicMock,
+  // setMockCaseStore: (mock: BasicMock) => {},
+  // setMockColorStore: (mock: BasicMock) => {},
+  // setMockSizeStore: (mock: BasicMock) => {},
 };
 
 export const BuilderContext = createContext(initState);
 
 const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
+  const basePrice = baseKeyboard.basePrice;
+
   const [currentStage, setCurrentStage] = useState(0);
-  const [estimatedTotal, setEstimatedTotal] = useState(0);
+  const [estimatedTotal, setEstimatedTotal] = useState(basePrice);
   const [estimatedShipDate, setEstimatedShipDate] = useState(new Date());
   const [keyThiccPoints, setKeyThiccPoints] = useState(0);
   const [keyboard, setKeyboardStore] = useState<Product | null>(baseKeyboard);
@@ -72,11 +100,23 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     builder: undefined,
     keyboardCase: undefined,
     keyboardColor: undefined,
+    keyboardCaseMock: "",
+    keyboardColorMock: "",
     keyboardSize: "",
     totalPrice: 0,
   });
   const [color, setColorStore] = useState<Color | null>(null);
   const [account, setAccount] = useState<Account | null>(null);
+  // mocks
+  const [mockCaseStore, setMockCaseStore] = useState<BasicMock>(
+    {} as BasicMock
+  );
+  const [mockColorStore, setMockColorStore] = useState<BasicMock>(
+    {} as BasicMock
+  );
+  const [mockSizeStore, setMockSizeStore] = useState<BasicMock>(
+    {} as BasicMock
+  );
 
   const setStage = (stage: number) => {
     setCurrentStage(stage);
@@ -89,13 +129,6 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
       baseKeyboard: keyboard,
     });
   };
-
-  const setKeyboardSize = (size: string) => {
-    setBuilderResult({
-      ...builderResult,
-      keyboardSize: size,
-    });
-  }
 
   const setKeycaps = (keycaps: Product & { _id: string }) => {
     setKeycapsStore(keycaps);
@@ -121,9 +154,52 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     });
   };
 
+  const setKeyboardSize = (size: BasicMock) => {
+    const total = builderResult.keyboardSize
+      ? estimatedTotal - mockSizeStore.price + size.price
+      : estimatedTotal + size.price;
+
+    setEstimatedTotal(total);
+
+    setMockSizeStore(size);
+    setBuilderResult({
+      ...builderResult,
+      keyboardSize: size.name,
+    });
+  };
+
+  const setKeyboardCaseMock = (mock: BasicMock) => {
+    const total = builderResult.keyboardCaseMock
+      ? estimatedTotal - mockCaseStore.price + mock.price
+      : estimatedTotal + mock.price;
+
+    setEstimatedTotal(total);
+
+    setMockCaseStore(mock);
+    setBuilderResult({
+      ...builderResult,
+      keyboardCaseMock: mock.name,
+    });
+  };
+
+  const setKeyboardColorMock = (mock: BasicMock) => {
+    const total = builderResult.keyboardColorMock
+      ? estimatedTotal - mockColorStore.price + mock.price
+      : estimatedTotal + mock.price;
+
+    setEstimatedTotal(total);
+
+    setMockColorStore(mock);
+    setBuilderResult({
+      ...builderResult,
+      keyboardColorMock: mock.name,
+    });
+  };
+
   return (
     <BuilderContext.Provider
       value={{
+        basePrice,
         currentStage,
         estimatedTotal,
         estimatedShipDate,
@@ -144,6 +220,11 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
         setSwitches,
         setColor,
         setAccount,
+        setKeyboardCaseMock,
+        setKeyboardColorMock,
+        mockCaseStore,
+        mockColorStore,
+        mockSizeStore,
       }}
     >
       {children}

@@ -71,13 +71,16 @@ export class Product extends TimeStamps {
   @prop({ type: Boolean })
   public wireless?: boolean;
 
+  // if it is not customizable, take first item in the array
   @prop({ type: Array })
   public sizes?: mongoose.Types.Array<string>;
 
+  // if it is not customizable, take first item in the array
   @prop({ ref: () => Color, autopopulate: true })
   public colors?: Ref<Color>[];
 
   // cases act as material but for keyboards
+  // if it is not customizable, take first item in the array
   @prop({ type: Array })
   public cases?: mongoose.Types.Array<string>;
 

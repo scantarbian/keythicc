@@ -25,6 +25,17 @@ const VerifyPayment = ({ className }: Props) => {
               transactionStatus: event.data.transaction_status,
             }),
           }).then((res) => {
+            // TO-DO: call Shipper order API to create order here
+            // fetch("/api/shipper/order", {
+            //   method: "POST",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify({
+            //   })
+            // }).then((res) => {
+            //   setPhase("success");
+            // });
             setPhase("success");
           });
         }

@@ -19,6 +19,14 @@ export class Builder {
   @prop({ type: Number })
   public totalPrice!: number;
 
+  // this is for mock only, actual is keyboardCase
+  @prop({ type: String })
+  public keyboardCaseMock?: string;
+
+  // this is for mock only, actual is keyboardColor
+  @prop({ type: String })
+  public keyboardColorMock?: string;
+
   @prop({ ref: () => Product, autopopulate: true })
   public keyboardCase!: Ref<Product>;
 

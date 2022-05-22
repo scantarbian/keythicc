@@ -28,7 +28,9 @@ const BuilderMain = ({ className }: Props) => {
 
   return (
     <div className={`grid grid-cols-5 w-full gap-x-20 ${className} p-10`}>
-      <div className="col-span-4 text-white text-center">CANVAS</div>
+      <div className="col-span-4 text-white text-center">
+        CANVAS (WORK IN PROGESS)
+      </div>
       <div className="col-span-1">{Menu()}</div>
     </div>
   );
