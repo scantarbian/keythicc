@@ -43,7 +43,6 @@ const Details = ({ order }: Props) => {
         {order.items.map((item: any) => (
           <CartItem key={item._id} item={item} displayOnly={true} />
         ))}
-        {/* <span className="text-white">{JSON.stringify(order)}</span> */}
       </div>
     </div>
   );

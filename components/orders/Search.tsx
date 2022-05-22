@@ -2,6 +2,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useState } from "react";
 // types
 import { Order } from "models/Order";
+import { Address } from "models/Address";
 // components
 import Details from "./Details";
 
@@ -13,6 +14,7 @@ const Search = () => {
   const [result, setResult] = useState<
     Order & {
       _id: string;
+      destination: Address;
     }
   >();
 
