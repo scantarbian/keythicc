@@ -31,6 +31,10 @@ export class Builder {
   @prop({ type: String })
   public keyboardKeycapMock?: string;
 
+  // this is for mock only, actual is switch
+  @prop({ type: String })
+  public keyboardSwitchMock?: string;
+
   @prop({ ref: () => Product, autopopulate: true })
   public keyboardCase!: Ref<Product>;
 

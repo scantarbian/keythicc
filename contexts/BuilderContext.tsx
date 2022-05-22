@@ -42,9 +42,11 @@ type StateProps = {
   mockColorStore: BasicMock;
   mockSizeStore: BasicMock;
   mockKeycapStore: BasicMock;
+  mockSwitchStore: BasicMock;
   setKeyboardCaseMock: (mock: BasicMock) => void;
   setKeyboardColorMock: (mock: BasicMock) => void;
   setKeyboardKeycapMock: (mock: BasicMock) => void;
+  setKeyboardSwitchMock: (mock: BasicMock) => void;
   // setMockCaseStore: (mock: BasicMock) => void;
   // setMockColorStore: (mock: BasicMock) => void;
   // setMockSizeStore: (mock: BasicMock) => void;
@@ -76,10 +78,12 @@ const initState: StateProps = {
   setKeyboardCaseMock: (mock: BasicMock) => {},
   setKeyboardColorMock: (mock: BasicMock) => {},
   setKeyboardKeycapMock: (mock: BasicMock) => {},
+  setKeyboardSwitchMock: (mock: BasicMock) => {},
   mockCaseStore: {} as BasicMock,
   mockColorStore: {} as BasicMock,
   mockSizeStore: {} as BasicMock,
   mockKeycapStore: {} as BasicMock,
+  mockSwitchStore: {} as BasicMock,
   // setMockCaseStore: (mock: BasicMock) => {},
   // setMockColorStore: (mock: BasicMock) => {},
   // setMockSizeStore: (mock: BasicMock) => {},
@@ -108,6 +112,7 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     keyboardColorMock: "",
     keyboardKeycapMock: "",
     keyboardSize: "",
+    keyboardSwitchMock: "",
     totalPrice: 0,
   });
   const [color, setColorStore] = useState<Color | null>(null);
@@ -123,6 +128,9 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     {} as BasicMock
   );
   const [mockKeycapStore, setMockKeycapStore] = useState<BasicMock>(
+    {} as BasicMock
+  );
+  const [mockSwitchStore, setMockSwitchStore] = useState<BasicMock>(
     {} as BasicMock
   );
 
@@ -218,6 +226,20 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     });
   };
 
+  const setKeyboardSwitchMock = (mock: BasicMock) => {
+    const total = builderResult.keyboardSwitchMock
+      ? estimatedTotal - mockSwitchStore.price + mock.price
+      : estimatedTotal + mock.price;
+
+    setEstimatedTotal(total);
+
+    setMockSwitchStore(mock);
+    setBuilderResult({
+      ...builderResult,
+      keyboardSwitchMock: mock.name,
+    });
+  };
+
   return (
     <BuilderContext.Provider
       value={{
@@ -249,6 +271,8 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
         mockSizeStore,
         mockKeycapStore,
         setKeyboardKeycapMock,
+        setKeyboardSwitchMock,
+        mockSwitchStore,
       }}
     >
       {children}

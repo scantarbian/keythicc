@@ -6,6 +6,7 @@ import {
   keyboardSizes,
   keyboardColors,
   keycaps,
+  switches,
 } from "./mockData";
 
 export const Keyboard = () => {
@@ -169,9 +170,97 @@ export const Keycaps = () => {
 };
 
 export const Switches = () => {
-  const { setSwitches } = useContext(BuilderContext);
+  const { setSwitches, setKeyboardSwitchMock, builderResult } =
+    useContext(BuilderContext);
 
-  return <></>;
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="font-bold text-white">LINEAR</span>
+      <div className="grid grid-cols-4">
+        {switches
+          .filter((switchItem) => switchItem.type.toLowerCase() === "linear")
+          .map((item) => (
+            <button
+              key={item.name}
+              onClick={() => {
+                setKeyboardSwitchMock(item);
+              }}
+              className={`rounded-xl w-16 h-16  ${
+                builderResult?.keyboardSwitchMock === item.name
+                  ? "border-yellow-500 border-4"
+                  : ""
+              }`}
+              style={{
+                background: item.color,
+              }}
+            />
+          ))}
+      </div>
+
+      <span className="font-bold text-white">TACTILE</span>
+      <div className="grid grid-cols-4">
+        {switches
+          .filter((switchItem) => switchItem.type.toLowerCase() === "tactile")
+          .map((item) => (
+            <button
+              key={item.name}
+              onClick={() => {
+                setKeyboardSwitchMock(item);
+              }}
+              className={`rounded-xl w-16 h-16  ${
+                builderResult?.keyboardSwitchMock === item.name
+                  ? "border-yellow-500 border-4"
+                  : ""
+              }`}
+              style={{
+                background: item.color,
+              }}
+            />
+          ))}
+      </div>
+
+      <span className="font-bold text-white">CLICKY</span>
+      <div className="grid grid-cols-4">
+        {switches
+          .filter((switchItem) => switchItem.type.toLowerCase() === "clicky")
+          .map((item) => (
+            <button
+              key={item.name}
+              onClick={() => {
+                setKeyboardSwitchMock(item);
+              }}
+              className={`rounded-xl w-16 h-16  ${
+                builderResult?.keyboardSwitchMock === item.name
+                  ? "border-yellow-500 border-4"
+                  : ""
+              }`}
+              style={{
+                background: item.color,
+              }}
+            />
+          ))}
+      </div>
+
+      {builderResult?.keyboardSwitchMock && (
+        <div className="flex flex-col gap-2">
+          <span className="text-xl font-bold text-white">
+            {
+              switches.find(
+                (item) => builderResult?.keyboardSwitchMock === item.name
+              )?.name
+            }
+          </span>
+
+          <span className=" text-white">
+            Rp
+            {switches
+              .find((item) => builderResult?.keyboardSwitchMock === item.name)
+              ?.price.toLocaleString()}
+          </span>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const Review = () => {

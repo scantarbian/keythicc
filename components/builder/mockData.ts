@@ -69,3 +69,24 @@ export const keycaps = [
     price: 800000,
   },
 ];
+
+export const switches = [
+  {
+    name: "Gateron Blue",
+    type: "Clicky",
+    price: 100000,
+    color: "#00b4ff",
+  },
+  {
+    name: "Gateron Red",
+    type: "Linear",
+    price: 100000,
+    color: "#ff0000",
+  },
+  {
+    name: "Gateron Brown",
+    type: "Tactile",
+    price: 100000,
+    color: "#8c6239",
+  },
+];
