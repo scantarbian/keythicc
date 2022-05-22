@@ -81,6 +81,7 @@ export const CreditCard = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col text-white gap-4 p-4"
     >
+      <span>4811111111111114</span>
       <input
         type="text"
         {...register("name", {
@@ -91,6 +92,7 @@ export const CreditCard = () => {
       />
       <input
         type="text"
+        // remove spaces
         {...register("number", {
           required: true,
         })}
