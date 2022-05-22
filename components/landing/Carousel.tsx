@@ -50,7 +50,7 @@ const CarouselWrapper = ({
               background: "rgba(0,0,0,0.5)",
             }}
           >
-            <Header />
+            <Header additionals />
             <div className="flex flex-col pl-48 gap-4">
               <h1 className="text-7xl font-bold ">{image.title}</h1>
               <h2 className="text-2xl font-light">{image.subtitle}</h2>

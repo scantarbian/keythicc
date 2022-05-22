@@ -6,7 +6,7 @@ type Props = {
 };
 
 const VerifyPayment = ({ className }: Props) => {
-  const { iframeUrl } = useContext(CartContext);
+  const { iframeUrl, setPhase } = useContext(CartContext);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
