@@ -80,18 +80,7 @@ const PaymentForm = ({ className }: Prop) => {
           body: JSON.stringify({
             account: session?.user._id,
             email: shipper.email,
-            items: contents.map((content) => {
-              // @ts-expect-error
-              if (!content.product.total_price) {
-                return content.product._id;
-              }
-            }),
-            builderItems: contents.map((content) => {
-              // @ts-expect-error
-              if (content.product.total_price) {
-                return content.product._id;
-              }
-            }),
+            items: contents,
             shipperServiceData: {
               logisticName: provider.logistic.name,
               rateName: provider.rate.name,

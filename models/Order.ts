@@ -1,12 +1,12 @@
 import { Ref, getModelForClass, prop, plugin } from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import autopopulate from "mongoose-autopopulate";
+import mongoose from "mongoose";
 
 import { Billing } from "./Billing";
 import { Address } from "./Address";
-import { Product } from "./Product";
-import { Builder } from "./Builder";
 import { Account } from "./Account";
+import { CartItem } from "./Cart";
 
 class ShipperServiceData {
   @prop({ type: String })
@@ -30,11 +30,8 @@ export class Order extends TimeStamps {
   @prop({ type: String })
   public email?: string;
 
-  @prop({ ref: () => Product, autopopulate: true, type: Array })
-  public items!: Ref<Product>[];
-
-  @prop({ ref: () => Builder, autopopulate: true, type: Array })
-  public builderItems?: Ref<Builder>[];
+  @prop({ type: Array, default: [] })
+  public items!: mongoose.Types.Array<CartItem>;
 
   // @prop({ ref: () => Billing, autopopulate: true })
   // public billing?: Ref<Billing>;

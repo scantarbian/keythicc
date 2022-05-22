@@ -26,13 +26,12 @@ const Search = () => {
     fetch(`/api/order?id=${data.orderId}`).then((res) => {
       res.json().then((data) => {
         setResult(data.order);
-        console.log(data.order);
       });
     });
   };
 
   return (
-    <div className="flex flex-col mt-4 items-center">
+    <div className="flex flex-col mt-4 items-center gap-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-4 p-4 border-yellow-500 border-2 rounded-lg w-1/2"
