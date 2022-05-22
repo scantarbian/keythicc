@@ -1,7 +1,12 @@
 import { useContext } from "react";
 import { BuilderContext } from "contexts/BuilderContext";
 // mock datas
-import { baseplateTypes, keyboardSizes, keyboardColors } from "./mockData"
+import {
+  baseplateTypes,
+  keyboardSizes,
+  keyboardColors,
+  keycaps,
+} from "./mockData";
 
 export const Keyboard = () => {
   const {
@@ -33,15 +38,6 @@ export const Keyboard = () => {
           </button>
         ))}
       </div>
-      {/* {keyboard && keyboard.sizes ? (
-        keyboard.sizes.map((size, index) => (
-          <button key={index} onClick={() => setKeyboardSize(size)}>
-            {size}
-          </button>
-        ))
-      ) : (
-        <span className="lowercase">Keyboard Size Unavailable</span>
-      )} */}
       <span className="uppercase">Keyboard Color</span>
       <div className="flex gap-4">
         {keyboardColors.map((color) => (
@@ -97,9 +93,79 @@ export const Keyboard = () => {
 };
 
 export const Keycaps = () => {
-  const { setKeycaps } = useContext(BuilderContext);
+  const { setKeycaps, setKeyboardKeycapMock, builderResult } =
+    useContext(BuilderContext);
 
-  return <></>;
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-4">
+        {keycaps.map((keycap) => (
+          <button
+            key={keycap.name}
+            onClick={() => {
+              setKeyboardKeycapMock(keycap);
+            }}
+            className={`rounded-full w-16 h-16  ${
+              builderResult?.keyboardKeycapMock === keycap.name
+                ? "border-yellow-500 border-4"
+                : ""
+            }`}
+            style={{
+              background: `linear-gradient(to bottom, ${keycap.colorStart}, ${keycap.colorEnd})`,
+            }}
+          />
+        ))}
+      </div>
+
+      {builderResult?.keyboardKeycapMock && (
+        <div className="flex flex-col gap-2">
+          <span className="text-xl font-bold text-white">
+            {
+              keycaps.find(
+                (keycap) => builderResult?.keyboardKeycapMock === keycap.name
+              )?.name
+            }
+          </span>
+
+          <span className=" text-white">
+            Rp
+            {keycaps
+              .find(
+                (keycap) => builderResult?.keyboardKeycapMock === keycap.name
+              )
+              ?.price.toLocaleString()}
+          </span>
+
+          <span className="text-white">
+            {
+              keycaps.find(
+                (keycap) => builderResult?.keyboardKeycapMock === keycap.name
+              )?.description
+            }
+          </span>
+
+          <ul className="list-disc list-inside">
+            <li className="text-white">
+              Profile:{" "}
+              {
+                keycaps.find(
+                  (keycap) => builderResult?.keyboardKeycapMock === keycap.name
+                )?.profile
+              }
+            </li>
+            <li className="text-white">
+              Material:{" "}
+              {
+                keycaps.find(
+                  (keycap) => builderResult?.keyboardKeycapMock === keycap.name
+                )?.material
+              }
+            </li>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const Switches = () => {

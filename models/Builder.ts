@@ -27,6 +27,10 @@ export class Builder {
   @prop({ type: String })
   public keyboardColorMock?: string;
 
+  // this is for mock only, actual is keycap
+  @prop({ type: String })
+  public keyboardKeycapMock?: string;
+
   @prop({ ref: () => Product, autopopulate: true })
   public keyboardCase!: Ref<Product>;
 
