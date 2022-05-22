@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useState, useContext } from "react";
 // components
 import Link from "next/link";
 // Types
-import { Inputs } from "./ShippingForm";
+import { Inputs } from "./AddressForms";
 // fetch headers
 import { shipper } from "lib/fetchHeaders";
 // context

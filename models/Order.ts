@@ -6,7 +6,8 @@ import mongoose from "mongoose";
 import { Billing } from "./Billing";
 import { Address } from "./Address";
 import { Account } from "./Account";
-import { CartItem } from "./Cart";
+import { Product } from "./Product";
+import { Builder } from "./Builder";
 
 class ShipperServiceData {
   @prop({ type: String })
@@ -23,6 +24,15 @@ class ShipperServiceData {
 }
 
 @plugin(autopopulate as any)
+export class Item {
+  @prop({ ref: () => Product || Builder, autopopulate: true })
+  public product?: Ref<Product> | Ref<Builder>;
+
+  @prop({ type: Number })
+  public quantity!: number;
+}
+
+@plugin(autopopulate as any)
 export class Order extends TimeStamps {
   @prop({ ref: () => Account })
   public account?: Ref<Account>;
@@ -31,7 +41,7 @@ export class Order extends TimeStamps {
   public email!: string;
 
   @prop({ type: Array, default: [] })
-  public items!: mongoose.Types.Array<CartItem>;
+  public items!: mongoose.Types.Array<Item>;
 
   // @prop({ ref: () => Billing, autopopulate: true })
   // public billing?: Ref<Billing>;

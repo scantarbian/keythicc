@@ -120,7 +120,7 @@ export const CreditCard = () => {
           {...register("cvv", {
             required: true,
           })}
-          className="border-white rounded-md placeholder:text-white bg-special-grey-2 flex-1"
+          className="border-white rounded-md placeholder:text-white bg-special-grey-2"
           placeholder="Security code"
         />
       </div>

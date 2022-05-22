@@ -60,6 +60,7 @@ type StateProps = {
   suburbs: Array<any>;
   areas: Array<any>;
   iframeUrl: string | undefined;
+  setContents: (contents: any) => void;
   setOrderId: (orderId: string) => void;
   setProvinces: (provinces: Array<any>) => void;
   setCities: (cities: Array<any>) => void;
@@ -97,6 +98,7 @@ const initState: StateProps = {
   areas: [],
   paymentMethod: 0,
   iframeUrl: undefined,
+  setContents: () => {},
   setOrderId: () => {},
   setPaymentMethod: () => {},
   setProvinces: () => {},
@@ -343,6 +345,7 @@ const CartProvider = ({ children }: CartProps) => {
         setSuburbs,
         areas,
         setAreas,
+        setContents,
       }}
     >
       {children}

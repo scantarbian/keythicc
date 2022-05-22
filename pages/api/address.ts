@@ -22,22 +22,22 @@ export default async function handler(
         }
 
         if (req.query.accountId) {
-          const address = await AddressModel.find({
+          const addresses = await AddressModel.find({
             account: req.query.accountId,
           });
 
           return res.status(200).json({
-            address,
+            addresses,
           });
         }
 
         if (req.query.email) {
-          const address = await AddressModel.find({
+          const addresses = await AddressModel.find({
             email: req.query.email,
           });
 
           return res.status(200).json({
-            address,
+            addresses,
           });
         }
 

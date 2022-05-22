@@ -6,7 +6,7 @@ import { Account } from "./Account";
 import mongoose from "mongoose";
 
 @plugin(autopopulate as any)
-export class CartItem {
+class CartItem {
   @prop({ ref: () => Product || Builder, autopopulate: true })
   public product?: Ref<Product> | Ref<Builder>;
 

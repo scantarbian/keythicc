@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { CartContext } from "contexts/CartContext";
-import { selectStyleConfig } from "./ShippingForm";
+import { selectStyleConfig } from "./AddressForms";
 import { useSession } from "next-auth/react";
 // components
 import Select from "react-select";
@@ -80,7 +80,7 @@ const PaymentForm = ({ className }: Prop) => {
           body: JSON.stringify({
             account: session?.user._id,
             email: shipper.email,
-            items: contents,
+            items: contents.filter((item) => item.selected),
             shipperServiceData: {
               logisticName: provider.logistic.name,
               rateName: provider.rate.name,
