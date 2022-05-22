@@ -1,21 +1,15 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 // components
 import { HeaderWithMenu } from "components/Header";
 import Search from "components/orders/Search";
+import List from "components/orders/List";
 // hooks
 import { useSession } from "next-auth/react";
 
 const Orders: NextPage = () => {
-  const [orders, setOrders] = useState([]);
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (session && session.user) {
-    }
-  }, [session]);
+  const { status } = useSession();
 
   return (
     <>
@@ -46,6 +40,7 @@ const Orders: NextPage = () => {
           {status === "unauthenticated" && <Search />}
 
           {/* Order list when logged in */}
+          {status === "authenticated" && <List />}
         </div>
       </main>
     </>

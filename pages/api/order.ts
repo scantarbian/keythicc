@@ -22,9 +22,10 @@ export default async function handler(
         }
 
         if (query.accountId) {
+          // sort descending by createdAt
           const orders = await OrderModel.find({
             account: query.accountId,
-          });
+          }).sort({ createdAt: -1 });
 
           return res.status(200).json({
             orders,
