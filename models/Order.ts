@@ -28,7 +28,7 @@ export class Order extends TimeStamps {
   public account?: Ref<Account>;
 
   @prop({ type: String })
-  public email?: string;
+  public email!: string;
 
   @prop({ type: Array, default: [] })
   public items!: mongoose.Types.Array<CartItem>;

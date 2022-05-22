@@ -42,6 +42,11 @@ const menuItems = [
     href: "/admin/users",
     icon: <></>,
   },
+  {
+    title: "Orders",
+    href: "/admin/orders",
+    icon: <></>,
+  },
 ];
 
 const Sidenav = ({
