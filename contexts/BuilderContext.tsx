@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useState } from "react";
 import { Product } from "models/Product";
-import { Account } from "models/Account";
 import { Builder } from "models/Builder";
 import { Color } from "models/Color";
 
@@ -25,7 +24,6 @@ type StateProps = {
   keycaps: Product | null;
   switches: Product | null;
   color: Color | null;
-  account: Account | null;
 
   setStage: (stage: number) => void;
   setEstimatedTotal: (total: number) => void;
@@ -35,7 +33,6 @@ type StateProps = {
   setKeycaps: (keycaps: Product & { _id: string }) => void;
   setSwitches: (switches: Product & { _id: string }) => void;
   setColor: (color: Color & { _id: string }) => void;
-  setAccount: (account: Account & { _id: string }) => void;
   // mocks
   setKeyboardSize: (size: BasicMock) => void;
   mockCaseStore: BasicMock;
@@ -63,7 +60,6 @@ const initState: StateProps = {
   keycaps: null,
   switches: null,
   color: null,
-  account: null,
   setStage: (stage: number) => {},
   setEstimatedTotal: (total: number) => {},
   setEstimatedShipDate: (date: Date) => {},
@@ -72,7 +68,6 @@ const initState: StateProps = {
   setKeycaps: (keycaps: Product & { _id: string }) => {},
   setSwitches: (switches: Product & { _id: string }) => {},
   setColor: (color: Color & { _id: string }) => {},
-  setAccount: (account: Account & { _id: string }) => {},
   // mocks
   setKeyboardSize: (size: BasicMock) => {},
   setKeyboardCaseMock: (mock: BasicMock) => {},
@@ -113,10 +108,9 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
     keyboardKeycapMock: "",
     keyboardSize: "",
     keyboardSwitchMock: "",
-    totalPrice: 0,
+    totalPrice: estimatedTotal,
   });
   const [color, setColorStore] = useState<Color | null>(null);
-  const [account, setAccount] = useState<Account | null>(null);
   // mocks
   const [mockCaseStore, setMockCaseStore] = useState<BasicMock>(
     {} as BasicMock
@@ -253,7 +247,6 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
         switches,
         builderResult,
         color,
-        account,
         setStage,
         setEstimatedTotal,
         setEstimatedShipDate,
@@ -263,7 +256,6 @@ const BuilderProvider = ({ children, baseKeyboard }: BuilderProps) => {
         setKeycaps,
         setSwitches,
         setColor,
-        setAccount,
         setKeyboardCaseMock,
         setKeyboardColorMock,
         mockCaseStore,

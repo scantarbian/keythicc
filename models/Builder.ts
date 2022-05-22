@@ -3,10 +3,11 @@ import autopopulate from "mongoose-autopopulate";
 import { Account } from "./Account";
 import { Product } from "./Product";
 import { Color } from "./Color";
+import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 
 // handles custom keyboard built through the builder
 @plugin(autopopulate as any)
-export class Builder {
+export class Builder extends TimeStamps {
   @prop({ ref: () => Product, autopopulate: true })
   public baseKeyboard!: Ref<Product>;
 

@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { format } from "date-fns";
 import { BuilderContext } from "contexts/BuilderContext";
+import { CartContext } from "contexts/CartContext";
+// hooks
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type Props = {
   className?: string;
@@ -13,7 +17,32 @@ const BuilderFooter = ({ className }: Props) => {
     estimatedShipDate,
     estimatedTotal,
     keyThiccPoints,
+    builderResult,
   } = useContext(BuilderContext);
+
+  const { addContent } = useContext(CartContext);
+
+  const router = useRouter();
+
+  const { data: session } = useSession();
+
+  const onSubmit = () => {
+    fetch("/api/builder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...builderResult,
+        builder: session?.user._id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        addContent(res.builder);
+        router.push("/cart");
+      });
+  };
 
   return (
     <div
@@ -54,7 +83,10 @@ const BuilderFooter = ({ className }: Props) => {
           NEXT
         </button>
       ) : (
-        <button className="bg-orange-400 text-white font-bold text-2xl p-4">
+        <button
+          onClick={onSubmit}
+          className="bg-orange-400 text-white font-bold text-2xl p-4"
+        >
           ADD TO CART
         </button>
       )}
