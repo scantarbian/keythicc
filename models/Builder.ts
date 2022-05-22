@@ -11,7 +11,7 @@ export class Builder {
   public baseKeyboard!: Ref<Product>;
 
   @prop({ ref: () => Color, autopopulate: true })
-  public keyboardColor!: Ref<Color>;
+  public keyboardColor?: Ref<Color>;
 
   @prop({ type: String })
   public keyboardSize!: string;
@@ -36,13 +36,13 @@ export class Builder {
   public keyboardSwitchMock?: string;
 
   @prop({ ref: () => Product, autopopulate: true })
-  public keyboardCase!: Ref<Product>;
+  public keyboardCase?: Ref<Product>;
 
   @prop({ ref: () => Product, autopopulate: true })
-  public keycaps!: Ref<Product>;
+  public keycaps?: Ref<Product>;
 
   @prop({ ref: () => Product, autopopulate: true })
-  public switches!: Ref<Product>;
+  public switches?: Ref<Product>;
 
   @prop({ ref: () => Account, autopopulate: true })
   public builder!: Ref<Account>;

@@ -264,5 +264,77 @@ export const Switches = () => {
 };
 
 export const Review = () => {
-  return <></>;
+  const {
+    builderResult,
+    basePrice,
+    mockCaseStore,
+    mockColorStore,
+    mockKeycapStore,
+    mockSizeStore,
+    mockSwitchStore,
+  } = useContext(BuilderContext);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2">
+        <div
+          className="h-16 w-16 rounded-lg"
+          style={{
+            background: keyboardColors.find(
+              (color) => color.name === mockColorStore.name
+            )?.code,
+          }}
+        />
+        <div className="flex flex-col text-white">
+          {/* @ts-ignore */}
+          <span className="text-xl">{builderResult!.baseKeyboard!.name}</span>
+          <span>{mockCaseStore.name}</span>
+          <span>{mockColorStore.name}</span>
+          <span>{mockSizeStore.name}</span>
+
+          <span>
+            Rp
+            {(
+              basePrice +
+              mockCaseStore.price +
+              mockColorStore.price +
+              mockSizeStore.price
+            ).toLocaleString()}
+          </span>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <div
+          className="h-16 w-16 rounded-lg"
+          style={{
+            background: `linear-gradient(to bottom, ${
+              keycaps.find((keycap) => keycap.name === mockKeycapStore.name)
+                ?.colorStart
+            }, ${
+              keycaps.find((keycap) => keycap.name === mockKeycapStore.name)
+                ?.colorEnd
+            })`,
+          }}
+        />
+        <div className="flex flex-col text-white">
+          <span className="text-xl">{builderResult!.keyboardKeycapMock}</span>
+          <span>Rp{mockKeycapStore.price.toLocaleString()}</span>
+        </div>
+      </div>
+      <div className="flex gap-2">
+        <div
+          className="h-16 w-16 rounded-lg"
+          style={{
+            background: switches.find(
+              (switchItem) => switchItem.name === mockSwitchStore.name
+            )?.color,
+          }}
+        />
+        <div className="flex flex-col text-white">
+          <span className="text-xl">{builderResult!.keyboardSwitchMock}</span>
+          <span>Rp{mockSwitchStore.price.toLocaleString()}</span>
+        </div>
+      </div>
+    </div>
+  );
 };

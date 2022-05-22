@@ -43,7 +43,7 @@ const BuilderHeader = ({ className }: Props) => {
         <span className="text-white text-xl">
           {currentStage !== 3
             ? `SELECT YOUR ${Stages[currentStage].toUpperCase()}`
-            : `REVIEW`}
+            : `YOUR KEYBOARD`}
         </span>
         <span className="bg-special-grey-3 p-0.5 w-full" />
       </div>
